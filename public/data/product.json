@@ -1,0 +1,66 @@
+[
+  {
+    "id": "1",
+    "imageUrl": "/image/1.webp",
+    "name": "분홍색 후드티",
+    "price": "50000",
+    "category": "여성",
+    "description": "설명이 조하"
+  },
+  {
+    "id": "2",
+    "imageUrl": "/image/2.webp",
+    "name": "검은색 후드티",
+    "price": "60000",
+    "category": "남성",
+    "description": "설명이 조하"
+  },
+  {
+    "id": "3",
+    "imageUrl": "/image/3.webp",
+    "name": "밀짚 상의",
+    "price": "10000",
+    "category": "여성",
+    "description": "설명이 조하"
+  },
+  {
+    "id": "4",
+    "imageUrl": "/image/4.webp",
+    "name": "밀짚 하의",
+    "price": "10000",
+    "category": "여성",
+    "description": "설명이 조하"
+  },
+  {
+    "id": "5",
+    "imageUrl": "/image/5.webp",
+    "name": "크롭티",
+    "price": "200000",
+    "category": "여성",
+    "description": "설명이 조하"
+  },
+  {
+    "id": "6",
+    "imageUrl": "/image/6.webp",
+    "name": "원피스",
+    "price": "100000",
+    "category": "여성",
+    "description": "설명이 조하"
+  },
+  {
+    "id": "7",
+    "imageUrl": "/image/7.webp",
+    "name": "발렌티노 레드",
+    "price": "500000",
+    "category": "여성",
+    "description": "설명이 조하"
+  },
+  {
+    "id": "8",
+    "imageUrl": "/image/8.webp",
+    "name": "흰티",
+    "price": "50000",
+    "category": "남성",
+    "description": "설명이 조하"
+  }
+]

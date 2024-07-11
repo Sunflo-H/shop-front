@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Raleway&display=swap");
+
+:root {
+  --screen: calc(100vw - 5rem);
+}
+
+body {
+  margin: 0;
+  font-family: "Raleway", sans-serif, "Abril Fatface", cursive, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue";
+
+  /* 현재 글꼴 "Segoe UI" */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* @apply max-w-screen-2xl m-auto; */
+  /* max-width: 1300px; */
+  /* margin: auto; */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* input {
+  @apply p-4 outline-none border border-gray-300 my-1;
+} */
+
+h1 {
+  font-family: "Abril Fatface", cursive;
+}
+
+/* Carousel */
+.viewer {
+  width: var(--screen);
+  max-width: 1456px;
+  overflow: hidden;
+}
+
+.slider {
+  width: calc(var(--screen) * 5);
+}
+
+.slide {
+  width: var(--screen);
+}
+
+.slide1 {
+  transform: translateX(calc(var(--screen) * -1));
+}
+.slide2 {
+  transform: translateX(calc(var(--screen) * -2));
+}
+.slide3 {
+  transform: translateX(calc(var(--screen) * -3));
+}
+.slide4 {
+  transform: translateX(calc(var(--screen) * -4));
+}
+.first-slide {
+  transform: translateX(-1400px);
+}
+
+.banner-img {
+  width: var(--screen);
+  height: 100vh;
+  max-width: 1040px;
+  max-height: 800px;
+}
+
+.banner1 {
+  background-image: url("https://res.cloudinary.com/dysdtbktd/image/upload/c_scale,h_800,w_1040/v1678772735/shoppy/jonas-svidras-t6TvCg7Ft5E-unsplash_xp02ba.jpg");
+}
+.banner2 {
+  background-image: url("https://res.cloudinary.com/dysdtbktd/image/upload/c_scale,w_1040/v1678444072/shoppy/aaron-robinson-k1efdruuT5E-unsplash_c8wgjl.jpg");
+}
+.banner3 {
+  background-image: url("https://res.cloudinary.com/dysdtbktd/image/upload/c_scale,h_800,w_1040/v1678772735/shoppy/ke-atlas-eqHRrgRQDew-unsplash_grixz9.jpg");
+}
+
+.text-box {
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  transform: translateY(-50%);
+
+  width: 700px;
+}
+
+.arrow-box {
+  position: absolute;
+  width: 350px;
+  right: 0;
+  padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+  .text-box {
+    top: 40%;
+    left: 10%;
+  }
+  :root {
+    --screen: calc(100vw - 2.5rem);
+  }
+}
+
+@media (max-width: 1280px) {
+  .arrow-box {
+    width: var(--screen);
+  }
+}
+
+@media (min-width: 1500px) {
+  .text-box {
+    left: 700px;
+  }
+}
