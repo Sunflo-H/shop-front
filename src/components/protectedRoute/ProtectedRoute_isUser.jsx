@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
+import { useSelector } from "react-redux";
 
 /**
  *  children에 아무나 접근하지 못하도록 보호하는 컴포넌트
@@ -8,7 +9,8 @@ import { useAuthContext } from "../../context/AuthContext";
  * - user 인지 확인한다. (로그인)
  */
 export default function ProtectedRoute({ children, requireAdmin }) {
-  const { user, isLoading } = useAuthContext();
+  const user = useSelector((state) => state.auth.user);
+  const isLoading = useSelector((state) => state.auth.isLoading);
 
   if (isLoading) {
     return <div>Loading...</div>;

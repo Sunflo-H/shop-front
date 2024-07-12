@@ -3,10 +3,13 @@ import { MdArrowDropDown } from "react-icons/md";
 import { useAuthContext } from "../../../context/AuthContext";
 import User from "./User";
 import { Link } from "react-router-dom";
+import { login, logout } from "../../../api/firebase_auth";
+import { useSelector } from "react-redux";
 
 export default function SignAndUser() {
-  const { user, login, logout } = useAuthContext();
   const [isOpen, setIsOpen] = useState(false);
+  const user = useSelector((state) => state.auth.user) ?? {}; // user 데이터를 가지고 오기 전이라면 {}
+
   const handleLogin = () => {
     login();
   };
@@ -43,7 +46,7 @@ export default function SignAndUser() {
                 <li className="mb-4">
                   <User user={user} />
                 </li>
-                {user.isAdmin && (
+                {/* {user.isAdmin && (
                   <li className="mb-4">
                     <Link
                       to="/products/new"
@@ -52,7 +55,7 @@ export default function SignAndUser() {
                       Upload Products
                     </Link>
                   </li>
-                )}
+                )} */}
                 <li className="mb-4 ">
                   <Link
                     to="/favorites"

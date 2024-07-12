@@ -7,12 +7,15 @@ import useFavorites from "../../hooks/useFavorites";
 import Swal from "sweetalert2";
 import SizeOption from "../../components/product/SizeOption";
 import ColorOption from "../../components/product/ColorOption";
+import { useSelector } from "react-redux";
 
 const DEFAULT_SIZE = "S";
 const DEFAULT_COLOR = "Black";
 
 export default function ProductDetail() {
-  const { user, uid } = useAuthContext();
+  const user = useSelector((state) => state.auth.user);
+  const { uid } = user ?? {};
+
   const { addCart } = useCart();
   const {
     state: { product },

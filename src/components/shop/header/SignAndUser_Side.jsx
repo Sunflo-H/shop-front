@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { BiMinus } from "react-icons/bi";
 import { BsPlusLg } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../../../context/AuthContext";
 import SideListItem from "../../ui/SideListItem";
+import { login, logout } from "../../../api/firebase_auth";
+import { useSelector } from "react-redux";
 
 export default function SignAndUser_Side() {
-  const { user, login, logout } = useAuthContext();
+  const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const optionList = user?.isAdmin
     ? [

@@ -29,22 +29,22 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-      {
-        path: "/products/recommend",
-        element: <ProductsRecommend />,
-      },
+      // {
+      //   path: "/products/recommend",
+      //   element: <ProductsRecommend />,
+      // },
       {
         path: "/products/:category",
         element: <Products />,
       },
-      {
-        path: "/products/new",
-        element: (
-          <ProtectedRoute_isUser requireAdmin>
-            <UploadProduct />
-          </ProtectedRoute_isUser>
-        ),
-      },
+      // {
+      //   path: "/products/new",
+      //   element: (
+      //     <ProtectedRoute_isUser requireAdmin>
+      //       <UploadProduct />
+      //     </ProtectedRoute_isUser>
+      //   ),
+      // },
       {
         path: "/products/:category/:id",
         element: <ProductDetail />,

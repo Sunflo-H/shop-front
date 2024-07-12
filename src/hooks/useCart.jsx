@@ -1,13 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCart, removeCartItem, uploadCart } from "../api/firebase_db";
 import { useAuthContext } from "../context/AuthContext";
+import { useSelector } from "react-redux";
 
 const SEC = 1000;
 /**
  * 카트 정보를 불러오고, 새 상품을 등록, 상품의 개수를 증감 하는 훅
  */
 export default function useCart() {
-  const { uid } = useAuthContext();
+  const { uid } = useSelector((state) => state.auth.user) ?? {};
   const queryClient = useQueryClient();
 
   // 카트 정보를 불러온다.

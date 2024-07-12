@@ -9,9 +9,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 export default function useFavorites(product, currentCategory) {
-  const { user, uid } = useAuthContext();
+  const user = useSelector((state) => state.auth.user);
+  const { uid } = user ?? {};
   const queryClient = useQueryClient();
   const [isFavorite, setIsFavorite] = useState(false); // 찜
 

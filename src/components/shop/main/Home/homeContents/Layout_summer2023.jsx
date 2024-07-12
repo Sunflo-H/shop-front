@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "../../../ui/Button";
-import useCategoryNavigation from "../../../../hooks/useCategoryNavigation";
+import Button from "../../../../ui/Button";
+import useCategoryNavigation from "../../../../../hooks/useCategoryNavigation";
 
 export default function Layout_summer2023() {
   const { handleGoToMen } = useCategoryNavigation();

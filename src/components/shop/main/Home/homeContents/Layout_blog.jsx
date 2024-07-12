@@ -1,6 +1,6 @@
 import React from "react";
-import BlogTopImage from "./BlogTopImage";
-import BlogBottom from "./BlogBottom";
+import BlogTopImage from "../BlogTopImage";
+import BlogBottom from "../BlogBottom";
 
 export default function Layout_blog() {
   const topImageInfo = [

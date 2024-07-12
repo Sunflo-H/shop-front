@@ -3,9 +3,11 @@ import { AiOutlinePlusSquare, AiOutlineMinusSquare } from "react-icons/ai";
 import { BsFillTrashFill } from "react-icons/bs";
 import { useAuthContext } from "../../../../context/AuthContext";
 import useCart from "../../../../hooks/useCart";
+import { useSelector } from "react-redux";
 
 export default function CartItem({ product }) {
-  const { uid } = useAuthContext();
+  const user = useSelector((state) => state.auth.user);
+  const { uid } = user ?? {};
   const { quantityMinus, quantityPlus, removeCart } = useCart();
   const { id, title, imageUrl, price, quantity, size, color } = product;
 
