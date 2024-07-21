@@ -1,13 +1,11 @@
-import Nav from "../../components/ProductManagement/main/ProductList/Category/Nav";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import useProducts from "../../hooks/useProducts";
 import { initProducts } from "../../slice/productsManagement/productManagementSlice";
 import Header from "../../layout/manage/Header";
 import Main from "../../layout/manage/Main";
-import { Outlet } from "react-router-dom";
 
-export default function ProductManagement() {
+export default function ProductManagementApp() {
   const dispatch = useDispatch();
   const {
     productsQuery_all: { data },

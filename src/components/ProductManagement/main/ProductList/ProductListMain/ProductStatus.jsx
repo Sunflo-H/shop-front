@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import useProducts from "../../../../hooks/useProducts";
-import { updateProduct } from "../../../../api/firebase_db";
+import useProducts from "../../../../../hooks/useProducts";
+import { updateProduct } from "../../../../../api/firebase_db";
 import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
-import { filterByStatus } from "../../../../slice/productsManagement/productManagementSlice";
+import { filterByStatus } from "../../../../../slice/productsManagement/productManagementSlice";
 
 const statusList = ["ALL", "Sale", "Sold Out", "Hide"];
 

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrentPage,
   setCurrentPageGroup,
-} from "../../../../slice/productsManagement/pageNationSlice";
+} from "../../../../../slice/productsManagement/pageNationSlice";
 import Page from "./Page";
 
 /**

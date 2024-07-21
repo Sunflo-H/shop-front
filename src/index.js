@@ -11,12 +11,12 @@ import Products from "./pages/shop/Products";
 import ProductsRecommend from "./pages/shop/ProductsRecommend";
 import MyFavorites from "./pages/shop/MyFavorites";
 import ProtectedRoute_isUser from "./components/protectedRoute/ProtectedRoute_isUser";
-import ProductManagement from "./pages/productManagement/ProductManagement";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import store from "./store";
 import UploadProduct from "./pages/productManagement/UploadProduct";
-import ProductList from "./components/ProductManagement/main/ProductList/ProductList";
+import ProductManagementApp from "./pages/productManagement/ProductManagementApp";
+import ProductList from "./pages/productManagement/ProductList";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
     element: (
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
-          <ProductManagement />
+          <ProductManagementApp />
         </Provider>
       </QueryClientProvider>
     ),
