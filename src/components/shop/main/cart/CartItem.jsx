@@ -1,7 +1,6 @@
 import React from "react";
 import { AiOutlinePlusSquare, AiOutlineMinusSquare } from "react-icons/ai";
 import { BsFillTrashFill } from "react-icons/bs";
-import { useAuthContext } from "../../../../context/AuthContext";
 import useCart from "../../../../hooks/useCart";
 import { useSelector } from "react-redux";
 

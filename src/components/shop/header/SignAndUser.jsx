@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
-import { useAuthContext } from "../../../context/AuthContext";
 import User from "./User";
 import { Link } from "react-router-dom";
 import { login, logout } from "../../../api/firebase_auth";

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Nav from "./Nav";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useAuthContext } from "../../../context/AuthContext";
 import Cart from "./Cart";
 import SideNav from "./SideNav";
 import SignAndUser from "./SignAndUser";

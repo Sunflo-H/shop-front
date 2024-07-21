@@ -1,15 +1,11 @@
-import { Outlet } from "react-router-dom";
-import Header from "../../components/ProductManagement/header/Header";
-import Nav from "../../components/ProductManagement/nav/Nav";
+import Nav from "../../components/ProductManagement/main/ProductList/Category/Nav";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import ProductStatus from "../../components/ProductManagement/main/ProductStatus";
-
-import PageNation from "../../components/ProductManagement/main/PageNation";
-import SelectBox from "../../components/ui/SelectBox";
-import SearchBar from "../../components/ui/SearchBar";
 import useProducts from "../../hooks/useProducts";
 import { initProducts } from "../../slice/productsManagement/productManagementSlice";
+import Header from "../../layout/manage/Header";
+import Main from "../../layout/manage/Main";
+import { Outlet } from "react-router-dom";
 
 export default function ProductManagement() {
   const dispatch = useDispatch();
@@ -25,18 +21,7 @@ export default function ProductManagement() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-200 ">
       <Header />
-      <div className="flex self-center w-screen max-w-screen-2xl ">
-        <Nav />
-        <div className="grow">
-          <div className="flex border-gray-300 border-b ">
-            <ProductStatus />
-            <SelectBox />
-          </div>
-          <SearchBar />
-          <Outlet />
-          <PageNation />
-        </div>
-      </div>
+      <Main />
     </div>
   );
 }

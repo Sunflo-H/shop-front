@@ -1,10 +1,10 @@
 import React from "react";
-import ProductListItem from "./productListUI/ProductListItem";
+import ProductListItem from "./listUI/ListItem";
 
 import { useSelector } from "react-redux";
-import ProductListTitles from "./productListUI/ProductListTitles";
+import ProductListTitles from "./listUI/ListTitles";
 
-export default function ProductList() {
+export default function List() {
   const products_origin = useSelector(
     (state) => state.productManagement.products_origin
   );

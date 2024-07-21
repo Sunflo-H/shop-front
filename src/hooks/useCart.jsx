@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCart, removeCartItem, uploadCart } from "../api/firebase_db";
-import { useAuthContext } from "../context/AuthContext";
 import { useSelector } from "react-redux";
 
 const SEC = 1000;

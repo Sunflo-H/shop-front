@@ -1,7 +1,7 @@
 import React from "react";
 import useFavorites from "../../hooks/useFavorites";
 import { useEffect } from "react";
-import EmptyProduct from "../../components/error/EmptyProduct";
+import EmptyProduct from "../../pages/error/EmptyProduct";
 import ProductCard from "../../components/product/ProductCard";
 
 export default function MyFavorites() {
