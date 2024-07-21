@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../../components/shop/header/Nav";
+import Nav from "../../components/ProductManagement/main/ProductList/ProductListNav/Nav";
 import SelectBox from "../../components/ProductManagement/main/ProductList/ProductListMain/SelectBox";
 import ProductStatus from "../../components/ProductManagement/main/ProductList/ProductListMain/ProductStatus";
 import List from "../../components/ProductManagement/main/ProductList/ProductListMain/List";
