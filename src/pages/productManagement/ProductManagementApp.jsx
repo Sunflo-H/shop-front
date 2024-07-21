@@ -19,7 +19,9 @@ export default function ProductManagementApp() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-200 ">
       <Header />
-      <Main />
+      <div className="flex self-center max-w-screen-2xl w-screen mt-4 ">
+        <Main />
+      </div>
     </div>
   );
 }

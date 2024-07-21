@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { filterByCategory } from "../../../../../../slice/productsManagement/productManagementSlice";
+import { filterByCategory } from "../../../../../slice/productsManagement/productManagementSlice";
 
 export default function CategoryItem({ currentCategory }) {
   const dispatch = useDispatch();

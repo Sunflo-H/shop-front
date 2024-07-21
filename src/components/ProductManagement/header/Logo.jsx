@@ -3,11 +3,8 @@ import { Link } from "react-router-dom";
 
 export default function Logo() {
   return (
-    <Link
-      to="/manage"
-      className="flex self-center top-1/2 text-xl font-bold ml-4"
-    >
-      Product Management
+    <Link to="/manage" className="flex self-center text-lg font-bold ">
+      상품 관리
     </Link>
   );
 }

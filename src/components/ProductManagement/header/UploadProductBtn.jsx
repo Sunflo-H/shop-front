@@ -5,9 +5,9 @@ export default function UploadProductBtn() {
   return (
     <Link
       to="/manage/new"
-      className="ml-auto bg-blue-500 text-white p-2 cursor-pointer"
+      className=" bg-blue-500 text-white px-2 py-1 cursor-pointer text-md ml-auto"
     >
-      Upload Product
+      상품추가
     </Link>
   );
 }
