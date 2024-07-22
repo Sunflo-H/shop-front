@@ -175,16 +175,34 @@ export default function UploadProduct() {
           <section className="w-1/2  bg-white rounded-md p-2 shadow-md">
             <div className="flex px-4 py-4">
               <div className="font-bold">Image</div>
-              <button className="flex self-center text-blue-500 font-bold ml-auto">
-                <span className="mr-1 self-center">Add</span>{" "}
+              <label className="flex self-center text-blue-500 font-bold ml-auto">
+                <span className="mr-1 self-center cursor-pointer">Add</span>{" "}
                 <FaPlus className="self-center" />
-              </button>
+                <input
+                  type="file"
+                  accept="image/*"
+                  name="file"
+                  required
+                  onChange={handleChange}
+                  hidden
+                />
+              </label>
             </div>
             <div className="mx-4 mb-4">
-              <img
-                src="/images/default-placeholder.png"
-                className="rounded-md"
-              />
+              <label>
+                <img
+                  src="/images/default-placeholder.png"
+                  className="rounded-md cursor-pointer"
+                />
+                <input
+                  type="file"
+                  accept="image/*"
+                  name="file"
+                  required
+                  onChange={handleChange}
+                  hidden
+                />
+              </label>
             </div>
           </section>
         </div>
