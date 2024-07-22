@@ -9,6 +9,7 @@ import Input_size from "../../components/shop/main/UploadProduct/Input_size";
 import Input_color from "../../components/shop/main/UploadProduct/Input_color";
 import { v4 as uuid } from "uuid";
 import Swal from "sweetalert2";
+import RadioBtn from "../../components/ProductManagement/main/UploadProduct/RadioBtn";
 
 const category = ["Men", "Women", "Accessories", "Shoes"];
 const productDetails = ["title", "description"];
@@ -17,6 +18,13 @@ const color = ["Black", "Red", "Green", "Blue", "Yellow"];
 const inputStyle = "p-4 outline-none border border-gray-300 my-1";
 
 export default function UploadProduct() {
+  const [checkedItems, setCheckedItems] = useState({
+    S: false,
+    M: false,
+    L: false,
+    XL: false,
+  });
+  console.log(checkedItems);
   const [isUploading, setIsUploading] = useState();
   const [success, setSuccess] = useState();
   const [file, setFile] = useState();
@@ -90,65 +98,92 @@ export default function UploadProduct() {
   };
 
   return (
-    <section className="text-center max-w-screen-lg w-screen m-auto">
+    <div className="max-w-screen-lg w-screen m-auto">
       <div className="">
-        {/* 상단 컨텐츠 - 상품명 가격 카테고리 | 이미지 업로드 */}
-        <div className="flex gap-6 h-[300px]">
-          <div className="w-1/2 bg-white rounded-md">
-            <ul>
-              <li className="flex min-h-[3rem] border-black border">
-                <div className="w-1/4 border-r border-black ">
-                  <p className="line relative top-1/2 -translate-y-1/2 ">
-                    <b>Name</b>
-                  </p>
+        <div className="flex gap-6 ">
+          <div className="w-1/2">
+            {/* 좌측 상단 첫번째 컨텐츠 : 상품명, 가격 */}
+            <section className="bg-white rounded-md shadow-md p-2">
+              <div className=" py-4 px-4">
+                <div className="font-bold">
+                  Product Name{" "}
+                  <span className="font-normal text-sm mx-1 text-blue-500">
+                    ( require )
+                  </span>
                 </div>
-                <div className="grow text-start mx-4">
+                <div className="grow text-start border-b mt-1">
                   <input
                     type="text"
-                    placeholder="product name"
-                    className="w-1/2 my-2 h-8 border border-black"
-                  ></input>
+                    className="w-full outline-none"
+                    placeholder="ex) Man's Suit"
+                  />
                 </div>
-              </li>
-              <li className="flex min-h-[3rem] border-black border-b border-l border-r">
-                <div className="w-1/4 border-r border-black">
-                  <p className="line relative top-1/2 -translate-y-1/2 ">
-                    <b>Price</b>
-                  </p>
+              </div>
+              <div className=" py-4 px-4">
+                <div className="font-bold">
+                  Price
+                  <span className="font-normal text-sm mx-1 text-blue-500">
+                    ( require )
+                  </span>
                 </div>
-                <div className="grow text-start mx-4">
-                  <input type="number" className=" my-2 h-8 mr-1"></input>$
+                <div className="flex border-b mt-1 ">
+                  <input
+                    type="Number"
+                    className="w-full outline-none"
+                    placeholder="100"
+                  />
                 </div>
-              </li>
-              <li className="flex min-h-[3rem] border-black border-b border-l border-r">
-                <div className="w-1/4 border-r border-black">
-                  <p className="relative top-1/2 -translate-y-1/2 ">
-                    <b>Category</b>
-                  </p>
+              </div>
+            </section>
+            {/* 좌측 상단 두번째 컨텐츠 : 카테고리, 사이즈, 컬러 */}
+            <section className="bg-white  mt-4 rounded-md shadow-md">
+              {/* 카테고리 */}
+              <div className="py-4 px-4">
+                <div className="font-bold">
+                  Category
+                  <span className="font-normal text-sm mx-1 text-blue-500">
+                    ( require )
+                  </span>
                 </div>
-                <div className="grow text-start mx-4 my-2 ">
-                  <div className="relative top-1/2 -translate-y-1/2">
-                    <label>
-                      <input type="radio" name="category" value="Man" />
-                      <span className="mr-6 ml-2">Man</span>
-                    </label>
-                    <label>
-                      <input type="radio" name="category" value="Woman" />
-                      <span className="mr-6 ml-2">Woman</span>
-                    </label>
-                    <label>
-                      <input type="radio" name="category" value="Shoes" />
-                      <span className="mr-6 ml-2">Shoes</span>
-                    </label>
-                    <label>
-                      <input type="radio" name="category" value="Accessory" />
-                      <span className="mr-6 ml-2">Accessory</span>
-                    </label>
+                <div className="mt-1 ">
+                  <div className="">
+                    {category.map((item) => (
+                      <RadioBtn value={item} name="category" />
+                    ))}
                   </div>
                 </div>
-              </li>
-            </ul>
+              </div>
+              {/* 사이즈 */}
+              <div className="py-4 px-4">
+                <div className="font-bold">Size</div>
+                <div className="flex gap-4">
+                  <div
+                    className="px-2 bg-red-500 w-auto px-4"
+                    onClick={() =>
+                      setCheckedItems({ ...checkedItems, S: !checkedItems.S })
+                    }
+                  >
+                    S
+                  </div>
+                  <div className="px-2 bg-red-500 w-auto px-4">M</div>
+                  <div className="px-2 bg-red-500 w-auto px-4">L</div>
+                  <div className="px-2 bg-red-500 w-auto px-4">XL</div>
+                </div>
+              </div>
+              {/* 컬러 */}
+              <div className="py-4 px-4">
+                <div className="font-bold">Color</div>
+                <div className="mt-1 ">
+                  <input
+                    type="text"
+                    placeholder="Separate with a comma. ex) S, M, L"
+                    className="w-full border-b"
+                  />
+                </div>
+              </div>
+            </section>
           </div>
+
           <div className="w-1/2  bg-white rounded-md ">이미지 업로드</div>
         </div>
         <div>하단</div>
@@ -230,6 +265,6 @@ export default function UploadProduct() {
           disabled={isUploading}
         ></UploadButton>
       </form> */}
-    </section>
+    </div>
   );
 }
