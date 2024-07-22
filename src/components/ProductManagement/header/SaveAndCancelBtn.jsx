@@ -22,14 +22,14 @@ export default function SaveAndCancelBtn() {
   };
 
   return (
-    <div className="flex ml-auto gap-4">
+    <div className="flex ml-auto gap-3">
       <div
-        className=" bg-blue-500 text-white px-6 py-1 cursor-pointer text-md ml-auto"
+        className="border-gray-300 border px-6 py-1 cursor-pointer text-md ml-auto self-center"
         onClick={handleCancelClick}
       >
         취소
       </div>
-      <div className=" bg-blue-500 text-white px-6 py-1 cursor-pointer text-md ml-auto">
+      <div className=" bg-blue-500 border border-transparent text-white px-6 py-1 cursor-pointer text-md ml-auto flex self-center">
         저장
       </div>
     </div>
