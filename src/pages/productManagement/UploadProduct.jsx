@@ -18,13 +18,6 @@ const color = ["Black", "Red", "Green", "Blue", "Yellow"];
 const inputStyle = "p-4 outline-none border border-gray-300 my-1";
 
 export default function UploadProduct() {
-  const [checkedItems, setCheckedItems] = useState({
-    S: false,
-    M: false,
-    L: false,
-    XL: false,
-  });
-  console.log(checkedItems);
   const [isUploading, setIsUploading] = useState();
   const [success, setSuccess] = useState();
   const [file, setFile] = useState();
@@ -156,18 +149,12 @@ export default function UploadProduct() {
               {/* 사이즈 */}
               <div className="py-4 px-4">
                 <div className="font-bold">Size</div>
-                <div className="flex gap-4">
-                  <div
-                    className="px-2 bg-red-500 w-auto px-4"
-                    onClick={() =>
-                      setCheckedItems({ ...checkedItems, S: !checkedItems.S })
-                    }
-                  >
-                    S
-                  </div>
-                  <div className="px-2 bg-red-500 w-auto px-4">M</div>
-                  <div className="px-2 bg-red-500 w-auto px-4">L</div>
-                  <div className="px-2 bg-red-500 w-auto px-4">XL</div>
+                <div className="mt-1 ">
+                  <input
+                    type="text"
+                    placeholder="Separate with a comma. ex) S, M, L"
+                    className="w-full border-b"
+                  />
                 </div>
               </div>
               {/* 컬러 */}
@@ -176,7 +163,7 @@ export default function UploadProduct() {
                 <div className="mt-1 ">
                   <input
                     type="text"
-                    placeholder="Separate with a comma. ex) S, M, L"
+                    placeholder="Separate with a comma. ex) Black, Red, Blue"
                     className="w-full border-b"
                   />
                 </div>
