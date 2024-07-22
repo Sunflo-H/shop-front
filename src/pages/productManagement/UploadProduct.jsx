@@ -172,7 +172,7 @@ export default function UploadProduct() {
             </section>
           </div>
           {/* 우측 상단 컨텐츠 : 이미지 업로드 */}
-          <section className="w-1/2  bg-white rounded-md p-2">
+          <section className="w-1/2  bg-white rounded-md p-2 shadow-md">
             <div className="flex px-4 py-4">
               <div className="font-bold">Image</div>
               <button className="flex self-center text-blue-500 font-bold ml-auto">
@@ -180,8 +180,11 @@ export default function UploadProduct() {
                 <FaPlus className="self-center" />
               </button>
             </div>
-            <div className="bg-black mx-4 ">
-              <img src="/images/default-placeholder.png" />
+            <div className="mx-4 mb-4">
+              <img
+                src="/images/default-placeholder.png"
+                className="rounded-md"
+              />
             </div>
           </section>
         </div>
