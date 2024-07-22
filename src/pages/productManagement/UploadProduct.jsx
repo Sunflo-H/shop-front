@@ -22,6 +22,7 @@ export default function UploadProduct() {
   const [isUploading, setIsUploading] = useState();
   const [success, setSuccess] = useState();
   const [file, setFile] = useState();
+  const [imageSrc, setImageSrc] = useState("/images/default-placeholder.png");
   const [product, setProduct] = useState({
     category: "",
     title: "",
@@ -33,8 +34,11 @@ export default function UploadProduct() {
   });
   const { uploadProduct } = useProducts(product?.category);
 
-  const handleChange = (e) => {
+  const handleFileChange = (e) => {
     const { name, value, files } = e.target;
+    console.log(name);
+    console.log(value);
+    console.log(files);
 
     if (name === "file") {
       setFile(files[0]);
@@ -141,8 +145,8 @@ export default function UploadProduct() {
                 </div>
                 <div className="mt-1 ">
                   <div className="">
-                    {category.map((item) => (
-                      <RadioBtn value={item} name="category" />
+                    {category.map((item, index) => (
+                      <RadioBtn value={item} name="category" key={index} />
                     ))}
                   </div>
                 </div>
@@ -183,23 +187,28 @@ export default function UploadProduct() {
                   accept="image/*"
                   name="file"
                   required
-                  onChange={handleChange}
+                  onChange={handleFileChange}
                   hidden
                 />
               </label>
             </div>
             <div className="mx-4 mb-4">
               <label>
-                <img
-                  src="/images/default-placeholder.png"
-                  className="rounded-md cursor-pointer"
-                />
+                {file ? (
+                  <img
+                    className="rounded-md cursor-pointer"
+                    src={URL.createObjectURL(file)}
+                  />
+                ) : (
+                  <img src={imageSrc} className="rounded-md cursor-pointer" />
+                )}
+
                 <input
                   type="file"
                   accept="image/*"
                   name="file"
                   required
-                  onChange={handleChange}
+                  onChange={handleFileChange}
                   hidden
                 />
               </label>
@@ -208,13 +217,6 @@ export default function UploadProduct() {
         </div>
         <div>하단</div>
       </div>
-      {file && (
-        <img
-          className="w-80 h-96 mx-auto mb-2"
-          src={URL.createObjectURL(file)}
-          alt="local file"
-        />
-      )}
 
       {/* <form className="flex flex-col px-12" onSubmit={handleUploadProduct}>
         <div className="flex mb-4 gap-2 font-bold">
@@ -230,14 +232,14 @@ export default function UploadProduct() {
           })}
         </div>
 
-        <Input_file handleChange={handleChange} />
+        <Input_file handleFileChange={handleFileChange} />
 
         {productDetails.map((item) => {
           return (
             <Input_text
               attribute={item}
               value={product[item]}
-              handleChange={handleChange}
+              handleFileChange={handleFileChange}
               key={item}
             />
           );
@@ -249,7 +251,7 @@ export default function UploadProduct() {
           value={product?.price}
           placeholder="price"
           required
-          onChange={handleChange}
+          onChange={handleFileChange}
         />
         <input
           className={inputStyle}
@@ -258,7 +260,7 @@ export default function UploadProduct() {
           value={product?.stock}
           placeholder="Stock"
           required
-          onChange={handleChange}
+          onChange={handleFileChange}
         />
 
         <input
@@ -268,7 +270,7 @@ export default function UploadProduct() {
           value={product?.size}
           placeholder="Size (Separate with commas(,))"
           required
-          onChange={handleChange}
+          onChange={handleFileChange}
         />
         <input
           className={inputStyle}
@@ -277,7 +279,7 @@ export default function UploadProduct() {
           value={product?.color}
           placeholder="Colors (Separate with commas(,))"
           required
-          onChange={handleChange}
+          onChange={handleFileChange}
         />
 
         <UploadButton
