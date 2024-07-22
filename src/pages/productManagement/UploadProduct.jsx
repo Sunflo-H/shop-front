@@ -10,6 +10,7 @@ import Input_color from "../../components/shop/main/UploadProduct/Input_color";
 import { v4 as uuid } from "uuid";
 import Swal from "sweetalert2";
 import RadioBtn from "../../components/ProductManagement/main/UploadProduct/RadioBtn";
+import { FaPlus } from "react-icons/fa";
 
 const category = ["Men", "Women", "Accessories", "Shoes"];
 const productDetails = ["title", "description"];
@@ -129,7 +130,7 @@ export default function UploadProduct() {
               </div>
             </section>
             {/* 좌측 상단 두번째 컨텐츠 : 카테고리, 사이즈, 컬러 */}
-            <section className="bg-white  mt-4 rounded-md shadow-md">
+            <section className="bg-white  mt-4 rounded-md shadow-md p-2">
               {/* 카테고리 */}
               <div className="py-4 px-4">
                 <div className="font-bold">
@@ -170,8 +171,19 @@ export default function UploadProduct() {
               </div>
             </section>
           </div>
-
-          <div className="w-1/2  bg-white rounded-md ">이미지 업로드</div>
+          {/* 우측 상단 컨텐츠 : 이미지 업로드 */}
+          <section className="w-1/2  bg-white rounded-md p-2">
+            <div className="flex px-4 py-4">
+              <div className="font-bold">Image</div>
+              <button className="flex self-center text-blue-500 font-bold ml-auto">
+                <span className="mr-1 self-center">Add</span>{" "}
+                <FaPlus className="self-center" />
+              </button>
+            </div>
+            <div className="bg-black mx-4 ">
+              <img src="/images/default-placeholder.png" />
+            </div>
+          </section>
         </div>
         <div>하단</div>
       </div>
