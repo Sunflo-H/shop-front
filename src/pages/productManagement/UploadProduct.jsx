@@ -176,7 +176,7 @@ export default function UploadProduct() {
             </section>
           </div>
           {/* 우측 상단 컨텐츠 : 이미지 업로드 */}
-          <section className="w-1/2  bg-white rounded-md p-2 shadow-md">
+          <section className="flex flex-col w-1/2 h-[472px] bg-white rounded-md p-2 shadow-md">
             <div className="flex px-4 py-4">
               <div className="font-bold">Image</div>
               <label className="flex self-center text-blue-500 font-bold ml-auto">
@@ -192,17 +192,19 @@ export default function UploadProduct() {
                 />
               </label>
             </div>
-            <div className="mx-4 mb-4">
+            <div className="grow mx-4 mb-4 h-full">
               <label>
                 {file ? (
                   <img
-                    className="rounded-md cursor-pointer"
+                    className="rounded-md cursor-pointer w-[452.19px] h-[384px]"
                     src={URL.createObjectURL(file)}
                   />
                 ) : (
-                  <img src={imageSrc} className="rounded-md cursor-pointer" />
+                  <img
+                    src={imageSrc}
+                    className="rounded-md cursor-pointer w-[452.19px] h-[384px]"
+                  />
                 )}
-
                 <input
                   type="file"
                   accept="image/*"
@@ -215,7 +217,14 @@ export default function UploadProduct() {
             </div>
           </section>
         </div>
-        <div>하단</div>
+        <section className="bg-white mt-4 rounded-md shadow-md">
+          <div className="py-4 px-4">
+            <div className="font-bold">Description</div>
+            <div className="flex mt-1 ">
+              <textarea className="w-full h-20 border outline-none resize-none"></textarea>
+            </div>
+          </div>
+        </section>
       </div>
 
       {/* <form className="flex flex-col px-12" onSubmit={handleUploadProduct}>
