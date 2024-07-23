@@ -97,8 +97,10 @@ export default function UploadProduct() {
 
   return (
     <div className="max-w-screen-lg w-screen m-auto">
-      <div className="">
-        <div className="flex gap-6 ">
+      <form action="상품 생성" method="POST">
+        <input type="submit" hidden />
+        {/* 상단 컨텐츠 */}
+        <section className="flex gap-6 ">
           <div className="w-1/2">
             {/* 좌측 상단 첫번째 컨텐츠 : 상품명, 가격 */}
             <section className="bg-white rounded-md shadow-md p-2">
@@ -114,6 +116,7 @@ export default function UploadProduct() {
                     type="text"
                     className="w-full outline-none"
                     placeholder="ex) Man's Suit"
+                    required
                   />
                 </div>
               </div>
@@ -129,6 +132,7 @@ export default function UploadProduct() {
                     type="Number"
                     className="w-full outline-none"
                     placeholder="100"
+                    required
                   />
                 </div>
               </div>
@@ -216,7 +220,8 @@ export default function UploadProduct() {
               </label>
             </div>
           </section>
-        </div>
+        </section>
+        {/* 하단 컨텐츠 : 상품 설명 */}
         <section className="bg-white mt-4 rounded-md shadow-md">
           <div className="py-4 px-4">
             <div className="font-bold">Description</div>
@@ -225,7 +230,7 @@ export default function UploadProduct() {
             </div>
           </div>
         </section>
-      </div>
+      </form>
 
       {/* <form className="flex flex-col px-12" onSubmit={handleUploadProduct}>
         <div className="flex mb-4 gap-2 font-bold">
