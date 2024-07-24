@@ -26,11 +26,14 @@ const GET_CATEGORY_URL = process.env.REACT_APP_GET_CATEGORY_URL_LOCAL;
 export default function UploadProduct() {
   const formRef = useRef(null);
   const dispatch = useDispatch();
+  const [file, setFile] = useState();
+  const [imageSrc, setImageSrc] = useState("/images/default-placeholder.png");
   const { data, isSuccess } = useQuery({
     queryKey: ["categoryId"],
     queryFn: () => axios.get(GET_CATEGORY_URL),
   });
   const categoryData = isSuccess ? data.data : [];
+  const [selectCategory, setSelectCategory] = useState("man");
 
   useEffect(() => {
     dispatch(setFormRef(formRef.current));
@@ -50,12 +53,14 @@ export default function UploadProduct() {
     console.log(1);
     e.preventDefault();
     const formData = new FormData(formRef.current);
-    console.log(formData);
+  };
+
+  const handleCategoryChange = (e) => {
+    setSelectCategory(e.target.dataset.category);
   };
   // const [isUploading, setIsUploading] = useState();
   // const [success, setSuccess] = useState();
-  const [file, setFile] = useState();
-  const [imageSrc, setImageSrc] = useState("/images/default-placeholder.png");
+
   // const [product, setProduct] = useState({
   //   category: "",
   //   title: "",
@@ -175,6 +180,8 @@ export default function UploadProduct() {
                         category={item.name}
                         id={item._id}
                         name="category"
+                        selectCategory={selectCategory}
+                        onChange={handleCategoryChange}
                         key={index}
                       />
                     ))}
