@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useRef } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export default function SaveAndCancelBtn() {
   const navigate = useNavigate();
+  const formRef = useSelector((state) => state.productManagement.formRef);
+
+  const handleSubmit = () => {
+    formRef.submit();
+  };
+
   const handleCancelClick = () => {
     Swal.fire({
       title: "정말 취소하시겠습니까?",
@@ -29,7 +36,10 @@ export default function SaveAndCancelBtn() {
       >
         취소
       </div>
-      <div className=" bg-blue-500 border border-transparent text-white px-6 py-1 cursor-pointer text-md ml-auto flex self-center">
+      <div
+        className=" bg-blue-500 border border-transparent text-white px-6 py-1 cursor-pointer text-md ml-auto flex self-center"
+        onClick={handleSubmit}
+      >
         저장
       </div>
     </div>

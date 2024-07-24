@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { imageUploadAndGetUrl } from "../../api/cloudinary";
 import UploadButton from "../../components/ui/UploadButton";
 import useProducts from "../../hooks/useProducts";
@@ -11,6 +11,8 @@ import { v4 as uuid } from "uuid";
 import Swal from "sweetalert2";
 import RadioBtn from "../../components/ProductManagement/main/UploadProduct/RadioBtn";
 import { FaPlus } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { setFormRef } from "../../slice/productsManagement/productManagementSlice";
 
 const category = ["Men", "Women", "Accessories", "Shoes"];
 const productDetails = ["title", "description"];
@@ -34,11 +36,15 @@ export default function UploadProduct() {
   });
   const { uploadProduct } = useProducts(product?.category);
 
+  const formRef = useRef(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setFormRef(formRef.current));
+  }, [dispatch]);
+
   const handleFileChange = (e) => {
     const { name, value, files } = e.target;
-    console.log(name);
-    console.log(value);
-    console.log(files);
 
     if (name === "file") {
       setFile(files[0]);
@@ -97,7 +103,11 @@ export default function UploadProduct() {
 
   return (
     <div className="max-w-screen-lg w-screen m-auto">
-      <form action="상품 생성" method="POST">
+      <form
+        ref={formRef}
+        action="http://localhost:8080/api/product/create"
+        method="POST"
+      >
         <input type="submit" hidden />
         {/* 상단 컨텐츠 */}
         <section className="flex gap-6 ">

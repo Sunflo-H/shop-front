@@ -19,7 +19,6 @@ import ProductManagementApp from "./pages/productManagement/ProductManagementApp
 import ProductList from "./pages/productManagement/ProductList";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
@@ -70,13 +69,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/manage",
-    element: (
-      <QueryClientProvider client={queryClient}>
-        <Provider store={store}>
-          <ProductManagementApp />
-        </Provider>
-      </QueryClientProvider>
-    ),
+    element: <ProductManagementApp />,
     children: [
       {
         index: true,
