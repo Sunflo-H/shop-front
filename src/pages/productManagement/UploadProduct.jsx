@@ -23,7 +23,6 @@ const color = ["Black", "Red", "Green", "Blue", "Yellow"];
 const inputStyle = "p-4 outline-none border border-gray-300 my-1";
 const GET_CATEGORY_URL = process.env.REACT_APP_GET_CATEGORY_URL_LOCAL;
 
-console.log(GET_CATEGORY_URL);
 export default function UploadProduct() {
   const formRef = useRef(null);
   const dispatch = useDispatch();
@@ -48,8 +47,10 @@ export default function UploadProduct() {
   };
 
   const handleSubmit = async (e) => {
+    console.log(1);
     e.preventDefault();
     const formData = new FormData(formRef.current);
+    console.log(formData);
   };
   // const [isUploading, setIsUploading] = useState();
   // const [success, setSuccess] = useState();

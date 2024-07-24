@@ -7,7 +7,8 @@ export default function SaveAndCancelBtn() {
   const navigate = useNavigate();
   const formRef = useSelector((state) => state.productManagement.formRef);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     formRef.submit();
   };
 
@@ -36,12 +37,13 @@ export default function SaveAndCancelBtn() {
       >
         취소
       </div>
-      <div
+      <button
+        type="submit"
         className=" bg-blue-500 border border-transparent text-white px-6 py-1 cursor-pointer text-md ml-auto flex self-center"
         onClick={handleSubmit}
       >
         저장
-      </div>
+      </button>
     </div>
   );
 }
