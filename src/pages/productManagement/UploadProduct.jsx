@@ -13,31 +13,23 @@ import RadioBtn from "../../components/ProductManagement/main/UploadProduct/Radi
 import { FaPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setFormRef } from "../../slice/productsManagement/productManagementSlice";
+import RequireOption from "../../components/ProductManagement/main/UploadProduct/RequireOption";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
-const category = ["Men", "Women", "Accessories", "Shoes"];
 const productDetails = ["title", "description"];
 const size = ["S", "M", "L", "XL"];
 const color = ["Black", "Red", "Green", "Blue", "Yellow"];
 const inputStyle = "p-4 outline-none border border-gray-300 my-1";
 
 export default function UploadProduct() {
-  const [isUploading, setIsUploading] = useState();
-  const [success, setSuccess] = useState();
-  const [file, setFile] = useState();
-  const [imageSrc, setImageSrc] = useState("/images/default-placeholder.png");
-  const [product, setProduct] = useState({
-    category: "",
-    title: "",
-    price: "",
-    description: "",
-    stock: "",
-    size: [],
-    color: [],
-  });
-  const { uploadProduct } = useProducts(product?.category);
-
   const formRef = useRef(null);
   const dispatch = useDispatch();
+  const { data, isSuccess } = useQuery({
+    queryKey: ["categoryId"],
+    queryFn: () => axios.get("http://localhost:8080/api/category"),
+  });
+  const categoryData = isSuccess ? data.data : [];
 
   useEffect(() => {
     dispatch(setFormRef(formRef.current));
@@ -50,56 +42,76 @@ export default function UploadProduct() {
       setFile(files[0]);
       return;
     }
-    setProduct({ ...product, [name]: value });
+    // setProduct({ ...product, [name]: value });
   };
 
-  const handleUploadProduct = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsUploading(true);
-
-    const PRODUCT_STATUS = {
-      SALE: "Sale",
-      SOLD_OUT: "Sold Out",
-      HIDE: "Hide",
-    };
-    const id = uuid();
-    const imageUrl = await imageUploadAndGetUrl(file);
-    const productToUpload = {
-      ...product,
-      id,
-      imageUrl,
-      price: Number(product.price),
-      stock: Number(product.stock),
-      size: product.size.split(","),
-      color: product.color.split(","),
-      status: PRODUCT_STATUS.SALE, // [Sale, Sold Out, Hide]
-    };
-
-    try {
-      uploadProduct.mutate(
-        { productToUpload },
-        {
-          onSuccess: () => {
-            setSuccess(true);
-            setTimeout(() => {
-              setSuccess(false);
-            }, 3000);
-          },
-          onError: (error) => {
-            console.log(error);
-          },
-        }
-      );
-    } finally {
-      setIsUploading(false);
-
-      Swal.fire({
-        icon: "success",
-        title: "✅ Upload Successfully",
-        confirmButtonColor: "#222",
-      });
-    }
+    const formData = new FormData(formRef.current);
   };
+  // const [isUploading, setIsUploading] = useState();
+  // const [success, setSuccess] = useState();
+  const [file, setFile] = useState();
+  const [imageSrc, setImageSrc] = useState("/images/default-placeholder.png");
+  // const [product, setProduct] = useState({
+  //   category: "",
+  //   title: "",
+  //   price: "",
+  //   description: "",
+  //   stock: "",
+  //   size: [],
+  //   color: [],
+  // });
+  // const { uploadProduct } = useProducts(product?.category);
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(formRef.current);
+  // setIsUploading(true);
+
+  // const PRODUCT_STATUS = {
+  //   SALE: "Sale",
+  //   SOLD_OUT: "Sold Out",
+  //   HIDE: "Hide",
+  // };
+  // // const id = uuid();
+  // const imageUrl = await imageUploadAndGetUrl(file);
+  // const productToUpload = {
+  //   ...product,
+  //   // id,
+  //   imageUrl,
+  //   price: Number(product.price),
+  //   stock: Number(product.stock),
+  //   size: product.size.split(","),
+  //   color: product.color.split(","),
+  //   status: PRODUCT_STATUS.SALE, // [Sale, Sold Out, Hide]
+  // };
+
+  // try {
+  //   uploadProduct.mutate(
+  //     { productToUpload },
+  //     {
+  //       onSuccess: () => {
+  //         setSuccess(true);
+  //         setTimeout(() => {
+  //           setSuccess(false);
+  //         }, 3000);
+  //       },
+  //       onError: (error) => {
+  //         console.log(error);
+  //       },
+  //     }
+  //   );
+  // } finally {
+  //   setIsUploading(false);
+
+  //   Swal.fire({
+  //     icon: "success",
+  //     title: "✅ Upload Successfully",
+  //     confirmButtonColor: "#222",
+  //   });
+  // }
+  // };
 
   return (
     <div className="max-w-screen-lg w-screen m-auto">
@@ -107,23 +119,22 @@ export default function UploadProduct() {
         ref={formRef}
         action="http://localhost:8080/api/product/create"
         method="POST"
+        onSubmit={handleSubmit}
       >
         <input type="submit" hidden />
         {/* 상단 컨텐츠 */}
-        <section className="flex gap-6 ">
+        <section className="flex gap-6">
           <div className="w-1/2">
             {/* 좌측 상단 첫번째 컨텐츠 : 상품명, 가격 */}
             <section className="bg-white rounded-md shadow-md p-2">
               <div className=" py-4 px-4">
                 <div className="font-bold">
-                  Product Name{" "}
-                  <span className="font-normal text-sm mx-1 text-blue-500">
-                    ( require )
-                  </span>
+                  Product Name <RequireOption />
                 </div>
                 <div className="grow text-start border-b mt-1">
                   <input
                     type="text"
+                    name="name"
                     className="w-full outline-none"
                     placeholder="ex) Man's Suit"
                     required
@@ -133,13 +144,12 @@ export default function UploadProduct() {
               <div className=" py-4 px-4">
                 <div className="font-bold">
                   Price
-                  <span className="font-normal text-sm mx-1 text-blue-500">
-                    ( require )
-                  </span>
+                  <RequireOption />
                 </div>
                 <div className="flex border-b mt-1 ">
                   <input
                     type="Number"
+                    name="price"
                     className="w-full outline-none"
                     placeholder="100"
                     required
@@ -153,14 +163,17 @@ export default function UploadProduct() {
               <div className="py-4 px-4">
                 <div className="font-bold">
                   Category
-                  <span className="font-normal text-sm mx-1 text-blue-500">
-                    ( require )
-                  </span>
+                  <RequireOption />
                 </div>
                 <div className="mt-1 ">
                   <div className="">
-                    {category.map((item, index) => (
-                      <RadioBtn value={item} name="category" key={index} />
+                    {categoryData.map((item, index) => (
+                      <RadioBtn
+                        category={item.name}
+                        id={item.id}
+                        name="category"
+                        key={index}
+                      />
                     ))}
                   </div>
                 </div>
@@ -171,6 +184,7 @@ export default function UploadProduct() {
                 <div className="mt-1 ">
                   <input
                     type="text"
+                    name="size"
                     placeholder="Separate with a comma. ex) S, M, L"
                     className="w-full border-b"
                   />
@@ -182,6 +196,7 @@ export default function UploadProduct() {
                 <div className="mt-1 ">
                   <input
                     type="text"
+                    name="color"
                     placeholder="Separate with a comma. ex) Black, Red, Blue"
                     className="w-full border-b"
                   />
@@ -192,14 +207,16 @@ export default function UploadProduct() {
           {/* 우측 상단 컨텐츠 : 이미지 업로드 */}
           <section className="flex flex-col w-1/2 h-[472px] bg-white rounded-md p-2 shadow-md">
             <div className="flex px-4 py-4">
-              <div className="font-bold">Image</div>
+              <div className="font-bold">
+                Image <RequireOption />
+              </div>
               <label className="flex self-center text-blue-500 font-bold ml-auto">
                 <span className="mr-1 self-center cursor-pointer">Add</span>{" "}
                 <FaPlus className="self-center" />
                 <input
                   type="file"
                   accept="image/*"
-                  name="file"
+                  name="imageUrl"
                   required
                   onChange={handleFileChange}
                   hidden
