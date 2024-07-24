@@ -21,13 +21,14 @@ const productDetails = ["title", "description"];
 const size = ["S", "M", "L", "XL"];
 const color = ["Black", "Red", "Green", "Blue", "Yellow"];
 const inputStyle = "p-4 outline-none border border-gray-300 my-1";
+const GET_CATEGORY_URL = process.env.GET_CATEGORY_URL_LOCAL;
 
 export default function UploadProduct() {
   const formRef = useRef(null);
   const dispatch = useDispatch();
   const { data, isSuccess } = useQuery({
     queryKey: ["categoryId"],
-    queryFn: () => axios.get("http://localhost:8080/api/category"),
+    queryFn: () => axios.get(GET_CATEGORY_URL),
   });
   const categoryData = isSuccess ? data.data : [];
 
@@ -170,7 +171,7 @@ export default function UploadProduct() {
                     {categoryData.map((item, index) => (
                       <RadioBtn
                         category={item.name}
-                        id={item.id}
+                        id={item._id}
                         name="category"
                         key={index}
                       />
