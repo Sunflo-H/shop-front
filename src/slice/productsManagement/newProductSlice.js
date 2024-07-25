@@ -11,6 +11,7 @@ export const newProductSlice = createSlice({
       color: [],
       description: "",
       imageUrl: "",
+      status: "Sale",
     },
   },
   reducers: {
