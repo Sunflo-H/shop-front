@@ -3,6 +3,7 @@ import categoryReducer from "./slice/categorySlice";
 import authReducer from "./slice/authSlice";
 import productManagementReducer from "./slice/productsManagement/productManagementSlice";
 import pageNationReducer from "./slice/productsManagement/pageNationSlice";
+import newProductReducer from "./slice/productsManagement/newProductSlice";
 
 export default configureStore({
   reducer: {
@@ -13,6 +14,9 @@ export default configureStore({
     // productManage
     productManagement: productManagementReducer,
     pageNation: pageNationReducer,
+
+    // newProduct
+    newProduct: newProductReducer,
   },
   middleware: getDefaultMiddleware({
     // 비 직렬화 값을 허용

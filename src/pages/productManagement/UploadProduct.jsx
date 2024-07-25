@@ -11,11 +11,11 @@ import { v4 as uuid } from "uuid";
 import Swal from "sweetalert2";
 import RadioBtn from "../../components/ProductManagement/main/UploadProduct/RadioBtn";
 import { FaPlus } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { setFormRef } from "../../slice/productsManagement/productManagementSlice";
+import { useDispatch, useSelector } from "react-redux";
 import RequireOption from "../../components/ProductManagement/main/UploadProduct/RequireOption";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { setNewProduct } from "../../slice/productsManagement/newProductSlice";
 
 const productDetails = ["title", "description"];
 const size = ["S", "M", "L", "XL"];
@@ -24,39 +24,38 @@ const inputStyle = "p-4 outline-none border border-gray-300 my-1";
 const GET_CATEGORY_URL = process.env.REACT_APP_GET_CATEGORY_URL_LOCAL;
 
 export default function UploadProduct() {
-  const formRef = useRef(null);
   const dispatch = useDispatch();
   const [file, setFile] = useState();
   const [imageSrc, setImageSrc] = useState("/images/default-placeholder.png");
+  const [selectCategory, setSelectCategory] = useState("man");
+
   const { data, isSuccess } = useQuery({
     queryKey: ["categoryId"],
     queryFn: () => axios.get(GET_CATEGORY_URL),
   });
   const categoryData = isSuccess ? data.data : [];
-  const [selectCategory, setSelectCategory] = useState("man");
-
-  useEffect(() => {
-    dispatch(setFormRef(formRef.current));
-  }, [dispatch]);
 
   const handleFileChange = (e) => {
     const { name, value, files } = e.target;
 
-    if (name === "file") {
+    if (name === "imageUrl") {
       setFile(files[0]);
       return;
     }
     // setProduct({ ...product, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    console.log(1);
-    e.preventDefault();
-    const formData = new FormData(formRef.current);
+  const handleCategoryChange = (e) => {
+    const key = e.target.name;
+    const value = e.target.dataset.category;
+    setSelectCategory(e.target.dataset.category);
+    dispatch(setNewProduct({ key, value }));
   };
 
-  const handleCategoryChange = (e) => {
-    setSelectCategory(e.target.dataset.category);
+  const handleInputChage = (e) => {
+    const key = e.target.name;
+    const value = e.target.value;
+    dispatch(setNewProduct({ key, value }));
   };
   // const [isUploading, setIsUploading] = useState();
   // const [success, setSuccess] = useState();
@@ -123,13 +122,7 @@ export default function UploadProduct() {
 
   return (
     <div className="max-w-screen-lg w-screen m-auto">
-      <form
-        ref={formRef}
-        action="http://localhost:8080/api/product/create"
-        method="POST"
-        onSubmit={handleSubmit}
-      >
-        <input type="submit" hidden />
+      <div>
         {/* 상단 컨텐츠 */}
         <section className="flex gap-6">
           <div className="w-1/2">
@@ -146,6 +139,7 @@ export default function UploadProduct() {
                     className="w-full outline-none"
                     placeholder="ex) Man's Suit"
                     required
+                    onChange={handleInputChage}
                   />
                 </div>
               </div>
@@ -161,6 +155,7 @@ export default function UploadProduct() {
                     className="w-full outline-none"
                     placeholder="100"
                     required
+                    onChange={handleInputChage}
                   />
                 </div>
               </div>
@@ -197,6 +192,7 @@ export default function UploadProduct() {
                     name="size"
                     placeholder="Separate with a comma. ex) S, M, L"
                     className="w-full border-b"
+                    onChange={handleInputChage}
                   />
                 </div>
               </div>
@@ -209,6 +205,7 @@ export default function UploadProduct() {
                     name="color"
                     placeholder="Separate with a comma. ex) Black, Red, Blue"
                     className="w-full border-b"
+                    onChange={handleInputChage}
                   />
                 </div>
               </div>
@@ -249,7 +246,7 @@ export default function UploadProduct() {
                 <input
                   type="file"
                   accept="image/*"
-                  name="file"
+                  name="imageUrl"
                   required
                   onChange={handleFileChange}
                   hidden
@@ -263,11 +260,15 @@ export default function UploadProduct() {
           <div className="py-4 px-4">
             <div className="font-bold">Description</div>
             <div className="flex mt-1 ">
-              <textarea className="w-full h-20 border outline-none resize-none"></textarea>
+              <textarea
+                className="w-full h-20 border outline-none resize-none"
+                name="description"
+                onChange={handleInputChage}
+              ></textarea>
             </div>
           </div>
         </section>
-      </form>
+      </div>
 
       {/* <form className="flex flex-col px-12" onSubmit={handleUploadProduct}>
         <div className="flex mb-4 gap-2 font-bold">

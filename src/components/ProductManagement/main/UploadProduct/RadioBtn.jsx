@@ -7,8 +7,6 @@ export default function RadioBtn({
   selectCategory,
   onChange,
 }) {
-  // console.log(selectCategory);
-  // console.log(category);
   return (
     <label>
       <input

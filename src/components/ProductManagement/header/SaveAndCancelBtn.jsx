@@ -5,11 +5,20 @@ import Swal from "sweetalert2";
 
 export default function SaveAndCancelBtn() {
   const navigate = useNavigate();
-  const formRef = useSelector((state) => state.productManagement.formRef);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    formRef.submit();
+    const formData = new FormData();
+
+    // FormData 객체를 쉽게 출력하기 위해 Object.fromEntries를 사용
+    const data = Object.fromEntries(formData.entries());
+    console.log("Form submitted with data:", data);
+
+    const name = formData.get("name");
+    console.log(name);
+    // 상태에 폼 데이터를 저장
+    // setFormData(data);
+    // formRef.submit();
   };
 
   const handleCancelClick = () => {

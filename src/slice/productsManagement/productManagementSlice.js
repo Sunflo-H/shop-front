@@ -10,7 +10,6 @@ export const productManagementSlice = createSlice({
     activeCategory: "ALL",
     activeStatus: "ALL",
     search: null,
-    formRef: null,
   },
   reducers: {
     initProducts: (state, action) => {
@@ -44,17 +43,9 @@ export const productManagementSlice = createSlice({
         );
       }
     },
-    setFormRef: (state, action) => {
-      state.formRef = action.payload;
-    },
   },
 });
 
-export const {
-  initProducts,
-  filterByCategory,
-  filterByStatus,
-  setSearch,
-  setFormRef,
-} = productManagementSlice.actions;
+export const { initProducts, filterByCategory, filterByStatus, setSearch } =
+  productManagementSlice.actions;
 export default productManagementSlice.reducer;
