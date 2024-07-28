@@ -1,10 +1,10 @@
 import React from "react";
-import ProductListItem from "./listUI/ListItem";
+import ProductListItem from "./ProductListItem";
 
 import { useSelector } from "react-redux";
-import ProductListTitles from "./listUI/ListTitles";
+import ProductListTitle from "./ProductListTitle";
 
-export default function List() {
+export default function ProductItemList() {
   const products_origin = useSelector(
     (state) => state.productManagement.products_origin
   );
@@ -24,7 +24,7 @@ export default function List() {
   //   .slice(start, last);
   return (
     <div className="mt-4 bg-white">
-      <ProductListTitles />
+      <ProductListTitle />
       <ul>
         {productsPerPage?.map((product_KeyValue, index) => (
           <ProductListItem

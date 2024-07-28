@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ProductListTitles() {
+export default function ProductListTitle() {
   return (
     <div className="flex px-8 py-2 border-b border-gray-300 font-bold">
       <div className="w-20">

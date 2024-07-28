@@ -2,7 +2,7 @@ import React from "react";
 import CategoryList from "../../components/ProductManagement/main/ProductList/CategoryList";
 import SelectBox from "../../components/ProductManagement/main/ProductList/SelectBox";
 import ProductStatus from "../../components/ProductManagement/main/ProductList/ProductStatus";
-import List from "../../components/ProductManagement/main/ProductList/List";
+import ProductItemList from "../../components/ProductManagement/main/ProductList/ProductItemList";
 import PageNation from "../../components/ProductManagement/main/ProductList/PageNation";
 import SearchBar from "../../components/ProductManagement/main/ProductList/SearchBar";
 
@@ -16,7 +16,7 @@ export default function ProductList() {
           <SelectBox />
         </div>
         <SearchBar />
-        <List />
+        <ProductItemList />
         <PageNation />
       </div>
     </>
