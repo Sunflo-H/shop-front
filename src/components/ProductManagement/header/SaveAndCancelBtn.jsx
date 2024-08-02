@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -5,20 +6,18 @@ import Swal from "sweetalert2";
 
 export default function SaveAndCancelBtn() {
   const navigate = useNavigate();
+  const newProduct = useSelector((state) => state.createProduct.newProduct);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData();
-
-    // FormData 객체를 쉽게 출력하기 위해 Object.fromEntries를 사용
-    const data = Object.fromEntries(formData.entries());
-    console.log("Form submitted with data:", data);
-
-    const name = formData.get("name");
-    console.log(name);
-    // 상태에 폼 데이터를 저장
-    // setFormData(data);
-    // formRef.submit();
+    axios
+      .post("http://localhost:8080/api/product/create", newProduct)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const handleCancelClick = () => {

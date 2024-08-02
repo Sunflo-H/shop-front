@@ -15,7 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import RequireOption from "../../components/ProductManagement/main/UploadProduct/RequireOption";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { setNewProduct } from "../../slice/productsManagement/newProductSlice";
+import { setNewProduct } from "../../slice/productsManagement/createProductSlice";
+import { S3Client } from "@aws-sdk/client-s3";
 
 const productDetails = ["title", "description"];
 const size = ["S", "M", "L", "XL"];
@@ -47,8 +48,11 @@ export default function UploadProduct() {
 
   const handleCategoryChange = (e) => {
     const key = e.target.name;
-    const value = e.target.dataset.category;
-    setSelectCategory(e.target.dataset.category);
+    const value = e.target.value;
+    const category = e.target.dataset.category;
+    console.log(value);
+
+    setSelectCategory(category);
     dispatch(setNewProduct({ key, value }));
   };
 
@@ -57,6 +61,7 @@ export default function UploadProduct() {
     const value = e.target.value;
     dispatch(setNewProduct({ key, value }));
   };
+
   // const [isUploading, setIsUploading] = useState();
   // const [success, setSuccess] = useState();
 
