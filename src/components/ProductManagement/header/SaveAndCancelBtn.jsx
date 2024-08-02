@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
+const CREATE_PRODUCT_URL = process.env.REACT_APP_CREATE_PRODUCT_URL;
+
 export default function SaveAndCancelBtn() {
   const navigate = useNavigate();
   const newProduct = useSelector((state) => state.createProduct.newProduct);
@@ -11,7 +13,7 @@ export default function SaveAndCancelBtn() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/product/create", newProduct)
+      .post(CREATE_PRODUCT_URL, newProduct)
       .then(function (response) {
         console.log(response);
       })

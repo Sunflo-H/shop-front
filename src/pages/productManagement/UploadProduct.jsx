@@ -22,7 +22,7 @@ const productDetails = ["title", "description"];
 const size = ["S", "M", "L", "XL"];
 const color = ["Black", "Red", "Green", "Blue", "Yellow"];
 const inputStyle = "p-4 outline-none border border-gray-300 my-1";
-const GET_CATEGORY_URL = process.env.REACT_APP_GET_CATEGORY_URL_LOCAL;
+const GET_CATEGORY_URL = process.env.REACT_APP_GET_CATEGORY_URL;
 
 export default function UploadProduct() {
   const dispatch = useDispatch();
