@@ -1,14 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { imageUploadAndGetUrl } from "../../api/cloudinary";
-import UploadButton from "../../components/ui/UploadButton";
-import useProducts from "../../hooks/useProducts";
-import Input_Category from "../../components/shop/main/UploadProduct/Input_category";
-import Input_file from "../../components/shop/main/UploadProduct/Input_file";
-import Input_text from "../../components/shop/main/UploadProduct/Input_text";
-import Input_size from "../../components/shop/main/UploadProduct/Input_size";
-import Input_color from "../../components/shop/main/UploadProduct/Input_color";
-import { v4 as uuid } from "uuid";
-import Swal from "sweetalert2";
 import RadioBtn from "../../components/ProductManagement/main/UploadProduct/RadioBtn";
 import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +6,6 @@ import RequireOption from "../../components/ProductManagement/main/UploadProduct
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { setNewProduct } from "../../slice/productsManagement/createProductSlice";
-import { S3Client } from "@aws-sdk/client-s3";
 
 const productDetails = ["title", "description"];
 const size = ["S", "M", "L", "XL"];
@@ -56,74 +45,11 @@ export default function UploadProduct() {
     dispatch(setNewProduct({ key, value }));
   };
 
-  const handleInputChage = (e) => {
+  const handleInputChange = (e) => {
     const key = e.target.name;
     const value = e.target.value;
     dispatch(setNewProduct({ key, value }));
   };
-
-  // const [isUploading, setIsUploading] = useState();
-  // const [success, setSuccess] = useState();
-
-  // const [product, setProduct] = useState({
-  //   category: "",
-  //   title: "",
-  //   price: "",
-  //   description: "",
-  //   stock: "",
-  //   size: [],
-  //   color: [],
-  // });
-  // const { uploadProduct } = useProducts(product?.category);
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(formRef.current);
-  // setIsUploading(true);
-
-  // const PRODUCT_STATUS = {
-  //   SALE: "Sale",
-  //   SOLD_OUT: "Sold Out",
-  //   HIDE: "Hide",
-  // };
-  // // const id = uuid();
-  // const imageUrl = await imageUploadAndGetUrl(file);
-  // const productToUpload = {
-  //   ...product,
-  //   // id,
-  //   imageUrl,
-  //   price: Number(product.price),
-  //   stock: Number(product.stock),
-  //   size: product.size.split(","),
-  //   color: product.color.split(","),
-  //   status: PRODUCT_STATUS.SALE, // [Sale, Sold Out, Hide]
-  // };
-
-  // try {
-  //   uploadProduct.mutate(
-  //     { productToUpload },
-  //     {
-  //       onSuccess: () => {
-  //         setSuccess(true);
-  //         setTimeout(() => {
-  //           setSuccess(false);
-  //         }, 3000);
-  //       },
-  //       onError: (error) => {
-  //         console.log(error);
-  //       },
-  //     }
-  //   );
-  // } finally {
-  //   setIsUploading(false);
-
-  //   Swal.fire({
-  //     icon: "success",
-  //     title: "✅ Upload Successfully",
-  //     confirmButtonColor: "#222",
-  //   });
-  // }
-  // };
 
   return (
     <div className="max-w-screen-lg w-screen m-auto">
@@ -144,7 +70,7 @@ export default function UploadProduct() {
                     className="w-full outline-none"
                     placeholder="ex) Man's Suit"
                     required
-                    onChange={handleInputChage}
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>
@@ -160,7 +86,7 @@ export default function UploadProduct() {
                     className="w-full outline-none"
                     placeholder="100"
                     required
-                    onChange={handleInputChage}
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>
@@ -197,7 +123,7 @@ export default function UploadProduct() {
                     name="size"
                     placeholder="Separate with a comma. ex) S, M, L"
                     className="w-full border-b"
-                    onChange={handleInputChage}
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>
@@ -210,7 +136,7 @@ export default function UploadProduct() {
                     name="color"
                     placeholder="Separate with a comma. ex) Black, Red, Blue"
                     className="w-full border-b"
-                    onChange={handleInputChage}
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>
@@ -268,82 +194,12 @@ export default function UploadProduct() {
               <textarea
                 className="w-full h-20 border outline-none resize-none"
                 name="description"
-                onChange={handleInputChage}
+                onChange={handleInputChange}
               ></textarea>
             </div>
           </div>
         </section>
       </div>
-
-      {/* <form className="flex flex-col px-12" onSubmit={handleUploadProduct}>
-        <div className="flex mb-4 gap-2 font-bold">
-          {category.map((item) => {
-            return (
-              <Input_Category
-                category={item}
-                product={product}
-                setProduct={setProduct}
-                key={item}
-              />
-            );
-          })}
-        </div>
-
-        <Input_file handleFileChange={handleFileChange} />
-
-        {productDetails.map((item) => {
-          return (
-            <Input_text
-              attribute={item}
-              value={product[item]}
-              handleFileChange={handleFileChange}
-              key={item}
-            />
-          );
-        })}
-        <input
-          className={inputStyle}
-          type="number"
-          name="price"
-          value={product?.price}
-          placeholder="price"
-          required
-          onChange={handleFileChange}
-        />
-        <input
-          className={inputStyle}
-          type="number"
-          name="stock"
-          value={product?.stock}
-          placeholder="Stock"
-          required
-          onChange={handleFileChange}
-        />
-
-        <input
-          className={inputStyle}
-          type="text"
-          name="size"
-          value={product?.size}
-          placeholder="Size (Separate with commas(,))"
-          required
-          onChange={handleFileChange}
-        />
-        <input
-          className={inputStyle}
-          type="text"
-          name="color"
-          value={product?.color}
-          placeholder="Colors (Separate with commas(,))"
-          required
-          onChange={handleFileChange}
-        />
-
-        <UploadButton
-          text={isUploading ? "Uploading..." : "Products Upload"}
-          disabled={isUploading}
-        ></UploadButton>
-      </form> */}
     </div>
   );
 }
