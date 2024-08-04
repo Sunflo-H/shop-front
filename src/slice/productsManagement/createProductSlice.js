@@ -13,6 +13,7 @@ export const createProductSlice = createSlice({
       imageUrl: "",
       status: "Sale",
     },
+    imageFile: null,
   },
   reducers: {
     setNewProduct: (state, action) => {
@@ -21,8 +22,12 @@ export const createProductSlice = createSlice({
       state.newProduct = { ...state.newProduct, [key]: value };
       console.log(state.newProduct);
     },
+    setImageFile: (state, action) => {
+      state.fileUrl = action.payload;
+      console.log(action.payload);
+    },
   },
 });
 
-export const { setNewProduct } = createProductSlice.actions;
+export const { setNewProduct, setImageFile } = createProductSlice.actions;
 export default createProductSlice.reducer;

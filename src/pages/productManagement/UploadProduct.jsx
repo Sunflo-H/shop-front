@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import RequireOption from "../../components/ProductManagement/main/UploadProduct/RequireOption";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { setNewProduct } from "../../slice/productsManagement/createProductSlice";
+import {
+  setImageFile,
+  setNewProduct,
+} from "../../slice/productsManagement/createProductSlice";
 
 const productDetails = ["title", "description"];
 const size = ["S", "M", "L", "XL"];
@@ -26,13 +29,12 @@ export default function UploadProduct() {
   const categoryData = isSuccess ? data.data : [];
 
   const handleFileChange = (e) => {
-    const { name, value, files } = e.target;
-
-    if (name === "imageUrl") {
-      setFile(files[0]);
-      return;
-    }
-    // setProduct({ ...product, [name]: value });
+    const { name, files } = e.target;
+    const key = name;
+    const value = files[0];
+    setFile(value);
+    // dispatch(setNewProduct({ key, value }));
+    dispatch(setImageFile(files[0]));
   };
 
   const handleCategoryChange = (e) => {

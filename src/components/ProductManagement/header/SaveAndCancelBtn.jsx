@@ -1,26 +1,38 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { setNewProduct } from "../../../slice/productsManagement/createProductSlice";
+import uploadFileToS3 from "./uploadFunc";
 
 const CREATE_PRODUCT_URL = process.env.REACT_APP_CREATE_PRODUCT_URL;
+console.log(CREATE_PRODUCT_URL);
 
 export default function SaveAndCancelBtn() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const newProduct = useSelector((state) => state.createProduct.newProduct);
+  const imageFile = useSelector((state) => state.createProduct.fileUrl);
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+
+    try {
+      const fileUrl = await uploadFileToS3(imageFile);
+      console.log("File uploaded successfully:", fileUrl);
+      dispatch(setNewProduct({ key: "imageUrl", value: fileUrl }));
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+
+    console.log(newProduct);
     axios
       .post(CREATE_PRODUCT_URL, newProduct)
       .then(function (response) {
         console.log(response);
         Swal.fire({
-          position: "middle",
+          position: "center",
           icon: "success",
           title: "Your work has been saved",
           showConfirmButton: false,
@@ -29,9 +41,6 @@ export default function SaveAndCancelBtn() {
       })
       .catch(function (error) {
         console.log(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   };
 
@@ -68,7 +77,6 @@ export default function SaveAndCancelBtn() {
       >
         저장
       </button>
-      {isLoading ? <div>하이하이</div> : null}
     </div>
   );
 }

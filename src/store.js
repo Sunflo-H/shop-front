@@ -18,8 +18,8 @@ export default configureStore({
     // createProduct
     createProduct: createProductReducer,
   },
-  // middleware: getDefaultMiddleware({
-  //   // 비 직렬화 값을 허용
-  //   serializableCheck: false,
-  // }),
+  middleware: getDefaultMiddleware({
+    // 비 직렬화 값을 허용
+    serializableCheck: false,
+  }),
 });
