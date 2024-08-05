@@ -26,8 +26,21 @@ export const createProductSlice = createSlice({
       state.fileUrl = action.payload;
       console.log(action.payload);
     },
+    resetNewProduct: (state) => {
+      state.newProduct = {
+        name: "",
+        price: "",
+        category: "man",
+        size: [],
+        color: [],
+        description: "",
+        imageUrl: "",
+        status: "Sale",
+      };
+    },
   },
 });
 
-export const { setNewProduct, setImageFile } = createProductSlice.actions;
+export const { setNewProduct, setImageFile, resetNewProduct } =
+  createProductSlice.actions;
 export default createProductSlice.reducer;

@@ -71,6 +71,9 @@ export default function UploadProduct() {
                     name="name"
                     className="w-full outline-none"
                     placeholder="ex) Man's Suit"
+                    value={useSelector(
+                      (state) => state.createProduct.newProduct.name
+                    )}
                     required
                     onChange={handleInputChange}
                   />
@@ -88,6 +91,9 @@ export default function UploadProduct() {
                     className="w-full outline-none"
                     placeholder="100"
                     required
+                    value={useSelector(
+                      (state) => state.createProduct.newProduct.price
+                    )}
                     onChange={handleInputChange}
                   />
                 </div>
@@ -125,6 +131,9 @@ export default function UploadProduct() {
                     name="size"
                     placeholder="Separate with a comma. ex) S, M, L"
                     className="w-full border-b"
+                    value={useSelector(
+                      (state) => state.createProduct.newProduct.size
+                    )}
                     onChange={handleInputChange}
                   />
                 </div>
@@ -138,6 +147,9 @@ export default function UploadProduct() {
                     name="color"
                     placeholder="Separate with a comma. ex) Black, Red, Blue"
                     className="w-full border-b"
+                    value={useSelector(
+                      (state) => state.createProduct.newProduct.color
+                    )}
                     onChange={handleInputChange}
                   />
                 </div>
@@ -196,6 +208,9 @@ export default function UploadProduct() {
               <textarea
                 className="w-full h-20 border outline-none resize-none"
                 name="description"
+                value={useSelector(
+                  (state) => state.createProduct.newProduct.description
+                )}
                 onChange={handleInputChange}
               ></textarea>
             </div>
