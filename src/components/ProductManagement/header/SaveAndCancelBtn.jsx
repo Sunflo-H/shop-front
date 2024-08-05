@@ -1,13 +1,17 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { setNewProduct } from "../../../slice/productsManagement/createProductSlice";
+import {
+  resetNewProduct,
+  setNewProduct,
+} from "../../../slice/productsManagement/createProductSlice";
 import uploadFileToS3 from "./uploadFunc";
+import { alert_productUploadSuccess } from "../../../alerts/success";
+import { alert_productUploadCancel } from "../../../alerts/warning";
 
 const CREATE_PRODUCT_URL = process.env.REACT_APP_CREATE_PRODUCT_URL;
-console.log(CREATE_PRODUCT_URL);
 
 export default function SaveAndCancelBtn() {
   const dispatch = useDispatch();
@@ -26,18 +30,10 @@ export default function SaveAndCancelBtn() {
       console.error("Error uploading file:", error);
     }
 
-    console.log(newProduct);
     axios
       .post(CREATE_PRODUCT_URL, newProduct)
       .then(function (response) {
-        console.log(response);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Your work has been saved",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        alert_productUploadSuccess().then(dispatch(resetNewProduct()));
       })
       .catch(function (error) {
         console.log(error);
@@ -45,17 +41,8 @@ export default function SaveAndCancelBtn() {
   };
 
   const handleCancel = () => {
-    Swal.fire({
-      title: " Are you sure you want to cancel?",
-      text: "Your entered information will be lost",
-      icon: "warning",
-      showCancelButton: true,
-      // confirmButtonColor: "#3085d6",
-      confirmButtonColor: "#28a745",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
-      cancelButtonText: "No, I will not cancel.",
-    }).then((result) => {
+    // Alert
+    alert_productUploadCancel().then((result) => {
       if (result.isConfirmed) {
         navigate(-1);
       }
