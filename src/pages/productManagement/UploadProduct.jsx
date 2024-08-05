@@ -13,8 +13,9 @@ import {
 const productDetails = ["title", "description"];
 const size = ["S", "M", "L", "XL"];
 const color = ["Black", "Red", "Green", "Blue", "Yellow"];
+const category = ["man", "woman", "accessory", "shoes"];
 const inputStyle = "p-4 outline-none border border-gray-300 my-1";
-const GET_CATEGORY_URL = process.env.REACT_APP_GET_CATEGORY_URL;
+// const GET_CATEGORY_URL = process.env.REACT_APP_GET_CATEGORY_URL;
 
 export default function UploadProduct() {
   const dispatch = useDispatch();
@@ -22,15 +23,14 @@ export default function UploadProduct() {
   const [imageSrc, setImageSrc] = useState("/images/default-placeholder.png");
   const [selectCategory, setSelectCategory] = useState("man");
 
-  const { data, isSuccess } = useQuery({
-    queryKey: ["categoryId"],
-    queryFn: () => axios.get(GET_CATEGORY_URL),
-  });
-  const categoryData = isSuccess ? data.data : [];
+  // const { data, isSuccess } = useQuery({
+  //   queryKey: ["categoryId"],
+  //   queryFn: () => axios.get(GET_CATEGORY_URL),
+  // });
+  // const categoryData = isSuccess ? data.data : [];
 
   const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    const key = name;
+    const { files } = e.target;
     const value = files[0];
     setFile(value);
     // dispatch(setNewProduct({ key, value }));
@@ -38,12 +38,12 @@ export default function UploadProduct() {
   };
 
   const handleCategoryChange = (e) => {
-    const key = e.target.name;
+    // const key = e.target.name;
+    const key = "category";
     const value = e.target.value;
-    const category = e.target.dataset.category;
-    console.log(value);
+    // const category = e.target.dataset.category;
 
-    setSelectCategory(category);
+    setSelectCategory(value);
     dispatch(setNewProduct({ key, value }));
   };
 
@@ -109,7 +109,15 @@ export default function UploadProduct() {
                 </div>
                 <div className="mt-1 ">
                   <div className="">
-                    {categoryData.map((item, index) => (
+                    {category.map((item, index) => (
+                      <RadioBtn
+                        category={item}
+                        selectCategory={selectCategory}
+                        onChange={handleCategoryChange}
+                        key={index}
+                      />
+                    ))}
+                    {/* {categoryData.map((item, index) => (
                       <RadioBtn
                         category={item.name}
                         id={item._id}
@@ -118,7 +126,7 @@ export default function UploadProduct() {
                         onChange={handleCategoryChange}
                         key={index}
                       />
-                    ))}
+                    ))} */}
                   </div>
                 </div>
               </div>
