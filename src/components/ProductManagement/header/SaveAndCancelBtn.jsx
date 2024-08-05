@@ -1,8 +1,7 @@
 import axios from "axios";
-import React, { useRef, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import {
   resetNewProduct,
   setNewProduct,
@@ -17,7 +16,7 @@ export default function SaveAndCancelBtn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const newProduct = useSelector((state) => state.createProduct.newProduct);
-  const imageFile = useSelector((state) => state.createProduct.fileUrl);
+  const imageFile = useSelector((state) => state.createProduct.imageFile);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,23 +24,22 @@ export default function SaveAndCancelBtn() {
     try {
       const fileUrl = await uploadFileToS3(imageFile);
       console.log("File uploaded successfully:", fileUrl);
-      dispatch(setNewProduct({ key: "imageUrl", value: fileUrl }));
+      const uploadProduct = { ...newProduct, imageUrl: fileUrl };
+      // dispatch(setNewProduct({ key: "imageUrl", value: fileUrl }));
+      axios
+        .post(CREATE_PRODUCT_URL, uploadProduct)
+        .then(function (response) {
+          alert_productUploadSuccess().then(dispatch(resetNewProduct()));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     } catch (error) {
       console.error("Error uploading file:", error);
     }
-
-    axios
-      .post(CREATE_PRODUCT_URL, newProduct)
-      .then(function (response) {
-        alert_productUploadSuccess().then(dispatch(resetNewProduct()));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
   };
 
   const handleCancel = () => {
-    // Alert
     alert_productUploadCancel().then((result) => {
       if (result.isConfirmed) {
         navigate(-1);

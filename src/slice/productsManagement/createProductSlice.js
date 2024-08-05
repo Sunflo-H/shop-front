@@ -23,8 +23,8 @@ export const createProductSlice = createSlice({
       console.log(state.newProduct);
     },
     setImageFile: (state, action) => {
-      state.fileUrl = action.payload;
-      console.log(action.payload);
+      state.imageFile = action.payload;
+      console.log(state.imageFile);
     },
     resetNewProduct: (state) => {
       state.newProduct = {
