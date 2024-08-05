@@ -9,6 +9,7 @@ import {
 import uploadFileToS3 from "./uploadFunc";
 import { alert_productUploadSuccess } from "../../../alerts/success";
 import { alert_productUploadCancel } from "../../../alerts/warning";
+import { alert_requireError } from "../../../alerts/error";
 
 const CREATE_PRODUCT_URL = process.env.REACT_APP_CREATE_PRODUCT_URL;
 
@@ -16,26 +17,19 @@ export default function SaveAndCancelBtn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const newProduct = useSelector((state) => state.createProduct.newProduct);
-  const imageFile = useSelector((state) => state.createProduct.imageFile);
+  // const imageFile = useSelector((state) => state.createProduct.imageFile);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const fileUrl = await uploadFileToS3(imageFile);
-      console.log("File uploaded successfully:", fileUrl);
-      const uploadProduct = { ...newProduct, imageUrl: fileUrl };
-      // dispatch(setNewProduct({ key: "imageUrl", value: fileUrl }));
-      axios
-        .post(CREATE_PRODUCT_URL, uploadProduct)
-        .then(function (response) {
-          alert_productUploadSuccess().then(dispatch(resetNewProduct()));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    } catch (error) {
-      console.error("Error uploading file:", error);
+    if (requireCheck(newProduct)) {
+      try {
+        const fileUrl = await uploadFileToS3(newProduct.image);
+        // console.log("File uploaded successfully:", fileUrl);
+        const uploadProduct = { ...newProduct, image: fileUrl };
+        upload(uploadProduct);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
     }
   };
 
@@ -45,6 +39,34 @@ export default function SaveAndCancelBtn() {
         navigate(-1);
       }
     });
+  };
+
+  const upload = (uploadProduct) => {
+    axios
+      .post(CREATE_PRODUCT_URL, uploadProduct)
+      .then(function (response) {
+        alert_productUploadSuccess().then(dispatch(resetNewProduct()));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const requireCheck = (uploadProduct) => {
+    const requireOptions = ["name", "price", "category", "image"];
+    const emptyOptions = [];
+    let status = true;
+
+    requireOptions.forEach((item) => {
+      if (!uploadProduct[item] || uploadProduct[item] === "") {
+        status = false;
+        item = item.charAt(0).toUpperCase() + item.slice(1);
+        emptyOptions.push(item);
+      }
+    });
+
+    emptyOptions.length !== 0 && alert_requireError(emptyOptions);
+    return status;
   };
 
   return (

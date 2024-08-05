@@ -22,10 +22,12 @@ export default function UploadProduct() {
   const [selectCategory, setSelectCategory] = useState("man");
 
   const handleFileChange = (e) => {
-    const { files } = e.target;
+    const { name, files } = e.target;
+    const key = name;
     const value = files[0];
     setFile(value);
-    dispatch(setImageFile(files[0]));
+    // dispatch(setImageFile(files[0]));
+    dispatch(setNewProduct({ key, value }));
   };
 
   const handleCategoryChange = (e) => {
@@ -52,7 +54,7 @@ export default function UploadProduct() {
             <section className="bg-white rounded-md shadow-md p-2">
               <div className=" py-4 px-4">
                 <div className="font-bold">
-                  Product Name <RequireOption />
+                  Name <RequireOption />
                 </div>
                 <div className="grow text-start border-b mt-1">
                   <input
@@ -155,7 +157,7 @@ export default function UploadProduct() {
                 <input
                   type="file"
                   accept="image/*"
-                  name="imageUrl"
+                  name="image"
                   required
                   onChange={handleFileChange}
                   hidden
@@ -178,7 +180,7 @@ export default function UploadProduct() {
                 <input
                   type="file"
                   accept="image/*"
-                  name="imageUrl"
+                  name="image"
                   required
                   onChange={handleFileChange}
                   hidden

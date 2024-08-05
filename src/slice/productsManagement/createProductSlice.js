@@ -10,7 +10,7 @@ export const createProductSlice = createSlice({
       size: [],
       color: [],
       description: "",
-      imageUrl: "",
+      image: "",
       status: "Sale",
     },
     imageFile: null,
@@ -34,7 +34,7 @@ export const createProductSlice = createSlice({
         size: [],
         color: [],
         description: "",
-        imageUrl: "",
+        image: "",
         status: "Sale",
       };
     },
