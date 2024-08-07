@@ -10,7 +10,7 @@ export const createProductSlice = createSlice({
       size: [],
       color: [],
       description: "",
-      image: null,
+      image: "",
       status: "Sale",
     },
     defaultImage: "/images/default-placeholder.png",
@@ -21,10 +21,6 @@ export const createProductSlice = createSlice({
       console.log(action.payload);
       state.newProduct = { ...state.newProduct, [key]: value };
       console.log(state.newProduct);
-    },
-    setImageFile: (state, action) => {
-      state.imageFile = action.payload;
-      console.log(state.imageFile);
     },
     resetNewProduct: (state) => {
       state.newProduct = {
@@ -41,6 +37,5 @@ export const createProductSlice = createSlice({
   },
 });
 
-export const { setNewProduct, setImageFile, resetNewProduct } =
-  createProductSlice.actions;
+export const { setNewProduct, resetNewProduct } = createProductSlice.actions;
 export default createProductSlice.reducer;
