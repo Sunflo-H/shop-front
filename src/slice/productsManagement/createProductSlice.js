@@ -10,10 +10,10 @@ export const createProductSlice = createSlice({
       size: [],
       color: [],
       description: "",
-      image: "",
+      image: null,
       status: "Sale",
     },
-    imageFile: null,
+    defaultImage: "/images/default-placeholder.png",
   },
   reducers: {
     setNewProduct: (state, action) => {

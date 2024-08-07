@@ -9,14 +9,13 @@ const category = ["man", "woman", "accessory", "shoes"];
 
 export default function UploadProduct() {
   const dispatch = useDispatch();
-  const [file, setFile] = useState();
-  const [imageSrc, setImageSrc] = useState("/images/default-placeholder.png");
+  const defaultImage = useSelector((state) => state.createProduct.defaultImage);
+  const image = useSelector((state) => state.createProduct.newProduct.image);
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     const key = name;
     const value = files[0];
-    setFile(value);
     dispatch(setNewProduct({ key, value }));
   };
 
@@ -153,15 +152,15 @@ export default function UploadProduct() {
             </div>
             <div className="grow mx-4 mb-4 h-full">
               <label>
-                {file ? (
+                {!image ? (
                   <img
+                    src={defaultImage}
                     className="rounded-md cursor-pointer w-[452.19px] h-[384px]"
-                    src={URL.createObjectURL(file)}
                   />
                 ) : (
                   <img
-                    src={imageSrc}
                     className="rounded-md cursor-pointer w-[452.19px] h-[384px]"
+                    src={URL.createObjectURL(image)}
                   />
                 )}
                 <input
