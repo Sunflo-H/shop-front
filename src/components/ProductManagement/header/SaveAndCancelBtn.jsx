@@ -17,14 +17,12 @@ export default function SaveAndCancelBtn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const newProduct = useSelector((state) => state.createProduct.newProduct);
-  // const imageFile = useSelector((state) => state.createProduct.imageFile);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (requireCheck(newProduct)) {
       try {
         const fileUrl = await uploadFileToS3(newProduct.image);
-        // console.log("File uploaded successfully:", fileUrl);
         const uploadProduct = { ...newProduct, image: fileUrl };
         upload(uploadProduct);
       } catch (error) {

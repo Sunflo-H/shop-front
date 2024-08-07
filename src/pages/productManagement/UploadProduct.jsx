@@ -3,38 +3,26 @@ import RadioBtn from "../../components/ProductManagement/main/UploadProduct/Radi
 import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import RequireOption from "../../components/ProductManagement/main/UploadProduct/RequireOption";
+import { setNewProduct } from "../../slice/productsManagement/createProductSlice";
 
-import {
-  setImageFile,
-  setNewProduct,
-} from "../../slice/productsManagement/createProductSlice";
-
-const productDetails = ["title", "description"];
-const size = ["S", "M", "L", "XL"];
-const color = ["Black", "Red", "Green", "Blue", "Yellow"];
 const category = ["man", "woman", "accessory", "shoes"];
-const inputStyle = "p-4 outline-none border border-gray-300 my-1";
 
 export default function UploadProduct() {
   const dispatch = useDispatch();
   const [file, setFile] = useState();
   const [imageSrc, setImageSrc] = useState("/images/default-placeholder.png");
-  const [selectCategory, setSelectCategory] = useState("man");
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     const key = name;
     const value = files[0];
     setFile(value);
-    // dispatch(setImageFile(files[0]));
     dispatch(setNewProduct({ key, value }));
   };
 
   const handleCategoryChange = (e) => {
     const key = "category";
     const value = e.target.value;
-
-    setSelectCategory(value);
     dispatch(setNewProduct({ key, value }));
   };
 
@@ -103,7 +91,6 @@ export default function UploadProduct() {
                     {category.map((item, index) => (
                       <RadioBtn
                         category={item}
-                        selectCategory={selectCategory}
                         onChange={handleCategoryChange}
                         key={index}
                       />
