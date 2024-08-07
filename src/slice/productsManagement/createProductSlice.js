@@ -18,9 +18,13 @@ export const createProductSlice = createSlice({
   reducers: {
     setNewProduct: (state, action) => {
       const { key, value } = action.payload;
-      console.log(action.payload);
-      state.newProduct = { ...state.newProduct, [key]: value };
-      console.log(state.newProduct);
+      // console.log(action.payload);
+      if (key === "size" || key === "color") {
+        state.newProduct = { ...state.newProduct, [key]: value.split(",") };
+      } else {
+        state.newProduct = { ...state.newProduct, [key]: value };
+      }
+      // console.log(state.newProduct);
     },
     resetNewProduct: (state) => {
       state.newProduct = {
