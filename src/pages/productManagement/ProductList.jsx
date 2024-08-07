@@ -5,8 +5,13 @@ import ProductStatus from "../../components/ProductManagement/main/ProductList/P
 import ProductItemList from "../../components/ProductManagement/main/ProductList/ProductItemList";
 import PageNation from "../../components/ProductManagement/main/ProductList/PageNation";
 import SearchBar from "../../components/ProductManagement/main/ProductList/SearchBar";
+import { useDispatch, useSelector } from "react-redux";
+import { initProducts } from "../../slice/productsManagement/productListSlice";
 
 export default function ProductList() {
+  const dispatch = useDispatch();
+  dispatch(initProducts());
+
   return (
     <>
       <CategoryList />
