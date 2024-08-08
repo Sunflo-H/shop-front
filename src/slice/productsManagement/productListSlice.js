@@ -12,9 +12,15 @@ const productListSlice = createSlice({
   name: "productList",
   initialState: {
     products: [],
+    categoryList: ["ALL", "Men", "Women", "Accessories", "Shoes"],
+    activeCategory: "ALL",
     status: "idle",
   },
-  reducers: {},
+  reducers: {
+    categoryFilter: (state, action) => {
+      state.activeCategory = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProduct.pending, (state) => {
@@ -30,5 +36,5 @@ const productListSlice = createSlice({
   },
 });
 
-export const {} = productListSlice.actions;
+export const { categoryFilter } = productListSlice.actions;
 export default productListSlice.reducer;
