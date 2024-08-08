@@ -5,17 +5,15 @@ import { useSelector } from "react-redux";
 import ProductListTitle from "./ProductListTitle";
 
 export default function ProductItemList() {
-  const products_origin = useSelector(
-    (state) => state.productManagement.products_origin
-  );
-  const products = useSelector(
-    (state) => state.productManagement.products_filtered_final
-  );
-  const viewCount = useSelector((state) => state.pageNation.viewCount);
-  const currentPage = useSelector((state) => state.pageNation.currentPage);
-  const search = useSelector((state) => state.productManagement.search);
+  const products = useSelector((state) => state.productList.products);
+  // const products = useSelector(
+  //   (state) => state.productManagement.products_filtered_final
+  // );
+  // const viewCount = useSelector((state) => state.pageNation.viewCount);
+  // const currentPage = useSelector((state) => state.pageNation.currentPage);
+  // const search = useSelector((state) => state.productManagement.search);
 
-  let productsPerPage = getProductsPerPage(products, currentPage, viewCount);
+  // let productsPerPage = getProductsPerPage(products, currentPage, viewCount);
 
   // ! products_origin 에서 검색
   // if (search)
@@ -26,6 +24,11 @@ export default function ProductItemList() {
     <div className="mt-4 bg-white">
       <ProductListTitle />
       <ul>
+        {products.map((product) => {
+          <ProductListItem product={product} />;
+        })}
+      </ul>
+      {/* <ul>
         {productsPerPage?.map((product_KeyValue, index) => (
           <ProductListItem
             product_KeyAndValue={product_KeyValue}
@@ -34,7 +37,7 @@ export default function ProductItemList() {
             viewCount={viewCount}
           />
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }

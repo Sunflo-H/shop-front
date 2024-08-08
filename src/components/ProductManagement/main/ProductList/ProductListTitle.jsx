@@ -10,9 +10,9 @@ export default function ProductListTitle() {
       <div className="w-28 text-center">Price</div>
       <div className="w-40 text-center">Category</div>
       <div className="w-40 text-center">Status</div>
-      <div className="w-16  text-center mr-4">Stock</div>
+      {/* <div className="w-16  text-center mr-4">Stock</div> */}
       <div className="w-40 text-center">Registration Date</div>
-      <div className="w-40 text-center">Update Date</div>
+      {/* <div className="w-40 text-center">Update Date</div> */}
     </div>
   );
 }

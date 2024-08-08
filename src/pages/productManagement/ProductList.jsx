@@ -13,8 +13,8 @@ export default function ProductList() {
   const products = useSelector((state) => state.productList.products);
   useEffect(() => {
     dispatch(fetchProduct());
-    console.log(products);
   }, [dispatch]);
+
   return (
     <>
       <CategoryList />
