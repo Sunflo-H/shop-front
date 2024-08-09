@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterByStatus } from "../../../../slice/productsManagement/productManagementSlice";
 import {
   fetchProduct,
   setActiveStatus,
@@ -27,8 +26,12 @@ export default function ProductStatus() {
   }
 
   const handleStatusClick = (status) => {
-    if (status === "ALL") status = "";
-    dispatch(setActiveStatus(status));
+    if (status === "ALL") {
+      status = "";
+      dispatch(setActiveStatus("ALL"));
+    } else {
+      dispatch(setActiveStatus(status));
+    }
     dispatch(fetchProduct({ status }));
   };
 
