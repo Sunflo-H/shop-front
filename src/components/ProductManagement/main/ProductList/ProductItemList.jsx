@@ -12,7 +12,6 @@ export default function ProductItemList() {
     dispatch(fetchProduct(""));
   }, [dispatch]);
 
-  console.log(products);
   // const products = useSelector(
   //   (state) => state.productManagement.products_filtered_final
   // );

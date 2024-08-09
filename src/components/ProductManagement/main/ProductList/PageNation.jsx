@@ -92,7 +92,7 @@ export default function PageNation() {
   return (
     <div className="w-full flex items-center justify-center gap-1 mt-4 mb-2">
       <div className="flex text-2xl">
-        {/* 이전 페이지그룹으로 이동 버튼 */}
+        {/* '이전 페이지그룹' 이동 버튼 */}
         <div
           className="px-2 py-1 hover:bg-gray-300 rounded-md cursor-pointer"
           onClick={handlePrevPageGroupClick}
@@ -100,7 +100,7 @@ export default function PageNation() {
           <MdKeyboardDoubleArrowLeft />
         </div>
 
-        {/* 이전 페이지으로 이동 버튼 */}
+        {/* '이전 페이지' 이동 버튼 */}
         <div
           className="px-2 py-1 hover:bg-gray-300 rounded-md cursor-pointer"
           onClick={handlePrevPageClick}
@@ -117,11 +117,11 @@ export default function PageNation() {
         })}
       </div>
       <div className="flex text-2xl">
-        {/* 다음 페이지으로 이동 버튼 */}
+        {/* '다음 페이지' 이동 버튼 */}
         <div className="px-2 py-1 hover:bg-gray-300 rounded-md cursor-pointer">
           <MdKeyboardArrowRight onClick={handleNextPageClick} />
         </div>
-        {/* 다음 페이지그룹으로 이동 버튼 */}
+        {/* '다음 페이지그룹' 이동 버튼 */}
         <div className="px-2 py-1 hover:bg-gray-300 rounded-md cursor-pointer">
           <MdKeyboardDoubleArrowRight onClick={handleNextPageGroupClick} />
         </div>

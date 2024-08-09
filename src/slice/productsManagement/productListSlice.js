@@ -4,7 +4,7 @@ import axios from "axios";
 // 비동기 액션
 export const fetchProduct = createAsyncThunk(
   "productList/fetchProduct",
-  // async ({ category, status }, thunkAPI) => {
+
   async ({ category, status }, thunkAPI) => {
     const queryParams = new URLSearchParams();
 
@@ -21,14 +21,20 @@ export const fetchProduct = createAsyncThunk(
 const productListSlice = createSlice({
   name: "productList",
   initialState: {
+    products_origin: [],
     products: [],
     categoryList: ["ALL", "Men", "Women", "Accessories", "Shoes"],
     activeCategory: "ALL",
-    status: "idle",
+    activeStatus: "ALL",
+
+    status: "idle", //상품 데이터 처리상태
   },
   reducers: {
     categoryFilter: (state, action) => {
       state.activeCategory = action.payload;
+    },
+    setActiveStatus: (state, action) => {
+      state.activeStatus = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -39,6 +45,8 @@ const productListSlice = createSlice({
       .addCase(fetchProduct.fulfilled, (state, action) => {
         state.products = action.payload;
         state.status = "idle";
+        if (state.products_origin.length === 0)
+          state.products_origin = action.payload;
       })
       .addCase(fetchProduct.rejected, (state) => {
         state.status = "failed";
@@ -46,5 +54,5 @@ const productListSlice = createSlice({
   },
 });
 
-export const { categoryFilter } = productListSlice.actions;
+export const { categoryFilter, setActiveStatus } = productListSlice.actions;
 export default productListSlice.reducer;

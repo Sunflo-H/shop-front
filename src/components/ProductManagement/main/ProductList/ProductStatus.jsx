@@ -1,30 +1,36 @@
-import React, { useEffect, useState } from "react";
-import useProducts from "../../../../hooks/useProducts";
-import { updateProduct } from "../../../../api/firebase_db";
-import { format } from "date-fns";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterByStatus } from "../../../../slice/productsManagement/productManagementSlice";
+import {
+  fetchProduct,
+  setActiveStatus,
+} from "../../../../slice/productsManagement/productListSlice";
 
 const statusList = ["ALL", "Sale", "Sold Out", "Hide"];
 
 export default function ProductStatus() {
   const dispatch = useDispatch();
-  const activeStatus = useSelector(
-    (state) => state.productManagement.activeStatus
-  );
-  const products = useSelector(
-    (state) => state.productManagement.products_filtered_category
+  const activeStatus = useSelector((state) => state.productList.activeStatus);
+  const products_origin = useSelector(
+    (state) => state.productList.products_origin
   );
 
   function getCountProductsByStatus(status) {
     let count = 0;
-    if (status === "ALL") {
-      count = products.length;
-    } else {
-      count = products.filter((product) => product[1].status === status).length;
-    }
+    if (status === "ALL") count = products_origin.length;
+    else
+      count = products_origin.filter(
+        (product) => product.status === status
+      ).length;
+
     return count;
   }
+
+  const handleStatusClick = (status) => {
+    if (status === "ALL") status = "";
+    dispatch(setActiveStatus(status));
+    dispatch(fetchProduct({ status }));
+  };
 
   return (
     <ul className="flex gap-4">
@@ -35,7 +41,7 @@ export default function ProductStatus() {
             "text-blue-500 border-blue-500 border-b-2"
           }`}
           key={index}
-          onClick={() => dispatch(filterByStatus(status))}
+          onClick={() => handleStatusClick(status)}
         >
           {status} {getCountProductsByStatus(status)}
         </li>
@@ -43,17 +49,3 @@ export default function ProductStatus() {
     </ul>
   );
 }
-
-const 업데이트코드 = (e) => {
-  // let date = format(new Date(), "yyyy-MM-dd"); //=> '2014-01-11'
-  // for (let i = 0; i < women.length; i++) {
-  //   const [key, product] = women[i];
-  //   const updatedProduct = { ...product };
-  //   updatedProduct.registrationDate = date;
-  //   updatedProduct.updateDate = date;
-  //   updateProduct(key, updatedProduct);
-  // }
-  {
-    /* <div onClick={handleTest}>업데이트!</div> */
-  }
-};
