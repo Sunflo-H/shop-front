@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProductListItem from "./ProductListItem";
-
-import { useSelector } from "react-redux";
-import ProductListTitle from "./ProductListTitle";
+import { useDispatch, useSelector } from "react-redux";
+import ProductListHeader from "./ProductListHeader";
+import { fetchProduct } from "../../../../slice/productsManagement/productListSlice";
 
 export default function ProductItemList() {
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.productList.products);
+  useEffect(() => {
+    // dispatch(fetchProduct({ category: "man" }));
+    dispatch(fetchProduct(""));
+  }, [dispatch]);
+
+  console.log(products);
   // const products = useSelector(
   //   (state) => state.productManagement.products_filtered_final
   // );
@@ -22,11 +29,11 @@ export default function ProductItemList() {
   //   .slice(start, last);
   return (
     <div className="mt-4 bg-white">
-      <ProductListTitle />
+      <ProductListHeader />
       <ul>
-        {products.map((product) => {
-          <ProductListItem product={product} />;
-        })}
+        {products.map((product) => (
+          <ProductListItem product={product} key={product._id} />
+        ))}
       </ul>
       {/* <ul>
         {productsPerPage?.map((product_KeyValue, index) => (

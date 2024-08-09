@@ -9,12 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../../slice/productsManagement/productListSlice";
 
 export default function ProductList() {
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.productList.products);
-  useEffect(() => {
-    dispatch(fetchProduct());
-  }, [dispatch]);
-
   return (
     <>
       <CategoryList />

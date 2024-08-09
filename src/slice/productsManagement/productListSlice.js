@@ -2,11 +2,22 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // 비동기 액션
-export const fetchProduct = createAsyncThunk("counter/fetchCount", async () => {
-  const response = await fetch("http://localhost:8080/api/product");
-  const productData = await response.json();
-  return productData;
-});
+export const fetchProduct = createAsyncThunk(
+  "productList/fetchProduct",
+  // async ({ category, status }, thunkAPI) => {
+  async ({ category, status }, thunkAPI) => {
+    const queryParams = new URLSearchParams();
+
+    if (category) queryParams.append("category", category);
+    if (status) queryParams.append("status", status);
+
+    let url = `http://localhost:8080/api/product?${queryParams.toString()}`;
+    console.log(url);
+    const response = await fetch(url);
+    const productData = await response.json();
+    return productData;
+  }
+);
 
 const productListSlice = createSlice({
   name: "productList",
