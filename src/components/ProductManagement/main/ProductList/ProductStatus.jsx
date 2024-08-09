@@ -16,9 +16,6 @@ export default function ProductStatus() {
     (state) => state.productManagement.products_filtered_category
   );
 
-  //! slice안쓰는 버전
-  // const statusList = useSelector((state) => state.productManagement.statusList);
-
   function getCountProductsByStatus(status) {
     let count = 0;
     if (status === "ALL") {

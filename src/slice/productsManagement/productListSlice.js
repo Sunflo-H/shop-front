@@ -12,7 +12,6 @@ export const fetchProduct = createAsyncThunk(
     if (status) queryParams.append("status", status);
 
     let url = `http://localhost:8080/api/product?${queryParams.toString()}`;
-    console.log(url);
     const response = await fetch(url);
     const productData = await response.json();
     return productData;

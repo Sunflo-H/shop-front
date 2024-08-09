@@ -1,6 +1,14 @@
 import React from "react";
+import { setCurrentPage } from "../../../../slice/productsManagement/pageNationSlice";
+import { useDispatch } from "react-redux";
 
-export default function Page({ page, currentPage, handlePageClick }) {
+export default function Page({ page, currentPage }) {
+  const dispatch = useDispatch();
+
+  const handlePageClick = (page) => {
+    dispatch(setCurrentPage(page));
+  };
+
   return (
     <div
       className={`px-4 py-1 rounded-md cursor-pointer ${
