@@ -6,11 +6,10 @@ import { fetchProduct } from "../../../../slice/productsManagement/productListSl
 
 export default function ProductItemList() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.productList.products);
   useEffect(() => {
-    // dispatch(fetchProduct({ category: "man" }));
     dispatch(fetchProduct(""));
   }, [dispatch]);
+  const products = useSelector((state) => state.productList.products);
 
   // const products = useSelector(
   //   (state) => state.productManagement.products_filtered_final

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProduct,
@@ -10,29 +10,24 @@ const statusList = ["ALL", "Sale", "Sold Out", "Hide"];
 export default function ProductStatus() {
   const dispatch = useDispatch();
   const activeStatus = useSelector((state) => state.productList.activeStatus);
-  const products_origin = useSelector(
-    (state) => state.productList.products_origin
+  const products_filter_category = useSelector(
+    (state) => state.productList.products_filter_category
   );
 
   function getCountProductsByStatus(status) {
     let count = 0;
-    if (status === "ALL") count = products_origin.length;
+    if (status === "ALL") count = products_filter_category.length;
     else
-      count = products_origin.filter(
+      count = products_filter_category.filter(
         (product) => product.status === status
       ).length;
-
     return count;
   }
 
   const handleStatusClick = (status) => {
-    if (status === "ALL") {
-      status = "";
-      dispatch(setActiveStatus("ALL"));
-    } else {
-      dispatch(setActiveStatus(status));
-    }
-    dispatch(fetchProduct({ status }));
+    status === "ALL"
+      ? dispatch(setActiveStatus("ALL"))
+      : dispatch(setActiveStatus(status));
   };
 
   return (
