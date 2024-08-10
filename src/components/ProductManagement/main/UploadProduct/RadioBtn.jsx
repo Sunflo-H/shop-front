@@ -1,10 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setNewProduct } from "../../../../slice/productsManagement/createProductSlice";
 
-export default function RadioBtn({ category, onChange }) {
+export default function RadioBtn({ category }) {
+  const dispatch = useDispatch();
   const activeCategory = useSelector(
     (state) => state.createProduct.newProduct.category
   );
+
+  const handleCategoryChange = (e) => {
+    const key = "category";
+    const value = e.target.value;
+    dispatch(setNewProduct({ key, value }));
+  };
 
   return (
     <label>
@@ -13,7 +21,7 @@ export default function RadioBtn({ category, onChange }) {
         value={category}
         required
         checked={activeCategory === category}
-        onChange={onChange}
+        onChange={handleCategoryChange}
       />
       <span className="mr-6 ml-2">{category}</span>
     </label>
