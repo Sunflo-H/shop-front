@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProduct,
@@ -31,10 +31,11 @@ export default function ProductStatus() {
   };
 
   return (
-    <ul className="flex gap-4">
+    <ul className="flex gap-2">
       {statusList.map((status, index) => (
         <li
-          className={`w-32 m-auto  font-bold cursor-pointer flex justify-center
+          className={`w-[80px] p-4 pt-0 pb-1  font-bold cursor-pointer 
+            ${status === "Sold Out" && "w-[120px]"}
             ${
               status === activeStatus &&
               "text-blue-500 border-blue-500 border-b-2"
@@ -44,24 +45,9 @@ export default function ProductStatus() {
         >
           <div className="flex gap-2">
             <div>{status}</div>
-            <div className="">11</div>
+            <div className="">{getCountProductsByStatus(status)}</div>
           </div>
         </li>
-        // <li
-        //   className={`w-32 p-4 pt-0 pb-2  font-bold cursor-pointer
-        //     ${status === "Sold Out" && "min-w-36"}
-        //     ${
-        //       status === activeStatus &&
-        //       "text-blue-500 border-blue-500 border-b-2"
-        //     }`}
-        //   key={index}
-        //   onClick={() => handleStatusClick(status)}
-        // >
-        //   <div className="flex gap-2">
-        //     <div>{status}</div>
-        //     <div className="">11</div>
-        //   </div>
-        // </li>
       ))}
     </ul>
   );
