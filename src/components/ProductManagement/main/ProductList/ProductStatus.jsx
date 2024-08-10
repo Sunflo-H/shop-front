@@ -34,15 +34,34 @@ export default function ProductStatus() {
     <ul className="flex gap-4">
       {statusList.map((status, index) => (
         <li
-          className={`p-4 pt-0 pb-2  font-bold cursor-pointer ${
-            status === activeStatus &&
-            "text-blue-500 border-blue-500 border-b-2"
-          }`}
+          className={`w-32 m-auto  font-bold cursor-pointer flex justify-center
+            ${
+              status === activeStatus &&
+              "text-blue-500 border-blue-500 border-b-2"
+            }`}
           key={index}
           onClick={() => handleStatusClick(status)}
         >
-          {status} {getCountProductsByStatus(status)}
+          <div className="flex gap-2">
+            <div>{status}</div>
+            <div className="">11</div>
+          </div>
         </li>
+        // <li
+        //   className={`w-32 p-4 pt-0 pb-2  font-bold cursor-pointer
+        //     ${status === "Sold Out" && "min-w-36"}
+        //     ${
+        //       status === activeStatus &&
+        //       "text-blue-500 border-blue-500 border-b-2"
+        //     }`}
+        //   key={index}
+        //   onClick={() => handleStatusClick(status)}
+        // >
+        //   <div className="flex gap-2">
+        //     <div>{status}</div>
+        //     <div className="">11</div>
+        //   </div>
+        // </li>
       ))}
     </ul>
   );

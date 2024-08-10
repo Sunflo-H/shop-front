@@ -10,7 +10,7 @@ export default function SelectBox() {
   };
 
   return (
-    <div>
+    <div className="ml-8">
       <select onChange={handleChange}>
         <option value="10">Show 10 items</option>
         <option value="20">Show 20 items</option>
