@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import RequireOption from "../../components/ProductManagement/main/UploadProduct/RequireOption";
 import { setNewProduct } from "../../slice/productsManagement/createProductSlice";
 
-const category = ["man", "woman", "accessory", "shoes"];
+const category = ["Man", "Woman", "Accessory", "Shoes"];
 
 export default function UploadProduct() {
   const dispatch = useDispatch();
@@ -16,12 +16,6 @@ export default function UploadProduct() {
     const { name, files } = e.target;
     const key = name;
     const value = files[0];
-    dispatch(setNewProduct({ key, value }));
-  };
-
-  const handleCategoryChange = (e) => {
-    const key = "category";
-    const value = e.target.value;
     dispatch(setNewProduct({ key, value }));
   };
 
@@ -88,11 +82,7 @@ export default function UploadProduct() {
                 <div className="mt-1 ">
                   <div className="">
                     {category.map((item, index) => (
-                      <RadioBtn
-                        category={item}
-                        onChange={handleCategoryChange}
-                        key={index}
-                      />
+                      <RadioBtn category={item} key={index} />
                     ))}
                   </div>
                 </div>

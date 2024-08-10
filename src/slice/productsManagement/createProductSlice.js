@@ -6,7 +6,7 @@ export const createProductSlice = createSlice({
     newProduct: {
       name: "",
       price: "",
-      category: "man",
+      category: "Man",
       size: [],
       color: [],
       description: "",
@@ -30,7 +30,7 @@ export const createProductSlice = createSlice({
       state.newProduct = {
         name: "",
         price: "",
-        category: "man",
+        category: "Man",
         size: [],
         color: [],
         description: "",
