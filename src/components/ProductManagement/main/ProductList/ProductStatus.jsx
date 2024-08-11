@@ -10,6 +10,10 @@ const statusList = ["ALL", "Sale", "Sold Out", "Hide"];
 export default function ProductStatus() {
   const dispatch = useDispatch();
   const activeStatus = useSelector((state) => state.productList.activeStatus);
+  const { products_origin, category, status, page, limit } = useSelector(
+    (state) => state.productList
+  );
+
   const products_filter_category = useSelector(
     (state) => state.productList.products_filter_category
   );
@@ -24,10 +28,14 @@ export default function ProductStatus() {
     return count;
   }
 
-  const handleStatusClick = (status) => {
-    status === "ALL"
-      ? dispatch(setActiveStatus("ALL"))
-      : dispatch(setActiveStatus(status));
+  const handleStatusClick = (clickedStatus) => {
+    if (clickedStatus === "ALL") {
+      dispatch(setActiveStatus("ALL"));
+      dispatch(fetchProduct({ category, status: "", page, limit }));
+    } else {
+      dispatch(setActiveStatus(clickedStatus));
+      dispatch(fetchProduct({ category, status: clickedStatus, page, limit }));
+    }
   };
 
   return (

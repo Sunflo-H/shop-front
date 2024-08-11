@@ -5,11 +5,25 @@ import axios from "axios";
 export const fetchProduct = createAsyncThunk(
   "productList/fetchProduct",
 
-  async () => {
-    let url = `http://localhost:8080/api/product`;
-    const response = await fetch(url);
-    const productData = await response.json();
-    return productData;
+  async ({ category, status, page, limit }, thunkAPI) => {
+    // !쿼리스트링으로 필터링하는 코드 (아마 안쓸듯)
+
+    console.log(status);
+    const queryParams = new URLSearchParams();
+    if (category) queryParams.append("category", category);
+    if (status) queryParams.append("status", status);
+    if (page) queryParams.append("page", page);
+    if (limit) queryParams.append("limit", limit);
+
+    let url = `http://localhost:8080/api/product?${queryParams.toString()}`;
+
+    // let url = `http://localhost:8080/api/product`;
+    const response = await axios.get(url, {
+      params: { category, status, page, limit },
+    });
+    const productData = response.data;
+
+    return productData; // 이 값이 action이 된다.
   }
 );
 
@@ -20,59 +34,37 @@ const productListSlice = createSlice({
     products_filter_category: [], // status에서는 카테고리로 필터된 데이터가 필요하다.
     products: [],
     categoryList: ["ALL", "Man", "Woman", "Accessory", "Shoes"],
-    activeCategory: "ALL",
-    activeStatus: "ALL",
+    category: "ALL",
+    status: "ALL",
+    page: 1,
+    limit: 10,
 
-    status: "idle", //상품 데이터 처리상태
+    fetchStatus: "idle", //상품 데이터 처리상태
   },
   reducers: {
     setActiveCategory: (state, action) => {
-      state.activeCategory = action.payload;
-      state.products = filterData(state);
-      state.products_filter_category = filterData_category(state);
+      state.category = action.payload;
     },
     setActiveStatus: (state, action) => {
-      state.activeStatus = action.payload;
-      state.products = filterData(state);
+      state.status = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProduct.pending, (state) => {
-        state.status = "loading";
+        state.fetchStatus = "loading";
       })
       .addCase(fetchProduct.fulfilled, (state, action) => {
         state.products_origin = action.payload;
-        state.products = action.payload;
-        state.products_filter_category = action.payload;
-        state.status = "idle";
+        // state.products = action.payload;
+        // state.products_filter_category = action.payload;
+        state.fetchStatus = "idle";
       })
       .addCase(fetchProduct.rejected, (state) => {
-        state.status = "failed";
+        state.fetchStatus = "failed";
       });
   },
 });
-
-const filterData = (state) => {
-  return state.products_origin.filter((product) => {
-    const categoryMatch =
-      state.activeCategory === "ALL" ||
-      product.category === state.activeCategory;
-    const statusMatch =
-      state.activeStatus === "ALL" || product.status === state.activeStatus;
-
-    return categoryMatch && statusMatch;
-  });
-};
-
-const filterData_category = (state) => {
-  return state.products_origin.filter((product) => {
-    const categoryMatch =
-      state.activeCategory === "ALL" ||
-      product.category === state.activeCategory;
-    return categoryMatch;
-  });
-};
 
 export const { setActiveCategory, setActiveStatus, dataFilter } =
   productListSlice.actions;
