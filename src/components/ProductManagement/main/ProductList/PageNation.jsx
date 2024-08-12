@@ -4,17 +4,18 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setCurrentPage,
-  setCurrentPageGroup,
-} from "../../../../slice/productsManagement/pageNationSlice";
 import Page from "./Page";
+import {
+  fetchProduct,
+  setPage,
+  setPageGroup,
+} from "../../../../slice/productsManagement/productListSlice";
 
 /**
  ** 페이지 네이션 변수
  * page : 1,2,3,4,5 같은 page입니다.
  * pageGroup : 한번에 5개(1,2,3,4,5)의 page를 보여준다면 이 5개의 page를 하나의 pageGroup라고 합니다.
- * viewCount : 한번에 보여질 page 개수입니다.
+ * limit : 한번에 보여질 page 개수입니다.
  */
 
 const MIN_PAGE = 1;
@@ -24,69 +25,71 @@ const ARR_PAGE_PER_PAGEGORUP = [1, 2, 3, 4, 5];
 
 export default function PageNation() {
   const dispatch = useDispatch();
-  const productCount = useSelector(
-    (state) => state.productList.products.length
+  const { activeCategory, activeStatus, page, limit, pageGroup } = useSelector(
+    (state) => state.productList
+  );
+  const allProductCount = useSelector(
+    (state) => state.productList.allProducts.length
   );
 
-  let viewCount = useSelector((state) => state.pageNation.viewCount);
-  let maxPage = Math.ceil(productCount / viewCount);
+  let maxPage = Math.ceil(allProductCount / limit);
   let maxPageGroup = Math.ceil(maxPage / PAGE_PER_PAGEGORUP);
-  const currentPage = useSelector((state) => state.pageNation.currentPage);
-  const currentPageGroup = useSelector(
-    (state) => state.pageNation.currentPageGroup
-  );
-
-  //! 지금 페이지네이션의 curPage를 slice로 적용을 해봤어
-  //! 근데!!! 페이지네이션의 상태값들을 다른데서 사용하나?
-  //! 페이지네이션의 slice가 굳이 필요한가? products를 받아와서..
-  //* 아 필요하다 현재 페이지값이 있어야 productList에서 currentPage값으로 products를 필터링하지
 
   const handlePrevPageGroupClick = () => {
-    if (currentPageGroup === MIN_PAGEGROUP) return;
+    if (pageGroup === MIN_PAGEGROUP) return;
 
-    let prevPageGroup = currentPageGroup - 1;
+    const prevPageGroup = pageGroup - 1;
+    const lastPage = // 이전 페이지 그룹의 마지막 페이지
+      (prevPageGroup - 1) * PAGE_PER_PAGEGORUP +
+      ARR_PAGE_PER_PAGEGORUP[ARR_PAGE_PER_PAGEGORUP.length - 1];
+    dispatch(setPageGroup(prevPageGroup));
+    dispatch(setPage(lastPage));
+  };
 
-    dispatch(setCurrentPageGroup(prevPageGroup));
+  const handlePageClick = (page) => {
+    dispatch(setPage(page));
     dispatch(
-      setCurrentPage(
-        (prevPageGroup - 1) * PAGE_PER_PAGEGORUP +
-          ARR_PAGE_PER_PAGEGORUP[ARR_PAGE_PER_PAGEGORUP.length - 1]
-      )
+      fetchProduct({
+        category: activeCategory,
+        status: activeStatus,
+        page,
+        limit,
+      })
     );
   };
 
   const handleNextPageGroupClick = () => {
-    if (currentPageGroup === maxPageGroup) return;
+    if (pageGroup === maxPageGroup) return;
 
-    let nextPageGroup = currentPageGroup + 1;
+    let nextPageGroup = pageGroup + 1;
 
-    dispatch(setCurrentPageGroup(nextPageGroup));
+    dispatch(setPageGroup(nextPageGroup));
     dispatch(
-      setCurrentPage(
+      setPage(
         (nextPageGroup - 1) * PAGE_PER_PAGEGORUP + ARR_PAGE_PER_PAGEGORUP[0]
       )
     );
   };
 
   const handlePrevPageClick = () => {
-    if (currentPage === MIN_PAGE) return;
+    if (page === MIN_PAGE) return;
 
     let firstPageInPageGroup =
-      (currentPageGroup - 1) * PAGE_PER_PAGEGORUP + ARR_PAGE_PER_PAGEGORUP[0];
+      (pageGroup - 1) * PAGE_PER_PAGEGORUP + ARR_PAGE_PER_PAGEGORUP[0];
 
-    if (currentPage === firstPageInPageGroup) handlePrevPageGroupClick();
-    else dispatch(setCurrentPage(currentPage - 1));
+    if (page === firstPageInPageGroup) handlePrevPageGroupClick();
+    else dispatch(setPage(page - 1));
   };
 
   const handleNextPageClick = () => {
-    if (currentPage === maxPage) return;
+    if (page === maxPage) return;
 
     let lastPageInPageGroup =
-      (currentPageGroup - 1) * PAGE_PER_PAGEGORUP +
+      (pageGroup - 1) * PAGE_PER_PAGEGORUP +
       ARR_PAGE_PER_PAGEGORUP[ARR_PAGE_PER_PAGEGORUP.length - 1];
 
-    if (currentPage === lastPageInPageGroup) handleNextPageGroupClick();
-    else dispatch(setCurrentPage(currentPage + 1));
+    if (page === lastPageInPageGroup) handleNextPageGroupClick();
+    else dispatch(setPage(page + 1));
   };
 
   return (
@@ -110,10 +113,17 @@ export default function PageNation() {
       </div>
       {/* 페이지 넘버 */}
       <div className="flex items-center h-10 text-center font-bold gap-1">
-        {ARR_PAGE_PER_PAGEGORUP.map((item, index) => {
-          let page = (currentPageGroup - 1) * PAGE_PER_PAGEGORUP + item;
-          if (page > maxPage) return;
-          return <Page page={page} currentPage={currentPage} key={index} />;
+        {ARR_PAGE_PER_PAGEGORUP.map((num, index) => {
+          let pageNum = (pageGroup - 1) * PAGE_PER_PAGEGORUP + num;
+          if (pageNum > maxPage) return;
+          return (
+            <Page
+              value={pageNum}
+              activePage={page}
+              handlePageClick={handlePageClick}
+              key={index}
+            />
+          );
         })}
       </div>
       <div className="flex text-2xl">

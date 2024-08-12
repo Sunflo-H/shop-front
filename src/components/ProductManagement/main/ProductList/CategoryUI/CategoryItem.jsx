@@ -27,9 +27,3 @@ export default function CategoryItem({ category }) {
     </div>
   );
 }
-
-/**
- * fetch를 두개로 나누어서 해봤어
- * 처음 렌더링할 때는 allProducts 를 가지고 오고,
- * 필터링을 하면 products를 가지고 올거야
- */

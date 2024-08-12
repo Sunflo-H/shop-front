@@ -40,10 +40,13 @@ const productListSlice = createSlice({
     products_filteredByCategory: [], // status에서는 카테고리로 필터된 데이터가 필요하다.
     products: [], // 실제로 렌더링할 상품 데이터
     categoryList: ["ALL", "Man", "Woman", "Accessory", "Shoes"],
+
+    //filter && pageNation
     activeCategory: "ALL",
     activeStatus: "ALL",
     page: 1,
     limit: 10,
+    pageGroup: 1, // 현재 페이지 그룹 1~5, 6~10// 1이면 1~5
 
     //fetch
     allProductStatus: "idle",
@@ -62,6 +65,19 @@ const productListSlice = createSlice({
     },
     setActiveStatus: (state, action) => {
       state.activeStatus = action.payload;
+    },
+
+    //pageNation
+    setLimit: (state, action) => {
+      state.limit = action.payload;
+    },
+
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+
+    setPageGroup: (state, action) => {
+      state.pageGroup = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -92,6 +108,11 @@ const productListSlice = createSlice({
   },
 });
 
-export const { setActiveCategory, setActiveStatus, dataFilter } =
-  productListSlice.actions;
+export const {
+  setActiveCategory,
+  setActiveStatus,
+  setLimit,
+  setPage,
+  setPageGroup,
+} = productListSlice.actions;
 export default productListSlice.reducer;

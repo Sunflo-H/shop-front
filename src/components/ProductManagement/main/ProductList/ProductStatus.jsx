@@ -9,8 +9,9 @@ const statusList = ["ALL", "Sale", "Sold Out", "Hide"];
 
 export default function ProductStatus() {
   const dispatch = useDispatch();
-  const { products_origin, activeCategory, activeStatus, page, limit } =
-    useSelector((state) => state.productList);
+  const { activeCategory, activeStatus, page, limit } = useSelector(
+    (state) => state.productList
+  );
 
   const products_filteredByCategory = useSelector(
     (state) => state.productList.products_filteredByCategory
