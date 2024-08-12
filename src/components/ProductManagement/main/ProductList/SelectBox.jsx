@@ -1,12 +1,26 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { changeViewCount } from "../../../../slice/productsManagement/pageNationSlice";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  fetchProduct,
+  setLimit,
+} from "../../../../slice/productsManagement/productListSlice";
 
 export default function SelectBox() {
   const dispatch = useDispatch();
-
+  const { activeCategory, activeStatus, page, limit } = useSelector(
+    (state) => state.productList
+  );
   const handleChange = (e) => {
-    dispatch(changeViewCount(e.target.value));
+    dispatch(setLimit(e.target.value));
+    dispatch(
+      fetchProduct({
+        category: activeCategory,
+        status: activeStatus,
+        page,
+        limit: e.target.value,
+      })
+    );
   };
 
   return (
