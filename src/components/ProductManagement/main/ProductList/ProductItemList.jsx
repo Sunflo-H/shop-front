@@ -2,12 +2,26 @@ import React, { useEffect } from "react";
 import ProductListItem from "./ProductListItem";
 import { useDispatch, useSelector } from "react-redux";
 import ProductListHeader from "./ProductListHeader";
-import { fetchProduct } from "../../../../slice/productsManagement/productListSlice";
+import {
+  fetchAllProduct,
+  fetchProduct,
+} from "../../../../slice/productsManagement/productListSlice";
 
 export default function ProductItemList() {
   const dispatch = useDispatch();
+  const { activeCategory, activeStatus, page, limit } = useSelector(
+    (state) => state.productList
+  );
   useEffect(() => {
-    dispatch(fetchProduct(""));
+    dispatch(fetchAllProduct());
+    dispatch(
+      fetchProduct({
+        category: activeCategory,
+        status: activeStatus,
+        page,
+        limit,
+      })
+    );
   }, [dispatch]);
   const products = useSelector((state) => state.productList.products);
 
