@@ -25,14 +25,17 @@ const ARR_PAGE_PER_PAGEGORUP = [1, 2, 3, 4, 5];
 
 export default function PageNation() {
   const dispatch = useDispatch();
-  const { activeCategory, activeStatus, page, limit, pageGroup } = useSelector(
-    (state) => state.productList
-  );
-  const allProductCount = useSelector(
-    (state) => state.productList.allProducts.length
-  );
+  const {
+    activeCategory,
+    activeStatus,
+    page,
+    limit,
+    pageGroup,
+    products_filteredByCategory,
+  } = useSelector((state) => state.productList);
 
-  let maxPage = Math.ceil(allProductCount / limit);
+  const productCount = products_filteredByCategory.length;
+  let maxPage = Math.ceil(productCount / limit);
   let maxPageGroup = Math.ceil(maxPage / PAGE_PER_PAGEGORUP);
 
   const handlePrevPageGroupClick = () => {
