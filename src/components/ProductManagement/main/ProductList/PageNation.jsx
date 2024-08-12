@@ -38,17 +38,6 @@ export default function PageNation() {
   let maxPage = Math.ceil(productCount / limit);
   let maxPageGroup = Math.ceil(maxPage / PAGE_PER_PAGEGORUP);
 
-  const handlePrevPageGroupClick = () => {
-    if (pageGroup === MIN_PAGEGROUP) return;
-
-    const prevPageGroup = pageGroup - 1;
-    const lastPage = // 이전 페이지 그룹의 마지막 페이지
-      (prevPageGroup - 1) * PAGE_PER_PAGEGORUP +
-      ARR_PAGE_PER_PAGEGORUP[ARR_PAGE_PER_PAGEGORUP.length - 1];
-    dispatch(setPageGroup(prevPageGroup));
-    dispatch(setPage(lastPage));
-  };
-
   const handlePageClick = (page) => {
     dispatch(setPage(page));
     dispatch(
@@ -59,6 +48,17 @@ export default function PageNation() {
         limit,
       })
     );
+  };
+
+  const handlePrevPageGroupClick = () => {
+    if (pageGroup === MIN_PAGEGROUP) return;
+
+    const prevPageGroup = pageGroup - 1;
+    const lastPage = // 이전 페이지 그룹의 마지막 페이지
+      (prevPageGroup - 1) * PAGE_PER_PAGEGORUP +
+      ARR_PAGE_PER_PAGEGORUP[ARR_PAGE_PER_PAGEGORUP.length - 1];
+    dispatch(setPageGroup(prevPageGroup));
+    dispatch(setPage(lastPage));
   };
 
   const handleNextPageGroupClick = () => {
@@ -81,7 +81,17 @@ export default function PageNation() {
       (pageGroup - 1) * PAGE_PER_PAGEGORUP + ARR_PAGE_PER_PAGEGORUP[0];
 
     if (page === firstPageInPageGroup) handlePrevPageGroupClick();
-    else dispatch(setPage(page - 1));
+    else {
+      dispatch(setPage(page - 1));
+      dispatch(
+        fetchProduct({
+          category: activeCategory,
+          status: activeStatus,
+          page: page - 1,
+          limit,
+        })
+      );
+    }
   };
 
   const handleNextPageClick = () => {
@@ -92,7 +102,17 @@ export default function PageNation() {
       ARR_PAGE_PER_PAGEGORUP[ARR_PAGE_PER_PAGEGORUP.length - 1];
 
     if (page === lastPageInPageGroup) handleNextPageGroupClick();
-    else dispatch(setPage(page + 1));
+    else {
+      dispatch(setPage(page + 1));
+      dispatch(
+        fetchProduct({
+          category: activeCategory,
+          status: activeStatus,
+          page: page + 1,
+          limit,
+        })
+      );
+    }
   };
 
   return (
