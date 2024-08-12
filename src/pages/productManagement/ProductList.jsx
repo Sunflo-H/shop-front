@@ -14,8 +14,10 @@ export default function ProductList() {
       <CategoryList />
       <div className="grow">
         <div className="flex border-gray-300 border-b">
-          <ProductStatus />
-          <SelectBox />
+          <div className="flex ">
+            <ProductStatus />
+            <SelectBox />
+          </div>
         </div>
         <SearchBar />
         <ProductItemList />

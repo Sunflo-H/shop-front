@@ -43,7 +43,7 @@ export default function ProductStatus() {
     <ul className="flex gap-2">
       {statusList.map((status, index) => (
         <li
-          className={`w-[80px] p-4 pt-0 pb-1  font-bold cursor-pointer 
+          className={`w-[80px] px-4 pb-1 font-bold cursor-pointer
             ${status === "Sold Out" && "w-[120px]"}
             ${
               status === activeStatus &&
