@@ -13,7 +13,7 @@ export default function ProductList() {
     <>
       <CategoryList />
       <div className="grow">
-        <div className="flex border-gray-300 border-b">
+        <div className="flex border-gray-300 border-b ">
           <div className="flex ">
             <ProductStatus />
             <SelectBox />

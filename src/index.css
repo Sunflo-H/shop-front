@@ -8,6 +8,10 @@
   --screen: calc(100vw - 5rem);
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   margin: 0;
   font-family: "Raleway", sans-serif, "Abril Fatface", cursive, -apple-system,
@@ -17,9 +21,8 @@ body {
   /* 현재 글꼴 "Segoe UI" */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* @apply max-w-screen-2xl m-auto; */
-  /* max-width: 1300px; */
-  /* margin: auto; */
+
+  -ms-overflow-style: none;
 }
 
 code {

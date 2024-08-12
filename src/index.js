@@ -81,16 +81,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  // {
-  //   path: "/manage/new",
-  //   element: (
-  //     <QueryClientProvider client={queryClient}>
-  //       <Provider store={store}>
-  //         <UploadProduct />
-  //       </Provider>
-  //     </QueryClientProvider>
-  //   ),
-  // },
 ]);
 
 root.render(
