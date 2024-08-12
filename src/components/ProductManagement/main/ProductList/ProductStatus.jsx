@@ -44,7 +44,7 @@ export default function ProductStatus() {
       {statusList.map((status, index) => (
         <li
           className={`w-[80px] px-4 pb-1 font-bold cursor-pointer
-            ${status === "Sold Out" && "w-[120px]"}
+            ${status === "Sold Out" && "w-[120.1px]"}
             ${
               status === activeStatus &&
               "text-blue-500 border-blue-500 border-b-2"
