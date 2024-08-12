@@ -9,25 +9,33 @@ const statusList = ["ALL", "Sale", "Sold Out", "Hide"];
 
 export default function ProductStatus() {
   const dispatch = useDispatch();
-  const activeStatus = useSelector((state) => state.productList.activeStatus);
-  const products_filter_category = useSelector(
-    (state) => state.productList.products_filter_category
+  const { products_origin, activeCategory, activeStatus, page, limit } =
+    useSelector((state) => state.productList);
+
+  const products_filteredByCategory = useSelector(
+    (state) => state.productList.products_filteredByCategory
   );
 
   function getCountProductsByStatus(status) {
     let count = 0;
-    if (status === "ALL") count = products_filter_category.length;
+    if (status === "ALL") count = products_filteredByCategory.length;
     else
-      count = products_filter_category.filter(
+      count = products_filteredByCategory.filter(
         (product) => product.status === status
       ).length;
     return count;
   }
 
   const handleStatusClick = (status) => {
-    status === "ALL"
-      ? dispatch(setActiveStatus("ALL"))
-      : dispatch(setActiveStatus(status));
+    if (status === "ALL") {
+      dispatch(setActiveStatus("ALL"));
+      dispatch(
+        fetchProduct({ category: activeCategory, status: "", page, limit })
+      );
+    } else {
+      dispatch(setActiveStatus(status));
+      dispatch(fetchProduct({ category: activeCategory, status, page, limit }));
+    }
   };
 
   return (
