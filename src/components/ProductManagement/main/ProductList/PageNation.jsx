@@ -116,7 +116,7 @@ export default function PageNation() {
   };
 
   return (
-    <div className="w-full flex items-center justify-center gap-1 mt-4 mb-2">
+    <div className="nodrag w-full flex items-center justify-center gap-1 mt-4 mb-2">
       <div className="flex text-2xl">
         {/* '이전 페이지그룹' 이동 버튼 */}
         <div

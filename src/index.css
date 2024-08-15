@@ -30,12 +30,14 @@ code {
     monospace;
 }
 
-/* input {
-  @apply p-4 outline-none border border-gray-300 my-1;
-} */
-
 h1 {
   font-family: "Abril Fatface", cursive;
+}
+
+.nodrag {
+  @apply select-none; /* 텍스트 선택 금지 */
+  -webkit-user-drag: none; /* 요소 드래그 금지 */
+  user-drag: none;
 }
 
 /* Carousel */

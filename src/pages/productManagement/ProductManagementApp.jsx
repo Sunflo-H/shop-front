@@ -1,7 +1,4 @@
-import { Provider, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import useProducts from "../../hooks/useProducts";
-import { initProducts } from "../../slice/productsManagement/productManagementSlice";
+import { Provider } from "react-redux";
 import Header from "../../layout/manage/Header";
 import Main from "../../layout/manage/Main";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
