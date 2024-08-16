@@ -1,20 +1,28 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { alert_loginError } from "../../alerts/error";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(process.env.REACT_APP_LOGIN_URL, {
-      username,
-      password,
-    });
-    console.log(response);
-    const token = response.data.token;
-    console.log(token);
+    try {
+      const response = await axios.post(process.env.REACT_APP_LOGIN_URL, {
+        username,
+        password,
+      });
+
+      const token = response.data.token;
+
+      navigate("/");
+    } catch (error) {
+      const errMassage = error.response.data.msg;
+      alert_loginError(errMassage);
+    }
   };
 
   return (
@@ -60,32 +68,6 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-black focus:ring-black border-gray-300 rounded"
-              />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-900"
-              >
-                Remember me
-              </label>
-            </div>
-
-            <div className="text-sm">
-              <a
-                href="#"
-                className="font-medium text-black hover:text-gray-800"
-              >
-                Forgot your password?
-              </a>
-            </div>
-          </div>
-
           <div>
             <button
               type="submit"
@@ -95,13 +77,15 @@ const Login = () => {
               Sign in
             </button>
           </div>
-          <div className="text-center">
-            <p className="mt-2 text-sm text-gray-600">
-              Don't have an account?
-              <Link to="/register" className="ml-1 font-bold hover:underline">
-                Sign up
-              </Link>
-            </p>
+          <div className="flex items-center justify-center">
+            <div className="text-center">
+              <p className="text-sm text-gray-600">
+                Don't have an account?
+                <Link to="/register" className="ml-1 font-bold hover:underline">
+                  Sign up
+                </Link>
+              </p>
+            </div>
           </div>
         </form>
       </div>

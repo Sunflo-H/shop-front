@@ -17,3 +17,12 @@ export const alert_registerError = (errMassage) => {
     confirmButtonColor: "black",
   });
 };
+
+export const alert_loginError = (errMassage) => {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: `${errMassage}`,
+    confirmButtonColor: "black",
+  });
+};

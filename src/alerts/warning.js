@@ -10,7 +10,7 @@ export const alert_productUploadCancel = () => {
     confirmButtonColor: "#28a745",
     cancelButtonColor: "#d33",
     confirmButtonText: "Yes",
-    cancelButtonText: "No, I will not cancel.",
+    cancelButtonText: "No, I will not cancel",
   });
 };
 
@@ -27,7 +27,7 @@ export const alert_missMatch = () => {
   Swal.fire({
     icon: "warning",
     title: "Oops...",
-    text: `Passwords do not match.`,
+    text: `Passwords do not match`,
     confirmButtonColor: "black",
   });
 };

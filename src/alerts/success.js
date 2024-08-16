@@ -20,3 +20,14 @@ export const alert_registerSuccess = () => {
     ConfirmButtonColor: "black",
   });
 };
+
+// export const alert_loginSuccess = () => {
+//   return Swal.fire({
+//     position: "middle",
+//     icon: "success",
+//     title: "Sign in successful! ",
+//     text: "Redirecting HomePage",
+//     showConfirmButton: true,
+//     ConfirmButtonColor: "black",
+//   });
+// };

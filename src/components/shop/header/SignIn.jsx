@@ -10,11 +10,11 @@ export default function SignIn() {
   const user = useSelector((state) => state.auth.user) ?? {}; // user 데이터를 가지고 오기 전이라면 {}
 
   const handleLogin = () => {
-    login();
+    // login();
   };
 
   const handleLogout = () => {
-    logout();
+    // logout();
   };
 
   return (
