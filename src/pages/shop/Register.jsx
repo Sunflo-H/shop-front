@@ -19,11 +19,10 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!username || !password || !confirmPassword) {
+    if (!username || !password) {
       let missingField;
       if (!username) missingField = "Username";
       else if (!password) missingField = "Password";
-      else missingField = "ConfirmPassword";
 
       alert_incompleteForm(missingField);
       return;
