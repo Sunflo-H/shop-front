@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Nav from "./Nav";
+import Nav from "../../components/shop/header/Nav";
 import { RxHamburgerMenu } from "react-icons/rx";
-import Cart from "./Cart";
-import SideNav from "./SideNav";
-import SignAndUser from "./SignAndUser";
+import Cart from "../../components/shop/header/Cart";
+import SideNav from "../../components/shop/header/SideNav";
+import SignIn from "../../components/shop/header/SignIn";
 import { GrClose } from "react-icons/gr";
-import Logo from "./Logo";
+import Logo from "../../components/shop/header/Logo";
 import { useSelector } from "react-redux";
 
 export default function Header() {
@@ -19,7 +19,7 @@ export default function Header() {
         <Nav />
         <div className="flex items-center gap-2 font-semibold shrink-0 ">
           {user && <Cart />}
-          <SignAndUser />
+          <SignIn />
         </div>
 
         {/* 너비가 작아졌을때 */}

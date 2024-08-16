@@ -17,6 +17,8 @@ import store from "./store";
 import UploadProduct from "./pages/productManagement/UploadProduct";
 import ProductManagementApp from "./pages/productManagement/ProductManagementApp";
 import ProductList from "./pages/productManagement/ProductList";
+import Login from "./pages/shop/Login";
+import Register from "./pages/shop/Register";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -66,6 +68,14 @@ const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
   {
     path: "/manage",

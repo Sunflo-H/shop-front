@@ -19,10 +19,5 @@ export default function Header() {
         )}
       </div>
     </div>
-    // <div>
-    //   <div className="bg-white h-4"></div>
-    //   <div className="text-sm">홈 &gt; 상품관리 </div>
-    //   <div className="text-2xl">상품 관리</div>
-    // </div>
   );
 }

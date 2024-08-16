@@ -3,7 +3,7 @@ import { BsGithub, BsInstagram, BsTwitter, BsPinterest } from "react-icons/bs";
 import { HiPhone } from "react-icons/hi";
 import { GrMail, GrLinkedinOption } from "react-icons/gr";
 import { FaFacebookF, FaYoutube } from "react-icons/fa";
-import List from "./List";
+import List from "../../components/shop/footer/List";
 
 export default function Footer() {
   const etcList = [

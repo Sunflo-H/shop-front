@@ -1,11 +1,11 @@
-import { Outlet } from "react-router-dom";
-import Header from "./components/shop/header/Header";
-import Footer from "./components/shop/footer/Footer";
+import Header from "./layout/shop/Header";
+import Footer from "./layout/shop/Footer";
 import store from "./store";
 import { Provider } from "react-redux";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AuthCheck from "./components/authCheck/AuthCheck";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import Main from "./layout/shop/Main";
 
 function App() {
   const queryClient = new QueryClient();
@@ -15,7 +15,7 @@ function App() {
         <AuthCheck /> {/* 인증 확인을 위한 컴포넌트 */}
         <QueryClientProvider client={queryClient}>
           <Header />
-          <Outlet />
+          <Main />
           <Footer />
           {/* <ReactQueryDevtools initialIsOpen={true} /> */}
         </QueryClientProvider>
