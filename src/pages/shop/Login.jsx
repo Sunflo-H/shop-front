@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -5,9 +6,15 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Username:", username, "Password:", password);
+    const response = await axios.post(process.env.REACT_APP_LOGIN_URL, {
+      username,
+      password,
+    });
+    console.log(response);
+    const token = response.data.token;
+    console.log(token);
   };
 
   return (
@@ -87,15 +94,18 @@ const Login = () => {
               Sign in
             </button>
           </div>
+          <div className="text-center">
+            <p className="mt-2 text-sm text-gray-600">
+              Don't have an account?
+              <button
+                className="ml-1 font-bold hover:underline"
+                onClick={(e) => handleSubmit()}
+              >
+                Sign up
+              </button>
+            </p>
+          </div>
         </form>
-        <div className="text-center">
-          <p className="mt-2 text-sm text-gray-600">
-            Don't have an account?{" "}
-            <Link to="/register" className=" font-bold hover:underline ">
-              Sign up
-            </Link>
-          </p>
-        </div>
       </div>
     </div>
   );
