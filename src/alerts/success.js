@@ -9,3 +9,14 @@ export const alert_productUploadSuccess = () => {
     timer: 1500,
   });
 };
+
+export const alert_registerSuccess = () => {
+  return Swal.fire({
+    position: "middle",
+    icon: "success",
+    title: "Registration successful! ",
+    text: "Redirecting HomePage",
+    showConfirmButton: true,
+    ConfirmButtonColor: "black",
+  });
+};

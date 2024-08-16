@@ -1,15 +1,55 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { alert_incompleteForm, alert_missMatch } from "../../alerts/warning";
+import {
+  alert_registerSuccess,
+  alert_resigterSuccess,
+} from "../../alerts/success";
+import { alert_registerError } from "../../alerts/error";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 여기에 회원가입 로직을 구현합니다
-    console.log("Username:", username, "Email:", email, "Password:", password);
+
+    if (!username || !password || !confirmPassword) {
+      let missingField;
+      if (!username) missingField = "Username";
+      else if (!password) missingField = "Password";
+      else missingField = "ConfirmPassword";
+
+      alert_incompleteForm(missingField);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert_missMatch();
+      return;
+    }
+
+    try {
+      const response = await axios.post(process.env.REACT_APP_REGISTER_URL, {
+        username,
+        password,
+      });
+
+      const token = response.data.token;
+      alert_registerSuccess().then((result) => {
+        if (result.isConfirmed) {
+          navigate("/");
+        }
+      });
+    } catch (err) {
+      const errMassage = err.response.data.msg;
+      alert_registerError(errMassage);
+    }
   };
 
   return (
@@ -35,21 +75,6 @@ const SignUp = () => {
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-black focus:outline-none focus:ring-black focus:border-black focus:z-10 sm:text-sm"
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
@@ -88,6 +113,7 @@ const SignUp = () => {
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+              onClick={(e) => handleSubmit(e)}
             >
               Sign up
             </button>
@@ -96,12 +122,12 @@ const SignUp = () => {
         <div className="text-center">
           <p className="mt-2 text-sm text-gray-600">
             Already have an account?{" "}
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="font-medium text-black hover:text-gray-800"
             >
               Sign in
-            </a>
+            </Link>
           </p>
         </div>
       </div>

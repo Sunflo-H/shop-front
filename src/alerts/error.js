@@ -8,3 +8,12 @@ export const alert_requireError = (value) => {
     text: text,
   });
 };
+
+export const alert_registerError = (errMassage) => {
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: `${errMassage}`,
+    confirmButtonColor: "black",
+  });
+};

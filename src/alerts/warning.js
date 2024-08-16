@@ -13,3 +13,21 @@ export const alert_productUploadCancel = () => {
     cancelButtonText: "No, I will not cancel.",
   });
 };
+
+export const alert_incompleteForm = (missingField) => {
+  Swal.fire({
+    icon: "warning",
+    title: "Oops...",
+    text: `${missingField} are required`,
+    confirmButtonColor: "black",
+  });
+};
+
+export const alert_missMatch = () => {
+  Swal.fire({
+    icon: "warning",
+    title: "Oops...",
+    text: `Passwords do not match.`,
+    confirmButtonColor: "black",
+  });
+};
