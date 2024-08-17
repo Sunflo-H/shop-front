@@ -2,9 +2,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { alert_loginError } from "../../alerts/error";
+import { login } from "../../slice/authSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -17,7 +20,7 @@ const Login = () => {
       });
 
       const token = response.data.token;
-
+      dispatch(login(username));
       navigate("/");
     } catch (error) {
       const errMassage = error.response.data.msg;

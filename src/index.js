@@ -38,14 +38,6 @@ const router = createBrowserRouter([
         path: "/products/:category",
         element: <Products />,
       },
-      // {
-      //   path: "/products/new",
-      //   element: (
-      //     <ProtectedRoute_isUser requireAdmin>
-      //       <UploadProduct />
-      //     </ProtectedRoute_isUser>
-      //   ),
-      // },
       // ! 몽고디비로 바꿈에 따라 변화할 수 있는 페이지
       {
         path: "/products/:category/:id",
@@ -71,11 +63,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <Provider store={store}>
+        <Login />
+      </Provider>
+    ),
   },
   {
     path: "/register",
-    element: <Register />,
+    element: (
+      <Provider store={store}>
+        <Register />
+      </Provider>
+    ),
   },
   {
     path: "/manage",

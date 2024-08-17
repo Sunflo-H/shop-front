@@ -3,7 +3,7 @@ import Nav from "../../components/shop/header/Nav";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Cart from "../../components/shop/header/Cart";
 import SideNav from "../../components/shop/header/SideNav";
-import SignIn from "../../components/shop/header/SignIn";
+import SignAndUser from "../../components/shop/header/SignAndUser";
 import { GrClose } from "react-icons/gr";
 import Logo from "../../components/shop/header/Logo";
 import { useSelector } from "react-redux";
@@ -19,7 +19,7 @@ export default function Header() {
         <Nav />
         <div className="flex items-center gap-2 font-semibold shrink-0 ">
           {user && <Cart />}
-          <SignIn />
+          <SignAndUser />
         </div>
 
         {/* 너비가 작아졌을때 */}

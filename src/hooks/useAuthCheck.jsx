@@ -5,12 +5,13 @@ import { useDispatch } from "react-redux";
 
 export default function useAuthCheck() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    onUserStateChange(changeUserState);
-  }, []);
+  console.log(1);
+  // useEffect(() => {
+  //   onUserStateChange(changeUserState);
+  // }, []);
 
-  function changeUserState(user) {
-    dispatch(setUser(user));
-    dispatch(setIsLoading(false));
-  }
+  // function changeUserState(user) {
+  //   dispatch(setUser(user));
+  //   dispatch(setIsLoading(false));
+  // }
 }
