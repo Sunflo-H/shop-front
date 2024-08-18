@@ -3,12 +3,17 @@ import { MdArrowDropDown } from "react-icons/md";
 import User from "./User";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../../slice/authSlice";
+import { logout, setUserName } from "../../../slice/authSlice";
 
 export default function SignAndUser() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const username = useSelector((state) => state.auth.username) ?? "";
+
+  function logout() {
+    localStorage.removeItem("jwt");
+    dispatch(setUserName(""));
+  }
 
   return (
     <>
@@ -48,7 +53,7 @@ export default function SignAndUser() {
               <li className="mb-4">
                 <span
                   className="border-b-2 border-transparent hover:border-black pb-1 cursor-pointer"
-                  onClick={() => dispatch(logout())}
+                  onClick={() => logout()}
                 >
                   Sign Out
                 </span>

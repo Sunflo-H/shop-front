@@ -9,20 +9,24 @@ export default function AuthCheck() {
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     async function fetchUser() {
-      const response = await axios.get(
-        "http://localhost:5000/api/protected-route",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`, // JWT 토큰을 Authorization 헤더에 포함
-            "Content-Type": "application/json", // 요청의 데이터 형식을 JSON으로 지정
-          },
-        }
-      );
-      const username = response.data;
-      dispatch(setUserName(username));
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/protected-route",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`, // JWT 토큰을 Authorization 헤더에 포함
+              "Content-Type": "application/json", // 요청의 데이터 형식을 JSON으로 지정
+            },
+          }
+        );
+        const username = response.data;
+        dispatch(setUserName(username));
+      } catch (error) {
+        console.log("jwt fetch error");
+      }
     }
-    fetchUser();
+    token && fetchUser();
   }, []);
   return <></>;
 }

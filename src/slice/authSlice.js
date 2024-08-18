@@ -9,10 +9,6 @@ export const authSlice = createSlice({
     setUserName: (state, action) => {
       state.username = action.payload;
     },
-
-    logout: (state) => {
-      state.username = "";
-    },
   },
 });
 
