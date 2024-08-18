@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../slice/authSlice";
+import { setUserName } from "../../slice/authSlice";
 import axios from "axios";
 
 // 오직 useAuthCheck()를 실행하는 컴포넌트입니다.
@@ -20,7 +20,7 @@ export default function AuthCheck() {
         }
       );
       const username = response.data;
-      dispatch(setUser(username));
+      dispatch(setUserName(username));
     }
     fetchUser();
   }, []);

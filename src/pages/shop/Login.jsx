@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { alert_loginError } from "../../alerts/error";
-import { login, setUser } from "../../slice/authSlice";
+import { login, setUser, setUserName } from "../../slice/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
@@ -10,8 +10,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const user = useSelector((state) => state.auth.user);
-  console.log(user);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -31,7 +30,7 @@ const Login = () => {
         password,
       });
       const { token, user } = response.data;
-      dispatch(setUser(user));
+      dispatch(setUserName(user.username));
       return token;
     } catch (error) {
       const errMassage = error.response.data.msg;

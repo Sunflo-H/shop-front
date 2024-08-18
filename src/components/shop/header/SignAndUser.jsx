@@ -8,11 +8,11 @@ import { logout } from "../../../slice/authSlice";
 export default function SignAndUser() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
-  const user = useSelector((state) => state.auth.user) ?? "";
-  console.log(user);
+  const username = useSelector((state) => state.auth.username) ?? "";
+
   return (
     <>
-      {!user && (
+      {!username && (
         <Link
           to="login"
           className="hidden md:block border-b-2 border-transparent hover:border-black h-full px-2 pt-5 pb-3 cursor-pointer "
@@ -20,7 +20,7 @@ export default function SignAndUser() {
           Sign In
         </Link>
       )}
-      {user && (
+      {username && (
         <div
           className="relative"
           onMouseEnter={() => setIsOpen(true)}
@@ -35,7 +35,7 @@ export default function SignAndUser() {
           {isOpen && (
             <ul className="absolute top-15 -left-14 w-44 px-4 pt-4 border border-gray-300 bg-white z-10 text-sm text-center">
               <li className="mb-4">
-                <User user={user} />
+                <User username={username} />
               </li>
               <li className="mb-4 ">
                 <Link
