@@ -2,31 +2,45 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { alert_loginError } from "../../alerts/error";
-import { login } from "../../slice/authSlice";
-import { useDispatch } from "react-redux";
+import { login, setUser } from "../../slice/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = async (e) => {
+  const user = useSelector((state) => state.auth.user);
+  console.log(user);
+  const handleLogin = async (e) => {
     e.preventDefault();
+    try {
+      const token = await login(username, password);
+      saveToken(token);
+      navigate("/");
+      console.log("Login successful");
+    } catch (err) {
+      console.log("Login failed : ", err);
+    }
+  };
+
+  async function login(username, password) {
     try {
       const response = await axios.post(process.env.REACT_APP_LOGIN_URL, {
         username,
         password,
       });
-
-      const token = response.data.token;
-      dispatch(login(username));
-      navigate("/");
+      const { token, user } = response.data;
+      dispatch(setUser(user));
+      return token;
     } catch (error) {
       const errMassage = error.response.data.msg;
       alert_loginError(errMassage);
     }
-  };
+  }
+  function saveToken(token) {
+    localStorage.setItem("jwt", token);
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
@@ -36,7 +50,7 @@ const Login = () => {
             Sign in to your account
           </h2>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-6">
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
@@ -75,7 +89,7 @@ const Login = () => {
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
-              onClick={(e) => handleSubmit(e)}
+              onClick={(e) => handleLogin(e)}
             >
               Sign in
             </button>

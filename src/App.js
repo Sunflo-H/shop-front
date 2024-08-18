@@ -6,14 +6,16 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AuthCheck from "./components/authCheck/AuthCheck";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Main from "./layout/shop/Main";
+import { useEffect } from "react";
 
 function App() {
   const queryClient = new QueryClient();
+
   return (
     <>
       <Provider store={store}>
         {/* 인증 확인을 위한 컴포넌트 */}
-        {/* <AuthCheck />  */}
+        <AuthCheck />
         <QueryClientProvider client={queryClient}>
           <Header />
           <Main />

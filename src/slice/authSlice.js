@@ -4,8 +4,6 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: "",
-    isLoading: true,
-    isLogin: false,
   },
   reducers: {
     setUser: (state, action) => {
@@ -15,11 +13,6 @@ export const authSlice = createSlice({
       state.isLoading = action.payload;
     },
 
-    login: (state, action) => {
-      state.isLogin = true;
-      state.user = action.payload;
-      console.log(action.payload);
-    },
     logout: (state) => {
       state.isLogin = false;
       state.user = "";
@@ -27,5 +20,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setIsLoading, login, logout } = authSlice.actions;
+export const { setUser, logout } = authSlice.actions;
 export default authSlice.reducer;
