@@ -9,7 +9,7 @@ export default function SignAndUser() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const user = useSelector((state) => state.auth.user) ?? "";
-
+  console.log(user);
   return (
     <>
       {!user && (
