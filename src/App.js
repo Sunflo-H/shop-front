@@ -14,7 +14,6 @@ function App() {
   return (
     <>
       <Provider store={store}>
-        {/* 인증 확인을 위한 컴포넌트 */}
         <AuthCheck />
         <QueryClientProvider client={queryClient}>
           <Header />
