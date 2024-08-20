@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
   resetNewProduct,
   setNewProduct,
-} from "../../../slice/productsManagement/createProductSlice";
+} from "../../../slice/management/createProductSlice";
 import uploadFileToS3 from "./uploadFunc";
 import { alert_productUploadSuccess } from "../../../alerts/success";
 import { alert_productUploadCancel } from "../../../alerts/warning";

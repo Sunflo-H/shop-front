@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProduct,
   setActiveStatus,
-} from "../../../../slice/productsManagement/productListSlice";
+} from "../../../../slice/management/productListSlice";
 
 const statusList = ["ALL", "Sale", "Sold Out", "Hide"];
 

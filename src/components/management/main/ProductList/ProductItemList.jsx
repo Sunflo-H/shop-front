@@ -5,7 +5,7 @@ import ProductListHeader from "./ProductListHeader";
 import {
   fetchAllProduct,
   fetchProduct,
-} from "../../../../slice/productsManagement/productListSlice";
+} from "../../../../slice/management/productListSlice";
 
 export default function ProductItemList() {
   const dispatch = useDispatch();

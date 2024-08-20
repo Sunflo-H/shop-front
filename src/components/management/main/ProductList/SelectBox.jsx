@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProduct,
   setLimit,
-} from "../../../../slice/productsManagement/productListSlice";
+} from "../../../../slice/management/productListSlice";
 
 export default function SelectBox() {
   const dispatch = useDispatch();
