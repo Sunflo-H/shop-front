@@ -16,9 +16,3 @@ export default function ProductListItem({ product }) {
     </li>
   );
 }
-
-function transformDate() {
-  let date = "2024-08-13T00:03:54.514Z";
-  date.split("T");
-  console.log(date);
-}

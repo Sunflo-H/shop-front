@@ -9,8 +9,9 @@ import SearchBar from "../../components/ProductManagement/main/ProductList/Searc
 export default function ProductList() {
   return (
     <>
-      <CategoryList />
-      <div className="absolute left-1/2 -translate-x-1/2">
+      {/* <CategoryList /> */}
+      {/* <div className="absolute left-1/2 -translate-x-1/2"> */}
+      <div className="">
         <div className="flex border-gray-300 border-b ">
           <div className="flex ">
             <ProductStatus />
