@@ -1,20 +1,37 @@
 import React from "react";
 import { FaRegUser } from "react-icons/fa";
 import { FiShoppingBag } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { AiOutlineHome } from "react-icons/ai";
 
 export default function NavItem({ item, activePage, setActivePage }) {
   return (
-    <li
-      className={`flex items-center mx-4 px-6 py-3 my-2 font-bold gap-4 rounded-lg
+    <Link
+      to={getUrl(item)}
+      className={`flex items-center mx-4 px-6 py-3 my-2 font-bold gap-4 rounded-lg cursor-pointer
         ${item === activePage && "bg-blue-400 text-white"}`}
       onClick={() => setActivePage(item)}
     >
-      {item === "상품 관리" ? (
-        <FiShoppingBag className="text-[26px]" />
-      ) : (
-        <FaRegUser className="text-[26px]" />
-      )}
+      {getIcon(item)}
       {item}
-    </li>
+    </Link>
   );
+}
+
+function getIcon(navItem) {
+  let icon = "";
+  if (navItem === "홈") icon = AiOutlineHome;
+  else if (navItem === "상품 관리") icon = FiShoppingBag;
+  else icon = FaRegUser;
+
+  return React.createElement(icon, { className: "text-[26px]" });
+}
+
+function getUrl(navItem) {
+  let url = "";
+  if (navItem === "홈") url = "/manage";
+  else if (navItem === "상품 관리") url = "/manage/product/";
+  else url = "/manage/user";
+
+  return url;
 }

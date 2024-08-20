@@ -6,7 +6,7 @@ import ProductItemList from "../../components/ProductManagement/main/ProductList
 import PageNation from "../../components/ProductManagement/main/ProductList/PageNation";
 import SearchBar from "../../components/ProductManagement/main/ProductList/SearchBar";
 
-export default function ProductList() {
+export default function ProductManagement() {
   return (
     <>
       {/* <CategoryList /> */}

@@ -13,7 +13,7 @@ export default function Header() {
     <div className="flex justify-center border-b border-gray-300 bg-white ">
       <div className="w-screen max-w-screen-2xl flex h-[50px] ">
         <Logo />
-        <NavList />
+        {/* <NavList /> */}
 
         {location.pathname === "/manage" ? (
           <UploadProductBtn />

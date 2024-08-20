@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import NavItem from "../../components/ProductManagement/nav/NavItem";
 import { BiLogOut } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 export default function Nav() {
-  const navItem = ["상품 관리", "고객 관리"];
+  const navItem = ["홈", "상품 관리", "고객 관리"];
   const [activePage, setActivePage] = useState("상품 관리");
 
   return (
@@ -39,14 +40,15 @@ export default function Nav() {
           />
         ))}
       </ul>
-      <div
+      <Link
+        to="/"
         className="flex items-center mx-4 px-6 py-3 mb-8 gap-4
       font-bold rounded-lg border-blue-200 border-2 cursor-pointer 
       hover:bg-blue-500 hover:text-white hover:border-transparent"
       >
         <BiLogOut className="text-[26px]" />
         로그아웃
-      </div>
+      </Link>
     </nav>
   );
 }

@@ -11,14 +11,15 @@ import Products from "./pages/shop/Products";
 import ProductsRecommend from "./pages/shop/ProductsRecommend";
 import MyFavorites from "./pages/shop/MyFavorites";
 import ProtectedRoute_isUser from "./components/protectedRoute/ProtectedRoute_isUser";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import store from "./store";
 import UploadProduct from "./pages/productManagement/UploadProduct";
 import ProductManagementApp from "./pages/productManagement/ProductManagementApp";
-import ProductList from "./pages/productManagement/ProductList";
 import Login from "./pages/shop/Login";
 import Register from "./pages/shop/Register";
+import DashBoard from "./pages/productManagement/DashBoard";
+import ProductManagement from "./pages/productManagement/ProductManagement";
+import UserManagement from "./pages/productManagement/UserManagement";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -83,11 +84,19 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <ProductList />,
+        element: <DashBoard />,
       },
       {
-        path: "/manage/new",
+        path: "/manage/product",
+        element: <ProductManagement />,
+      },
+      {
+        path: "/manage/product/new",
         element: <UploadProduct />,
+      },
+      {
+        path: "/manage/user",
+        element: <UserManagement />,
       },
     ],
   },
