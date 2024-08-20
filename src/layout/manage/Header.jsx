@@ -15,11 +15,11 @@ export default function Header() {
         <Logo />
         <NavList />
 
-        {/* {location.pathname === "/manage" ? (
+        {location.pathname === "/manage" ? (
           <UploadProductBtn />
         ) : (
           <SaveAndCancelBtn />
-        )} */}
+        )}
       </div>
     </div>
   );
