@@ -28,7 +28,7 @@ export default function ProductList() {
   const products = useSelector((state) => state.productList.products);
 
   return (
-    <div className="mt-4 bg-white rounded-md ">
+    <div className="mt-4 bg-white rounded-md shadow-md border border-gray-300 overflow-hidden">
       <ProductListHeader />
       <ul>
         {products.map((product) => (

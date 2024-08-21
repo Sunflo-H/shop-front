@@ -14,7 +14,7 @@ export default function ProductManagement() {
   return (
     <div className="">
       <ManagementTitle title="상품 관리" />
-      <div className="flex w-full px-6 py-2 bg-white gap-3 shadow-md rounded-md">
+      <div className="flex w-full px-6 py-2 bg-white gap-3 shadow-md rounded-md ">
         <CategoryFilter />
         <StatusFilter />
         <SearchBar />

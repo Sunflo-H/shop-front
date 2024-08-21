@@ -8,8 +8,10 @@ export default function NavItem({ item, activePage, setActivePage }) {
   return (
     <Link
       to={getUrl(item)}
-      className={`flex items-center mx-4 px-6 py-3 my-2 font-bold gap-4 rounded-lg cursor-pointer
-        ${item === activePage && "bg-blue-400 text-white"}`}
+      className={`flex items-center mx-4 px-6 py-2 my-2 font-bold gap-4 rounded-lg cursor-pointer 
+        ${
+          item === activePage ? "bg-deepblue text-white " : "hover:bg-blue-100"
+        }`}
       onClick={() => setActivePage(item)}
     >
       {getIcon(item)}

@@ -7,8 +7,8 @@ export default function UploadProductBtn() {
     <Link
       to="/manage/new"
       className="flex self-center items-center px-4 py-2 ml-auto gap-1
-       bg-blue-900 text-white rounded-md cursor-pointer text-md font-bold
-       hover:bg-blue-800"
+       bg-deepblue text-white rounded-md cursor-pointer text-md font-bold
+       hover:bg-blue-900"
     >
       <FaPlus className="" />
       상품 추가
