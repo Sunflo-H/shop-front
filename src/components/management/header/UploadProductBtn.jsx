@@ -1,13 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
 
 export default function UploadProductBtn() {
   return (
     <Link
       to="/manage/new"
-      className="flex self-center bg-blue-500 border border-transparent text-white px-6 py-1 cursor-pointer text-md ml-auto"
+      className="flex self-center items-center px-4 py-2 ml-auto gap-1
+       bg-blue-900 text-white rounded-md cursor-pointer text-md font-bold
+       hover:bg-blue-800"
     >
-      상품추가
+      <FaPlus className="" />
+      상품 추가
     </Link>
   );
 }

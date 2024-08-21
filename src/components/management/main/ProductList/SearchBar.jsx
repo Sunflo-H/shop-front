@@ -14,10 +14,10 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="mt-2 border ">
-      <div className="flex justify-between bg-white">
+    <div className="border border-gray-300 rounded-md overflow-hidden">
+      <div className="flex justify-between h-full bg-white">
         <input
-          className="px-6 py-3 grow outline-none"
+          className="px-6 outline-none "
           type="text"
           placeholder="title search"
           value={input}
