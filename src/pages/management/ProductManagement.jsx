@@ -5,11 +5,12 @@ import ProductStatus from "../../components/management/main/ProductList/ProductS
 import ProductItemList from "../../components/management/main/ProductList/ProductItemList";
 import PageNation from "../../components/management/main/ProductList/PageNation";
 import SearchBar from "../../components/management/main/ProductList/SearchBar";
+import ManagementTitle from "../../components/management/main/shared/ManagementTitle";
 
 export default function ProductManagement() {
   return (
-    <>
-      <PM_header />
+    <div className="">
+      <ManagementTitle title="상품 관리" />
       {/* <CategoryList /> */}
       {/* <div className="absolute left-1/2 -translate-x-1/2"> */}
       <div className="">
@@ -23,6 +24,6 @@ export default function ProductManagement() {
         <ProductItemList />
         <PageNation />
       </div>
-    </>
+    </div>
   );
 }

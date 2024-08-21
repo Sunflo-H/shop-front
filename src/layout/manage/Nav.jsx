@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NavItem from "../../components/ProductManagement/nav/NavItem";
+import NavItem from "../../components/management/nav/NavItem";
 import { BiLogOut } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
