@@ -7,6 +7,7 @@ export default function ProductListItem({ product }) {
 
   return (
     <li className="flex py-2 border-b border-dashed	">
+      {/* remove 모드 상태면 보이게 */}
       <div className="w-20 flex justify-center items-center ">
         <label
           class="relative flex items-center rounded-full cursor-pointer"
@@ -40,9 +41,10 @@ export default function ProductListItem({ product }) {
       <div className="w-40 pl-[2px] ">{category}</div>
       <div className="w-40 pl-[2px] ">{status}</div>
       <div className="w-40 pl-[2px] ">{createdAt}</div>
-      <div className="w-40 flex justify-center items-center gap-5">
+      {/* <div className="border-l-[2px] h-[20px] border-lightblue"></div> */}
+      <div className="flex items-center px-6 ml-4 gap-5 border-l-[2px] border-lightblue">
         <FaPen className="cursor-pointer text-deepblue hover:text-blue-500" />
-        <FaTrash className="cursor-pointer text-deepblue hover:text-blue-500" />
+        <FaTrash className="cursor-pointer text-deepblue hover:text-red-500" />
       </div>
       {/* <div className="w-60 text-center">{name}</div>
       <div className="w-28 text-center">{price}</div>

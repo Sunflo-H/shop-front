@@ -1,8 +1,10 @@
 import React from "react";
+import { FaTrash } from "react-icons/fa";
 
 export default function ProductListHeader() {
   return (
     <div className="flex py-2 border-b border-gray-300 font-bold bg-blue-100 ">
+      {/* remove 모드 상태면 보이게 */}
       <div className="w-20 flex justify-center items-center ">
         <label
           class="relative flex items-center rounded-full cursor-pointer"
@@ -31,17 +33,13 @@ export default function ProductListHeader() {
           </span>
         </label>
       </div>
-      <div className="w-60 text-lg text-blue-900">Name</div>
-      <div className="w-40 text-lg text-blue-900">Price</div>
-      <div className="w-40 text-lg text-blue-900">Category</div>
-      <div className="w-40 text-lg text-blue-900">Status</div>
-      <div className="w-40 text-lg text-blue-900">Registration Date</div>
-      {/* <div className="w-60 text-center border border-red-500">Name</div>
-      <div className="w-28 text-center border border-red-500">Price</div>
-      <div className="w-40 text-center border border-red-500">Category</div>
-      <div className="w-40 text-center border border-red-500">Status</div>
-      <div className="w-40 text-center border border-red-500">
-        Registration Date
+      <div className="w-60 text-blue-900 uppercase">Name</div>
+      <div className="w-40 text-blue-900 uppercase">Price</div>
+      <div className="w-40 text-blue-900 uppercase">Category</div>
+      <div className="w-40 text-blue-900 uppercase">Status</div>
+      <div className="w-40 text-blue-900 uppercase">Creation Date</div>
+      {/* <div className="px-6 ml-4 flex items-center">
+        <FaTrash className="text-red-500" />
       </div> */}
     </div>
   );

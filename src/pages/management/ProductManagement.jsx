@@ -9,16 +9,18 @@ import ManagementTitle from "../../components/management/main/shared/ManagementT
 import CategoryFilter from "../../components/management/main/ProductList/CategoryFilter";
 import StatusFilter from "../../components/management/main/ProductList/StatusFilter";
 import UploadProductBtn from "../../components/management/header/UploadProductBtn";
+import RemoveSelectedBtn from "../../components/management/main/RemoveSeletedBtn";
 
 export default function ProductManagement() {
   return (
     <div className="">
-      <ManagementTitle title="상품 관리" />
+      <ManagementTitle title="Product Management" />
       <div className="flex w-full px-6 py-2 bg-white gap-3 shadow-md rounded-md ">
         <CategoryFilter />
         <StatusFilter />
         <SearchBar />
         <UploadProductBtn />
+        <RemoveSelectedBtn />
         {/* <div className="flex ">
           <ProductStatus />
           <SelectBox />
