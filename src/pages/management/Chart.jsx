@@ -58,7 +58,7 @@ const data = [
   },
 ];
 
-export default class Example extends PureComponent {
+export default class Chart extends PureComponent {
   static demoUrl =
     "https://codesandbox.io/p/sandbox/line-chart-width-xaxis-padding-8v7952";
 

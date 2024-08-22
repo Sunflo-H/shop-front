@@ -3,6 +3,7 @@ import { FaRegUser } from "react-icons/fa";
 import { FiShoppingBag } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
+import { FiPackage } from "react-icons/fi";
 
 export default function NavItem({ item, activePage, setActivePage }) {
   return (
@@ -23,7 +24,7 @@ export default function NavItem({ item, activePage, setActivePage }) {
 function getIcon(navItem) {
   let icon = "";
   if (navItem === "Home") icon = AiOutlineHome;
-  else if (navItem === "Products") icon = FiShoppingBag;
+  else if (navItem === "Products") icon = FiPackage;
   else icon = FaRegUser;
 
   return React.createElement(icon, { className: "text-[26px]" });
