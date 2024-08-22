@@ -4,9 +4,9 @@ import Chart from "./Chart";
 
 export default function ManagementHome() {
   return (
-    <div className="flex flex-col border border-red-500 min-w-[1080px]">
+    <div className="flex flex-col min-w-[1080px]">
       <ManagementTitle text="New Product & New User" />
-      <div className="flex justify-center items-center w-full h-[340px] rounded-md bg-white  border-gray-300 border shadow-md">
+      <div className="flex justify-center items-center w-full h-[340px] rounded-md bg-white  border-blue-200 border shadow-md">
         <Chart />
       </div>
       <div className="flex gap-4">

@@ -77,8 +77,8 @@ export default class Chart extends PureComponent {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
+          <XAxis dataKey="name" stroke="#90CAF9" />
+          <YAxis stroke="#90CAF9" />
           <Tooltip />
           <Legend />
           <Bar
