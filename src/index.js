@@ -20,6 +20,7 @@ import Register from "./pages/shop/Register";
 import DashBoard from "./pages/management/DashBoard";
 import ProductManagement from "./pages/management/ProductManagement";
 import UserManagement from "./pages/management/UserManagement";
+import ManagementHome from "./pages/management/ManagementHome";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -84,7 +85,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashBoard />,
+        element: <ManagementHome />,
       },
       {
         path: "/manage/product",

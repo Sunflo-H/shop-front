@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function Nav() {
   const navItem = ["Home", "Products", "Users"];
-  const [activePage, setActivePage] = useState("Products");
+  const [activePage, setActivePage] = useState("Home");
 
   return (
     // 높이 고정인 nav
