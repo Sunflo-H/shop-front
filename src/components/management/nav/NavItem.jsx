@@ -8,8 +8,10 @@ export default function NavItem({ item, activePage, setActivePage }) {
   return (
     <Link
       to={getUrl(item)}
-      className={`flex items-center mx-4 px-6 py-3 my-2 font-bold gap-4 rounded-lg cursor-pointer
-        ${item === activePage && "bg-blue-400 text-white"}`}
+      className={`flex items-center mx-4 px-6 py-2 my-2 font-bold gap-4 rounded-lg cursor-pointer 
+        ${
+          item === activePage ? "bg-blue-500 text-white " : "hover:bg-blue-100"
+        }`}
       onClick={() => setActivePage(item)}
     >
       {getIcon(item)}
@@ -20,8 +22,8 @@ export default function NavItem({ item, activePage, setActivePage }) {
 
 function getIcon(navItem) {
   let icon = "";
-  if (navItem === "홈") icon = AiOutlineHome;
-  else if (navItem === "상품 관리") icon = FiShoppingBag;
+  if (navItem === "Home") icon = AiOutlineHome;
+  else if (navItem === "Products") icon = FiShoppingBag;
   else icon = FaRegUser;
 
   return React.createElement(icon, { className: "text-[26px]" });
@@ -29,8 +31,8 @@ function getIcon(navItem) {
 
 function getUrl(navItem) {
   let url = "";
-  if (navItem === "홈") url = "/manage";
-  else if (navItem === "상품 관리") url = "/manage/product/";
+  if (navItem === "Home") url = "/manage";
+  else if (navItem === "Products") url = "/manage/product/";
   else url = "/manage/user";
 
   return url;

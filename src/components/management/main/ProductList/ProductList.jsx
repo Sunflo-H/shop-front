@@ -5,9 +5,9 @@ import ProductListHeader from "./ProductListHeader";
 import {
   fetchAllProduct,
   fetchProduct,
-} from "../../../../slice/productsManagement/productListSlice";
+} from "../../../../slice/management/productListSlice";
 
-export default function ProductItemList() {
+export default function ProductList() {
   const dispatch = useDispatch();
   const { activeCategory, activeStatus, page, limit } = useSelector(
     (state) => state.productList
@@ -28,7 +28,7 @@ export default function ProductItemList() {
   const products = useSelector((state) => state.productList.products);
 
   return (
-    <div className="mt-4 bg-white rounded-md ">
+    <div className="mt-4 bg-white rounded-md shadow-md border border-gray-300 overflow-hidden">
       <ProductListHeader />
       <ul>
         {products.map((product) => (

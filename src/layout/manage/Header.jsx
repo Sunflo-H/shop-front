@@ -1,10 +1,10 @@
 import React from "react";
 
-import Logo from "../../components/ProductManagement/header/Logo";
-import UploadProductBtn from "../../components/ProductManagement/header/UploadProductBtn";
+import Logo from "../../components/management/header/Logo";
+import UploadProductBtn from "../../components/management/header/UploadProductBtn";
 import { useLocation } from "react-router-dom";
-import SaveAndCancelBtn from "../../components/ProductManagement/header/SaveAndCancelBtn";
-import NavList from "../../components/ProductManagement/header/NavList";
+import SaveAndCancelBtn from "../../components/management/header/SaveAndCancelBtn";
+import NavList from "../../components/management/header/NavList";
 
 export default function Header() {
   const location = useLocation();

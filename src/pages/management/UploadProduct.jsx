@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import RadioBtn from "../../components/ProductManagement/main/UploadProduct/RadioBtn";
+import RadioBtn from "../../components/management/main/UploadProduct/RadioBtn";
 import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import RequireOption from "../../components/ProductManagement/main/UploadProduct/RequireOption";
-import { setNewProduct } from "../../slice/productsManagement/createProductSlice";
+import RequireOption from "../../components/management/main/UploadProduct/RequireOption";
+import { setNewProduct } from "../../slice/management/createProductSlice";
 
 const category = ["Man", "Woman", "Accessory", "Shoes"];
 

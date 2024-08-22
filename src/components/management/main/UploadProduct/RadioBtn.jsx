@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setNewProduct } from "../../../../slice/productsManagement/createProductSlice";
+import { setNewProduct } from "../../../../slice/management/createProductSlice";
 
 export default function RadioBtn({ category }) {
   const dispatch = useDispatch();

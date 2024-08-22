@@ -13,13 +13,14 @@ import MyFavorites from "./pages/shop/MyFavorites";
 import ProtectedRoute_isUser from "./components/protectedRoute/ProtectedRoute_isUser";
 import { Provider } from "react-redux";
 import store from "./store";
-import UploadProduct from "./pages/productManagement/UploadProduct";
-import ProductManagementApp from "./pages/productManagement/ProductManagementApp";
+import UploadProduct from "./pages/management/UploadProduct";
+import ManagementApp from "./pages/management/ManagementApp";
 import Login from "./pages/shop/Login";
 import Register from "./pages/shop/Register";
-import DashBoard from "./pages/productManagement/DashBoard";
-import ProductManagement from "./pages/productManagement/ProductManagement";
-import UserManagement from "./pages/productManagement/UserManagement";
+import DashBoard from "./pages/management/DashBoard";
+import ProductManagement from "./pages/management/ProductManagement";
+import UserManagement from "./pages/management/UserManagement";
+import ManagementHome from "./pages/management/ManagementHome";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -80,11 +81,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/manage",
-    element: <ProductManagementApp />,
+    element: <ManagementApp />,
     children: [
       {
         index: true,
-        element: <DashBoard />,
+        element: <ManagementHome />,
       },
       {
         path: "/manage/product",

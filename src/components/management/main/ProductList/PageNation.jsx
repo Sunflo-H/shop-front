@@ -9,7 +9,7 @@ import {
   fetchProduct,
   setPage,
   setPageGroup,
-} from "../../../../slice/productsManagement/productListSlice";
+} from "../../../../slice/management/productListSlice";
 
 /**
  ** 페이지 네이션 변수

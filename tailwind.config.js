@@ -32,6 +32,8 @@ module.exports = {
       },
       colors: {
         brand: "#f96162",
+        lightblue: "#eaf0f6",
+        deepblue: "#003265",
       },
       backgroundImage: {
         accessories: `url('../public/images/home/accessories.jpg')`,
