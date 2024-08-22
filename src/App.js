@@ -7,12 +7,13 @@ import AuthCheck from "./components/authCheck/AuthCheck";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Main from "./layout/shop/Main";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function App() {
   const queryClient = new QueryClient();
 
   return (
-    <>
+    <div className="shop-font">
       <Provider store={store}>
         <AuthCheck />
         <QueryClientProvider client={queryClient}>
@@ -22,7 +23,7 @@ function App() {
           {/* <ReactQueryDevtools initialIsOpen={true} /> */}
         </QueryClientProvider>
       </Provider>
-    </>
+    </div>
   );
 }
 

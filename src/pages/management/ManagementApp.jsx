@@ -11,9 +11,9 @@ export default function ManagementApp() {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <div className="flex flex-col min-h-screen bg-lightblue">
+        <div className="manage-font flex flex-col min-h-screen bg-lightblue">
           {/* <div className="flex flex-col min-h-screen bg-gray-200 "> */}
-          <Header />
+          {/* <Header /> */}
           <div className="flex self-center grow max-w-screen-2xl w-screen mt-4 ">
             <Nav />
             <Main />
