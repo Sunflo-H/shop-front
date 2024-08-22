@@ -13,7 +13,7 @@ import RemoveSelectedBtn from "../../components/management/main/RemoveSeletedBtn
 
 export default function ProductManagement() {
   return (
-    <div className="">
+    <div>
       <ManagementTitle title="Product Management" />
       <div className="flex w-full px-6 py-2 bg-white gap-3 shadow-md rounded-md ">
         <CategoryFilter />
