@@ -17,9 +17,8 @@ export default class Chart_oneLine extends PureComponent {
     "https://codesandbox.io/p/sandbox/line-chart-width-xaxis-padding-8v7952";
 
   render() {
-    const { data, x, y } = this.props;
-    console.log(data);
-    console.log(x, y);
+    const { data, allKey } = this.props;
+
     return (
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
@@ -32,13 +31,13 @@ export default class Chart_oneLine extends PureComponent {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey={"hour"} stroke="#90CAF9" />
+          <XAxis dataKey={allKey && allKey[0]} stroke="#90CAF9" />
           <YAxis stroke="#90CAF9" />
           <Tooltip />
           <Legend align="left" verticalAlign="top" height={40} />
           <Line
             type=""
-            dataKey={"sales"}
+            dataKey={allKey && allKey[1]}
             stroke="rgb(96 165 250)"
             strokeWidth={3}
           />
