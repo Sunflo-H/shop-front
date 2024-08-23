@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Jan",
+    "User": 4000,
+    "Product": 2400
+  },
+  {
+    "name": "Feb",
+    "User": 3000,
+    "Product": 1398
+  },
+  {
+    "name": "Mar",
+    "User": 2000,
+    "Product": 1800
+  },
+  {
+    "name": "Apr",
+    "User": 2780,
+    "Product": 3908
+  },
+  {
+    "name": "May",
+    "User": 1890,
+    "Product": 4800
+  },
+  {
+    "name": "Jun",
+    "User": 2390,
+    "Product": 3800
+  },
+  {
+    "name": "Jul",
+    "User": 3490,
+    "Product": 4300
+  }
+]

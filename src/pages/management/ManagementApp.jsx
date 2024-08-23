@@ -16,7 +16,9 @@ export default function ManagementApp() {
           {/* <Header /> */}
           <div className="flex self-center grow max-w-screen-2xl w-screen mt-4 ">
             <Nav />
-            <Main />
+            <div className="ml-72">
+              <Main />
+            </div>
           </div>
         </div>
       </Provider>

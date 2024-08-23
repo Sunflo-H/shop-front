@@ -9,13 +9,14 @@ export default function Nav() {
 
   return (
     // 높이 고정인 nav
-    <nav className="flex flex-col min-w-[240px] max-h-[699px] rounded-md mx-6 mb-4 bg-white shadow-md">
+    <nav className="fixed flex flex-col min-w-[240px] max-h-[699px] h-full rounded-md mx-6 mb-4 bg-white shadow-md">
       <ul className="mt-2 flex-1">
-        {navItem.map((item) => (
+        {navItem.map((item, index) => (
           <NavItem
             item={item}
             activePage={activePage}
             setActivePage={setActivePage}
+            key={index}
           />
         ))}
       </ul>
