@@ -130,9 +130,9 @@ export default function ManagementHome() {
           <div className="px-4 pt-4">
             <ChartHeader
               title="Daily Visitors"
-              count={{ num: 180, unit: "People" }}
+              count={{ num: 7395, unit: "Visitors" }}
               text={"Today"}
-              percent={-14}
+              percent={-1.85}
             />
           </div>
           <div className="w-full h-52 m-auto px-4 pt-1 ">
