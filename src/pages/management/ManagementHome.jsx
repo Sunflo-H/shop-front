@@ -4,9 +4,10 @@ import ChartMini from "../../components/management/main/Home/ChartMini";
 import ChartHeader from "../../components/management/main/Home/ChartHeader";
 import Chart_pie from "../../components/management/main/Home/Chart_pie";
 import Chart_oneLine from "../../components/management/main/Home/Chart_oneLine";
+import Chart_twoLine from "../../components/management/main/Home/Chart_twoLine";
 
 export default function ManagementHome() {
-  const data1 = [
+  const HourlySales = [
     { hour: "00:00", sales: 120 },
     { hour: "01:00", sales: 90 },
     { hour: "02:00", sales: 70 },
@@ -32,226 +33,55 @@ export default function ManagementHome() {
     { hour: "22:00", sales: 250 },
     { hour: "23:00", sales: 220 },
   ];
-  const data2 = [
-    {
-      name: "Jan",
-      User: 4000,
-      Product: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Feb",
-      User: 3000,
-      Product: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Mar",
-      User: 2000,
-      Product: 1800,
-      amt: 2290,
-    },
-    {
-      name: "Apr",
-      User: 2780,
-      Product: 3908,
-      amt: 2000,
-    },
-    {
-      name: "May",
-      User: 1890,
-      Product: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Jun",
-      User: 2390,
-      Product: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Jul",
-      User: 3490,
-      Product: 4300,
-      amt: 2100,
-    },
+
+  const dailyVisitors = [
+    { date: "1", visitors: 120 },
+    { date: "2", visitors: 135 },
+    { date: "3", visitors: 150 },
+    { date: "4", visitors: 160 },
+    { date: "5", visitors: 145 },
+    { date: "6", visitors: 155 },
+    { date: "7", visitors: 170 },
+    { date: "8", visitors: 180 },
+    { date: "9", visitors: 175 },
+    { date: "10", visitors: 165 },
+    { date: "11", visitors: 190 },
+    { date: "12", visitors: 200 },
+    { date: "13", visitors: 195 },
+    { date: "14", visitors: 185 },
+    { date: "15", visitors: 210 },
+    { date: "16", visitors: 220 },
+    { date: "17", visitors: 230 },
+    { date: "18", visitors: 240 },
+    { date: "19", visitors: 250 },
+    { date: "20", visitors: 260 },
+    { date: "21", visitors: 270 },
+    { date: "22", visitors: 280 },
+    { date: "23", visitors: 275 },
+    { date: "24", visitors: 265 },
+    { date: "25", visitors: 255 },
+    { date: "26", visitors: 245 },
+    { date: "27", visitors: 235 },
+    { date: "28", visitors: 225 },
+    { date: "29", visitors: 215 },
+    { date: "30", visitors: 205 },
+    { date: "31", visitors: 195 },
   ];
-  const data3 = [
-    {
-      name: "Jan",
-      User: 4000,
-      Product: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Feb",
-      User: 3000,
-      Product: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Mar",
-      User: 2000,
-      Product: 1800,
-      amt: 2290,
-    },
-    {
-      name: "Apr",
-      User: 2780,
-      Product: 3908,
-      amt: 2000,
-    },
-    {
-      name: "May",
-      User: 1890,
-      Product: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Jun",
-      User: 2390,
-      Product: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Jul",
-      User: 3490,
-      Product: 4300,
-      amt: 2100,
-    },
+  const salesAndCustomersData = [
+    { month: "Jan", sales: 12000, customers: 300 },
+    { month: "Feb", sales: 15000, customers: 350 },
+    { month: "Mar", sales: 18000, customers: 400 },
+    { month: "Apr", sales: 20000, customers: 450 },
+    { month: "May", sales: 17000, customers: 420 },
+    { month: "Jun", sales: 22000, customers: 500 },
+    { month: "Jul", sales: 21000, customers: 480 },
+    { month: "Aug", sales: 24000, customers: 530 },
+    { month: "Sep", sales: 23000, customers: 510 },
+    { month: "Oct", sales: 25000, customers: 550 },
+    { month: "Nov", sales: 27000, customers: 580 },
+    { month: "Dec", sales: 30000, customers: 620 },
   ];
-  const data4 = [
-    {
-      name: "Jan",
-      User: 4000,
-      Product: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Feb",
-      User: 3000,
-      Product: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Mar",
-      User: 2000,
-      Product: 1800,
-      amt: 2290,
-    },
-    {
-      name: "Apr",
-      User: 2780,
-      Product: 3908,
-      amt: 2000,
-    },
-    {
-      name: "May",
-      User: 1890,
-      Product: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Jun",
-      User: 2390,
-      Product: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Jul",
-      User: 3490,
-      Product: 4300,
-      amt: 2100,
-    },
-  ];
-  const data5 = [
-    {
-      name: "Jan",
-      User: 4000,
-      Product: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Feb",
-      User: 3000,
-      Product: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Mar",
-      User: 2000,
-      Product: 1800,
-      amt: 2290,
-    },
-    {
-      name: "Apr",
-      User: 2780,
-      Product: 3908,
-      amt: 2000,
-    },
-    {
-      name: "May",
-      User: 1890,
-      Product: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Jun",
-      User: 2390,
-      Product: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Jul",
-      User: 3490,
-      Product: 4300,
-      amt: 2100,
-    },
-  ];
-  const data6 = [
-    {
-      name: "Jan",
-      User: 4000,
-      Product: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Feb",
-      User: 3000,
-      Product: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Mar",
-      User: 2000,
-      Product: 1800,
-      amt: 2290,
-    },
-    {
-      name: "Apr",
-      User: 2780,
-      Product: 3908,
-      amt: 2000,
-    },
-    {
-      name: "May",
-      User: 1890,
-      Product: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Jun",
-      User: 2390,
-      Product: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Jul",
-      User: 3490,
-      Product: 4300,
-      amt: 2100,
-    },
-  ];
+
   return (
     <div className="flex flex-col min-w-[1080px] overflow-scroll gap-3">
       <div className="w-full rounded-md bg-white shadow-md ">
@@ -270,57 +100,66 @@ export default function ManagementHome() {
       </div>
       <div className="flex gap-4 h-[300px]">
         <div className="w-1/2 bg-white rounded-md shadow-md ">
+          {/* 시간대별 판매량 */}
           <div className="px-4 pt-4">
-            {/* 시간대별 판매량 */}
             <ChartHeader
-              title="Hourly Sales by Day"
+              title="Hourly Sales"
               count={{ num: 3000, unit: "$" }}
-              text={"today"}
+              text={"Today"}
               percent={10}
             />
           </div>
           <div className="w-full h-52 m-auto px-4 pt-1 ">
-            <Chart_oneLine
-              data={data1}
-              x={getKey(data1)[0]}
-              y={getKey(data1)[1]}
-            />
+            <Chart_oneLine data={HourlySales} allKey={getKey(HourlySales)[0]} />
           </div>
         </div>
         <div className="w-1/2 bg-white rounded-md shadow-md">
+          {/* 일별 방문자 수 */}
           <div className="px-4 pt-4">
-            {/* 시간대별 판매량 */}
             <ChartHeader
-              title="Hourly Sales by Day"
-              count={{ num: 1800, unit: "$" }}
-              text={"this month"}
-              percent={7}
+              title="Daily Visitors"
+              count={{ num: 180, unit: "People" }}
+              text={"Today"}
+              percent={-14}
             />
           </div>
           <div className="w-full h-52 m-auto px-4 pt-1 ">
-            <ChartMini data={data4} />
+            <Chart_oneLine
+              data={dailyVisitors}
+              allKey={getKey(dailyVisitors)[0]}
+            />
           </div>
         </div>
       </div>
-      <div className="flex gap-3 h-[300px] ">
-        <div className="w-1/2 bg-white rounded-md shadow-md pt-6 px-4 ">
-          <ChartHeader title="고객 비율" />
-          {/* 카테고리별 상품 개수 */}
-          <div className="w-full h-[200px] border border-red-500">
-            <Chart_pie data={data1} />
+      <div className="flex gap-4 h-[260px]">
+        <div className="w-1/2 bg-white rounded-md shadow-md ">
+          {/* 시간대별 판매량 */}
+          <div className="px-4 pt-4">
+            <ChartHeader title="Sales & Customers" />
+          </div>
+          <div className="w-full h-52 m-auto px-4 pt-1 ">
+            <Chart_twoLine
+              data={salesAndCustomersData}
+              allKey={getKey(salesAndCustomersData)[0]}
+            />
           </div>
         </div>
         <div className="w-1/2 bg-white rounded-md shadow-md">
-          {/* 신규 고객 수 */}
-          <ChartMini data={data2} />
-        </div>
-      </div>
-      <div className="flex gap-4 h-[300px]">
-        <div className="w-1/2 bg-white rounded-md shadow-md">
-          <ChartMini data={data5} />
-        </div>
-        <div className="w-1/2 bg-white rounded-md shadow-md">
-          <ChartMini data={data6} />
+          {/* 일별 방문자 수 */}
+          <div className="px-4 pt-4">
+            <ChartHeader
+              title="Daily Visitors"
+              count={{ num: 180, unit: "People" }}
+              text={"Today"}
+              percent={-14}
+            />
+          </div>
+          <div className="w-full h-52 m-auto px-4 pt-1 ">
+            <Chart_oneLine
+              data={dailyVisitors}
+              allKey={getKey(dailyVisitors)[0]}
+            />
+          </div>
         </div>
       </div>
     </div>

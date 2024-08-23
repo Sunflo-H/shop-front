@@ -24,14 +24,13 @@ function asd(percent) {
     ? (result = (
         <div className="flex items-end font-bold text-green-500 text-lg gap-1">
           <FaArrowCircleUp className="mb-1.5" />
-          <div>{percent}%</div>
+          {percent}%
         </div>
       ))
     : (result = (
-        <div className="flex font-bold text-red-500 text-lg gap-1">
-          {" "}
-          <FaArrowCircleDown />
-          {percent}
+        <div className="flex items-end font-bold text-red-500 text-lg gap-1">
+          <FaArrowCircleDown className="mb-1.5" />
+          {percent}%
         </div>
       ));
   return result;
