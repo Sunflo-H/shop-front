@@ -32,9 +32,8 @@ export default class Chart_twoLine extends PureComponent {
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey={allKey[0]} stroke="#90CAF9" />
-          <YAxis yAxisId="left" />
-          <YAxis yAxisId="right" orientation="right" />
-          {/* <YAxis stroke="#90CAF9" /> */}
+          <YAxis yAxisId="left" stroke="#90CAF9" />
+          <YAxis yAxisId="right" orientation="right" stroke="#90CAF9" />
           <Tooltip />
           <Legend align="left" verticalAlign="top" height={40} />
           <Line

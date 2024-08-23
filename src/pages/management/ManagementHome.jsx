@@ -1,10 +1,9 @@
 import React from "react";
 import Chart_bar from "../../components/management/main/Home/Chart_bar";
-import ChartMini from "../../components/management/main/Home/ChartMini";
 import ChartHeader from "../../components/management/main/Home/ChartHeader";
-import Chart_pie from "../../components/management/main/Home/Chart_pie";
 import Chart_oneLine from "../../components/management/main/Home/Chart_oneLine";
 import Chart_twoLine from "../../components/management/main/Home/Chart_twoLine";
+import Chart_fourLine from "../../components/management/main/Home/Chart_fourLine";
 
 export default function ManagementHome() {
   const HourlySales = [
@@ -81,17 +80,26 @@ export default function ManagementHome() {
     { month: "Nov", sales: 27000, customers: 580 },
     { month: "Dec", sales: 30000, customers: 620 },
   ];
-
+  const salesData = [
+    { month: "Jan", Man: 4000, Woman: 2000, Accessory: 1500, Shoes: 2300 },
+    { month: "Feb", Man: 3300, Woman: 2800, Accessory: 2000, Shoes: 3100 },
+    { month: "Mar", Man: 4300, Woman: 2500, Accessory: 1700, Shoes: 3400 },
+    { month: "Apr", Man: 4100, Woman: 2700, Accessory: 1800, Shoes: 3500 },
+    { month: "May", Man: 3600, Woman: 2000, Accessory: 1900, Shoes: 2900 },
+    { month: "Jun", Man: 3900, Woman: 3600, Accessory: 1600, Shoes: 3000 },
+    { month: "Jul", Man: 4400, Woman: 2400, Accessory: 2200, Shoes: 2800 },
+    { month: "Aug", Man: 4600, Woman: 3100, Accessory: 1700, Shoes: 3600 },
+  ];
   return (
-    <div className="flex flex-col min-w-[1080px] overflow-scroll gap-3">
+    <div className="flex flex-col min-w-[1080px] overflow-scroll gap-3 mb-4">
       <div className="w-full rounded-md bg-white shadow-md ">
-        {/* 카테고리별 판매량 */}
+        {/* 월별 판매량 */}
         <div className="px-6 pt-6">
           <ChartHeader
             title="Monthly Sales"
-            count={{ num: 1800, unit: "$" }}
+            count={{ num: 16500, unit: "$" }}
             text={"this month"}
-            percent={7}
+            percent={7.12}
           />
         </div>
         <div className="w-full h-72 m-auto px-6 pt-1 ">
@@ -104,13 +112,17 @@ export default function ManagementHome() {
           <div className="px-4 pt-4">
             <ChartHeader
               title="Hourly Sales"
-              count={{ num: 3000, unit: "$" }}
+              count={{ num: 3025, unit: "$" }}
               text={"Today"}
-              percent={10}
+              percent={7.48}
             />
           </div>
           <div className="w-full h-52 m-auto px-4 pt-1 ">
-            <Chart_oneLine data={HourlySales} allKey={getKey(HourlySales)[0]} />
+            <Chart_oneLine
+              data={HourlySales}
+              allKey={getKey(HourlySales)[0]}
+              color={"rgb(96 165 250)"}
+            />
           </div>
         </div>
         <div className="w-1/2 bg-white rounded-md shadow-md">
@@ -127,15 +139,21 @@ export default function ManagementHome() {
             <Chart_oneLine
               data={dailyVisitors}
               allKey={getKey(dailyVisitors)[0]}
+              color={"#FFA726"}
             />
           </div>
         </div>
       </div>
-      <div className="flex gap-4 h-[260px]">
+      <div className="flex gap-4 h-[300px]">
         <div className="w-1/2 bg-white rounded-md shadow-md ">
-          {/* 시간대별 판매량 */}
+          {/* 판매량과 고객수 */}
           <div className="px-4 pt-4">
-            <ChartHeader title="Sales & Customers" />
+            <ChartHeader
+              title="Sales & Customers"
+              count={{ num: 46.55, unit: "$" }}
+              text={"Sales per customer"}
+              percent={2.42}
+            />
           </div>
           <div className="w-full h-52 m-auto px-4 pt-1 ">
             <Chart_twoLine
@@ -145,20 +163,17 @@ export default function ManagementHome() {
           </div>
         </div>
         <div className="w-1/2 bg-white rounded-md shadow-md">
-          {/* 일별 방문자 수 */}
+          {/* 카테고리별 판매량 */}
           <div className="px-4 pt-4">
             <ChartHeader
-              title="Daily Visitors"
-              count={{ num: 180, unit: "People" }}
-              text={"Today"}
-              percent={-14}
+              title="Sales by Category"
+              count={{ num: 13800, unit: "$" }}
+              text={"Sale per category"}
+              percent={2.99}
             />
           </div>
           <div className="w-full h-52 m-auto px-4 pt-1 ">
-            <Chart_oneLine
-              data={dailyVisitors}
-              allKey={getKey(dailyVisitors)[0]}
-            />
+            <Chart_fourLine data={salesData} allKey={getKey(salesData)[0]} />
           </div>
         </div>
       </div>
@@ -167,7 +182,7 @@ export default function ManagementHome() {
 }
 
 function getKey(data) {
-  // data : [{},{},{},{}, ... ]
+  //* data : [{},{},{},{}, ... ]
   let allKey = data.map((obj) => Object.keys(obj));
   return allKey;
 }
