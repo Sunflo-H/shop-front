@@ -2,14 +2,13 @@ import React from "react";
 import { FaArrowCircleDown, FaArrowCircleUp } from "react-icons/fa";
 
 export default function ChartHeader({ title, text, count, percent }) {
-  const { num, unit } = count;
   return (
     <div>
-      <div className="font-bold">{title}</div>
-      <div className="flex justify-between">
+      <div className={`font-bold `}>{title}</div>
+      <div className="flex justify-between mt-2">
         <div className="flex items-end gap-1">
-          <span className=" text-3xl font-bold">{num}</span>
-          <span className="text-lg font-bold">{unit}</span>
+          <span className=" text-3xl font-bold">{count?.num}</span>
+          <span className="text-lg font-bold">{count?.unit}</span>
           <span className="opacity-60 ml-1">{text}</span>
         </div>
         {asd(percent)}
@@ -19,6 +18,7 @@ export default function ChartHeader({ title, text, count, percent }) {
 }
 
 function asd(percent) {
+  if (!percent) return;
   let result;
   percent > 0
     ? (result = (
