@@ -10,7 +10,7 @@ export default function Header() {
   const location = useLocation();
 
   return (
-    <div className="flex justify-center border-b border-gray-300 bg-white ">
+    <header className="flex justify-center border-b border-gray-300 bg-white ">
       <div className="w-screen max-w-screen-2xl flex h-[50px] ">
         <Logo />
         {/* <NavList /> */}
@@ -21,6 +21,6 @@ export default function Header() {
           <SaveAndCancelBtn />
         )}
       </div>
-    </div>
+    </header>
   );
 }

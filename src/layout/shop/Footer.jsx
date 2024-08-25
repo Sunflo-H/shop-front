@@ -38,7 +38,7 @@ export default function Footer() {
     ],
   ];
   return (
-    <div className="border-t border-gray-300 mt-10">
+    <footer className="border-t border-gray-300 mt-10">
       <div className="max-w-screen-2xl m-auto hidden md:block ">
         <ul className="flex justify-center items-center p-4 gap-10 text-lg font-bold ">
           <li className="flex items-center ">
@@ -102,6 +102,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
