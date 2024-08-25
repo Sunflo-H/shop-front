@@ -2,9 +2,8 @@ import React from "react";
 import ProductList from "../../components/management/main/ProductManagement/ProductList";
 import PageNation from "../../components/management/main/ProductManagement/PageNation";
 import SearchBar from "../../components/management/main/ProductManagement/SearchBar";
-import ManagementTitle from "../../components/management/main/shared/ManagementTitle";
+import ManagementTitle from "../../components/management/main/ui/ManagementTitle";
 import Filter from "../../components/management/main/ProductManagement/Filter";
-import UploadProductBtn from "../../components/management/header/UploadProductBtn";
 import RemoveSelectedBtn from "../../components/management/main/RemoveSeletedBtn";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,6 +11,7 @@ import {
   setActiveCategory,
   setActiveStatus,
 } from "../../slice/management/productManagementSlice";
+import GoAddPageButton from "../../components/management/main/ui/GoAddPageButton";
 
 const categoryOptions = [
   { value: "ALL", label: "전체 상품" },
@@ -60,9 +60,9 @@ export default function ProductManagement() {
           value={activeStatus}
         />
         <SearchBar />
-        <UploadProductBtn />
-        <RemoveSelectedBtn />
+        <GoAddPageButton url={"/manage/product/new"} />
       </div>
+      <RemoveSelectedBtn />
       <ProductList />
       <PageNation />
     </div>
