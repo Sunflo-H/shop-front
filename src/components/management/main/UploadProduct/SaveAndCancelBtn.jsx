@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import {
   resetNewProduct,
   setNewProduct,
-} from "../../../slice/management/createProductSlice";
-import uploadFileToS3 from "./uploadFunc";
-import { alert_productUploadSuccess } from "../../../alerts/success";
-import { alert_productUploadCancel } from "../../../alerts/warning";
-import { alert_requireError } from "../../../alerts/error";
+} from "../../../../slice/management/createProductSlice";
+import uploadFileToS3 from "../../header/uploadFunc";
+import { alert_productUploadSuccess } from "../../../../alerts/success";
+import { alert_productUploadCancel } from "../../../../alerts/warning";
+import { alert_requireError } from "../../../../alerts/error";
 
 const CREATE_PRODUCT_URL = process.env.REACT_APP_CREATE_PRODUCT_URL;
 
@@ -68,17 +68,17 @@ export default function SaveAndCancelBtn() {
   };
 
   return (
-    <div className="flex justify-center ml-auto gap-3 mt-3">
+    <div className="flex justify-center ml-auto gap-3 mt-4 border">
       <button
         type="submit"
-        className="px-6 py-2 bg-blue-500 text-white font-bold cursor-pointer
-        hover:bg-blue-600"
+        className="px-6 py-2 text-white font-bold  bg-blue-600 cursor-pointer rounded-md
+        hover:bg-blue-500"
         onClick={handleSubmit}
       >
         Add Product
       </button>
       <div
-        className="px-6 py-2 text-white bg-gray-800 cursor-pointer 
+        className="px-6 py-2 text-white font-bold bg-gray-800 cursor-pointer rounded-md
         hover:bg-gray-700"
         onClick={handleCancel}
       >

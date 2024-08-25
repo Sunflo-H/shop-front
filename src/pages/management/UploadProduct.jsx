@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import RequireOption from "../../components/management/main/UploadProduct/RequireOption";
 import { setNewProduct } from "../../slice/management/createProductSlice";
-import SaveAndCancelBtn from "../../components/management/header/SaveAndCancelBtn";
+import SaveAndCancelBtn from "../../components/management/main/UploadProduct/SaveAndCancelBtn";
 
 const category = ["Man", "Woman", "Accessory", "Shoes"];
 
@@ -182,7 +182,6 @@ export default function UploadProduct() {
             </div>
           </div>
         </section>
-        {/* 등록 및 취소 */}
         <SaveAndCancelBtn />
       </div>
     </div>
