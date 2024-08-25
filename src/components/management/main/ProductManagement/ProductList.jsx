@@ -5,12 +5,12 @@ import ProductListHeader from "./ProductListHeader";
 import {
   fetchAllProduct,
   fetchProduct,
-} from "../../../../slice/management/productListSlice";
+} from "../../../../slice/management/productManagementSlice";
 
 export default function ProductList() {
   const dispatch = useDispatch();
   const { activeCategory, activeStatus, page, limit } = useSelector(
-    (state) => state.productList
+    (state) => state.productManagement
   );
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function ProductList() {
     );
   }, [dispatch]);
 
-  const products = useSelector((state) => state.productList.products);
+  const products = useSelector((state) => state.productManagement.products);
 
   return (
     <div className="mt-4 bg-white rounded-md shadow-md border border-gray-300 overflow-hidden">

@@ -9,7 +9,7 @@ import {
   fetchProduct,
   setPage,
   setPageGroup,
-} from "../../../../slice/management/productListSlice";
+} from "../../../../slice/management/productManagementSlice";
 
 /**
  ** 페이지 네이션 변수
@@ -31,10 +31,10 @@ export default function PageNation() {
     page,
     limit,
     pageGroup,
-    products_filteredByCategory,
-  } = useSelector((state) => state.productList);
+    filteredProducts,
+  } = useSelector((state) => state.productManagement);
 
-  const productCount = products_filteredByCategory.length;
+  const productCount = filteredProducts.length;
   let maxPage = Math.ceil(productCount / limit);
   let maxPageGroup = Math.ceil(maxPage / PAGE_PER_PAGEGORUP);
 

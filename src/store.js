@@ -2,7 +2,7 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import categoryReducer from "./slice/categorySlice";
 import authReducer from "./slice/authSlice";
 import productManagementReducer from "./slice/management/productManagementSlice";
-import productListReducer from "./slice/management/productListSlice";
+
 import pageNationReducer from "./slice/management/pageNationSlice";
 import createProductReducer from "./slice/management/createProductSlice";
 
@@ -14,7 +14,6 @@ export default configureStore({
 
     // productList
     productManagement: productManagementReducer,
-    productList: productListReducer,
     pageNation: pageNationReducer,
 
     // createProduct

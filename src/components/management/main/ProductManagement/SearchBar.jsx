@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useDispatch } from "react-redux";
-import { setSearch } from "../../../../slice/management/productManagementSlice";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
@@ -10,7 +9,7 @@ export default function SearchBar() {
     setInput(e.target.value);
   };
   const handleSearch = () => {
-    dispatch(setSearch(input));
+    // dispatch(setSearch(input));
   };
 
   return (

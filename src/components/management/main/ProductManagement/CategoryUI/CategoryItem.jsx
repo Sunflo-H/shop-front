@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProduct,
   setActiveCategory,
-} from "../../../../../slice/management/productListSlice";
+} from "../../../../../slice/management/productManagementSlice";
 
 export default function CategoryItem({ category }) {
   const dispatch = useDispatch();
