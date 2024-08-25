@@ -1,13 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsSelectMode } from "../../../../slice/management/productManagementSlice";
 
-export default function ProductListItem({ product }) {
+export default function ProductListItem({
+  product,
+  setCheckboxList,
+  checkboxList,
+  index,
+}) {
+  const dispatch = useDispatch();
   const { name, price, category, status, createdAt } = product;
 
+  useEffect(() => {
+    const isChecked = Object.values(checkboxList).some((checked) => checked);
+    isChecked
+      ? dispatch(setIsSelectMode(true))
+      : dispatch(setIsSelectMode(false));
+  }, [checkboxList]);
+  const handleChange = (e) => {
+    const name = "checkbox" + (index + 1);
+
+    if (e.target.checked) {
+      setCheckboxList((prev) => ({
+        ...prev,
+        [name]: true,
+      }));
+    } else {
+      setCheckboxList((prev) => ({
+        ...prev,
+        [name]: false,
+      }));
+    }
+  };
   return (
     <li className="flex py-2 border-b border-dashed	">
-      {/* remove 모드 상태면 보이게 */}
       <div className="w-20 flex justify-center items-center ">
         <label
           className="relative flex items-center rounded-full cursor-pointer"
@@ -15,8 +43,9 @@ export default function ProductListItem({ product }) {
         >
           <input
             type="checkbox"
-            className="peer relative h-4 w-4 cursor-pointer appearance-none rounded border-2 border-blue-300 checked:border-blue-400 checked:bg-blue-400 "
+            className={`peer relative h-4 w-4 cursor-pointer appearance-none rounded border-2 border-blue-300 checked:border-blue-400 checked:bg-blue-400 `}
             id="checkbox"
+            onChange={handleChange}
           />
           <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
             <svg

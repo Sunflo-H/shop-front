@@ -49,6 +49,8 @@ const productListSlice = createSlice({
     limit: 10,
     pageGroup: 1, // 현재 페이지 그룹 1~5, 6~10// 1이면 1~5
 
+    // remove
+    isSelectMode: false,
     //fetch status
     allProductStatus: "idle",
     productStatus: "idle",
@@ -101,6 +103,12 @@ const productListSlice = createSlice({
     setPageGroup: (state, action) => {
       state.pageGroup = action.payload;
     },
+
+    // Remove
+    setIsSelectMode: (state, action) => {
+      state.isSelectMode = action.payload;
+      console.log(state.isSelectMode);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -137,6 +145,7 @@ export const {
   setLimit,
   setPage,
   setPageGroup,
+  setIsSelectMode,
 } = productListSlice.actions;
 export default productListSlice.reducer;
 

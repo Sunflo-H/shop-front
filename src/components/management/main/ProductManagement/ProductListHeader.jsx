@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 export default function ProductListHeader() {
   return (
     <div className="flex py-2 border-b border-gray-300 font-bold bg-blue-100 ">
-      {/* remove 모드 상태면 보이게 */}
-      <div className="w-20 flex justify-center items-center ">
+      <div className="w-20 flex justify-center items-center">
         <label
           className="relative flex items-center rounded-full cursor-pointer"
           htmlFor="checkbox"
         >
           <input
             type="checkbox"
-            className="peer relative h-4 w-4 cursor-pointer appearance-none rounded border-2 border-blue-400 bg-white checked:border-blue-400 checked:bg-blue-400 "
+            className={`peer relative h-4 w-4 cursor-pointer appearance-none rounded border-2 border-blue-400 bg-white checked:border-blue-400 checked:bg-blue-400 `}
             id="checkbox"
           />
           <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
@@ -38,9 +38,6 @@ export default function ProductListHeader() {
       <div className="w-40 text-blue-900 uppercase">Category</div>
       <div className="w-40 text-blue-900 uppercase">Status</div>
       <div className="w-40 text-blue-900 uppercase">Creation Date</div>
-      {/* <div className="px-6 ml-4 flex items-center">
-        <FaTrash className="text-red-500" />
-      </div> */}
     </div>
   );
 }
