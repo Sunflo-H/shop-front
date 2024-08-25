@@ -33,7 +33,7 @@ function getIcon(navItem) {
 function getUrl(navItem) {
   let url = "";
   if (navItem === "Home") url = "/manage";
-  else if (navItem === "Products") url = "/manage/product/";
+  else if (navItem === "Products") url = "/manage/product";
   else url = "/manage/user";
 
   return url;
