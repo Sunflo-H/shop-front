@@ -4,6 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import RequireOption from "../../components/management/main/UploadProduct/RequireOption";
 import { setNewProduct } from "../../slice/management/createProductSlice";
+import SaveAndCancelBtn from "../../components/management/header/SaveAndCancelBtn";
 
 const category = ["Man", "Woman", "Accessory", "Shoes"];
 
@@ -26,7 +27,7 @@ export default function UploadProduct() {
   };
 
   return (
-    <div className="max-w-screen-lg w-screen m-auto">
+    <div className="max-w-screen-lg w-screen m-auto pt-6">
       <div>
         {/* 상단 컨텐츠 */}
         <section className="flex gap-6">
@@ -181,6 +182,8 @@ export default function UploadProduct() {
             </div>
           </div>
         </section>
+        {/* 등록 및 취소 */}
+        <SaveAndCancelBtn />
       </div>
     </div>
   );

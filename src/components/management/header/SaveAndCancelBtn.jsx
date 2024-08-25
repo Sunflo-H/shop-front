@@ -68,20 +68,22 @@ export default function SaveAndCancelBtn() {
   };
 
   return (
-    <div className="flex ml-auto gap-3">
-      <div
-        className="border-gray-300 border px-6 py-1 cursor-pointer text-md ml-auto self-center"
-        onClick={handleCancel}
-      >
-        취소
-      </div>
+    <div className="flex justify-center ml-auto gap-3 mt-3">
       <button
         type="submit"
-        className=" bg-blue-500 border border-transparent text-white px-6 py-1 cursor-pointer text-md ml-auto flex self-center"
+        className="px-6 py-2 bg-blue-500 text-white font-bold cursor-pointer
+        hover:bg-blue-600"
         onClick={handleSubmit}
       >
-        저장
+        Add Product
       </button>
+      <div
+        className="px-6 py-2 text-white bg-gray-800 cursor-pointer 
+        hover:bg-gray-700"
+        onClick={handleCancel}
+      >
+        Cancel
+      </div>
     </div>
   );
 }

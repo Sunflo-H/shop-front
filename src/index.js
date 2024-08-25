@@ -91,15 +91,22 @@ const router = createBrowserRouter([
         path: "/manage/product",
         element: <ProductManagement />,
       },
-      {
-        path: "/manage/product/new",
-        element: <UploadProduct />,
-      },
+
       {
         path: "/manage/user",
         element: <UserManagement />,
       },
     ],
+  },
+  {
+    path: "/manage/product/new",
+    element: (
+      <Provider store={store}>
+        <div className="h-screen bg-lightblue manage-font">
+          <UploadProduct />
+        </div>
+      </Provider>
+    ),
   },
 ]);
 
