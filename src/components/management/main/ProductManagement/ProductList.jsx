@@ -12,18 +12,8 @@ export default function ProductList() {
   const { activeCategory, activeStatus, page, limit } = useSelector(
     (state) => state.productManagement
   );
-  const [checkboxList, setCheckboxList] = useState({
-    checkbox1: false,
-    checkbox2: false,
-    checkbox3: false,
-    checkbox4: false,
-    checkbox5: false,
-    checkbox6: false,
-    checkbox7: false,
-    checkbox8: false,
-    checkbox9: false,
-    checkbox10: false,
-  });
+
+  const [checkboxList, setCheckboxList] = useState(getCheckboxObj(limit));
 
   useEffect(() => {
     dispatch(fetchAllProduct());
@@ -55,4 +45,13 @@ export default function ProductList() {
       </ul>
     </div>
   );
+}
+
+function getCheckboxObj(limit) {
+  let obj = new Object();
+  for (let i = 0; i < limit; i++) {
+    const key = "checkbox" + (i + 1);
+    obj[key] = false;
+  }
+  return obj;
 }
