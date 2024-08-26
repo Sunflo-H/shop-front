@@ -1,18 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import RadioBtn from "../../components/management/main/UploadProduct/RadioBtn";
 import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import RequireOption from "../../components/management/main/UploadProduct/RequireOption";
 import { setNewProduct } from "../../slice/management/createProductSlice";
-import SaveAndCancelBtn from "../../components/management/main/UploadProduct/SaveAndCancelBtn";
+import UpdateAndExitBtn from "../../components/management/main/ManagementProductDetail/UpdateAndExitBtn";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const category = ["Man", "Woman", "Accessory", "Shoes"];
 
-export default function UpdateProduct() {
+export default function ManagementProductDetail() {
+  const location = useLocation();
+  const id = location.pathname.split("/")[4];
+  const data = axios.get(`/api/product/${id}`);
+  console.log(data);
+
   const dispatch = useDispatch();
   const defaultImage = useSelector((state) => state.createProduct.defaultImage);
   const image = useSelector((state) => state.createProduct.newProduct.image);
-
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     const key = name;
@@ -28,7 +34,7 @@ export default function UpdateProduct() {
 
   return (
     <div className="h-screen bg-lightblue manage-font">
-      <div className="max-w-screen-lg w-screen m-auto pt-6 ">
+      <div className="max-w-screen-lg w-screen m-auto pt-6">
         <div>
           {/* 상단 컨텐츠 */}
           <section className="flex gap-6">
@@ -183,7 +189,7 @@ export default function UpdateProduct() {
               </div>
             </div>
           </section>
-          <SaveAndCancelBtn />
+          <UpdateAndExitBtn />
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsSelectMode } from "../../../../slice/management/productManagementSlice";
+import { Link } from "react-router-dom";
 
 export default function ProductListItem({
   product,
@@ -11,7 +12,7 @@ export default function ProductListItem({
   index,
 }) {
   const dispatch = useDispatch();
-  const { name, price, category, status, createdAt } = product;
+  const { name, price, category, status, createdAt, _id } = product;
 
   useEffect(() => {
     const isChecked = Object.values(checkboxList).some((checked) => checked);
@@ -19,6 +20,7 @@ export default function ProductListItem({
       ? dispatch(setIsSelectMode(true))
       : dispatch(setIsSelectMode(false));
   }, [checkboxList]);
+
   const handleChange = (e) => {
     const name = "checkbox" + (index + 1);
 
@@ -34,6 +36,7 @@ export default function ProductListItem({
       }));
     }
   };
+
   return (
     <li className="flex py-2 border-b border-dashed	">
       <div className="w-20 flex justify-center items-center ">
@@ -65,13 +68,20 @@ export default function ProductListItem({
           </span>
         </label>
       </div>
-      <div className="w-60 pl-[2px] ">{name}</div>
+      <Link
+        to={`/manage/product/detail/${_id}`}
+        className="w-60 pl-[2px] text-bold"
+      >
+        {name}
+      </Link>
       <div className="w-40 pl-[2px] ">{price}</div>
       <div className="w-40 pl-[2px] ">{category}</div>
       <div className="w-40 pl-[2px] ">{status}</div>
       <div className="w-40 pl-[2px] ">{createdAt}</div>
       <div className="flex items-center px-6 ml-4 gap-5 border-l-[2px] border-lightblue">
-        <FaPen className="cursor-pointer text-deepblue hover:text-blue-500" />
+        <Link to={`/manage/product/update/${_id}`}>
+          <FaPen className="cursor-pointer text-deepblue hover:text-blue-500" />
+        </Link>
         <FaTrash className="cursor-pointer text-deepblue hover:text-red-500" />
       </div>
     </li>

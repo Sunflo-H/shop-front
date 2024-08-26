@@ -17,10 +17,11 @@ import UploadProduct from "./pages/management/UploadProduct";
 import ManagementApp from "./pages/management/ManagementApp";
 import Login from "./pages/shop/Login";
 import Register from "./pages/shop/Register";
-import DashBoard from "./pages/management/DashBoard";
 import ProductManagement from "./pages/management/ProductManagement";
 import UserManagement from "./pages/management/UserManagement";
 import ManagementHome from "./pages/management/ManagementHome";
+import UpdateProduct from "./pages/management/UpdateProduct";
+import ManagementProductDetail from "./pages/management/ManagementProductDetail";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -102,9 +103,23 @@ const router = createBrowserRouter([
     path: "/manage/product/new",
     element: (
       <Provider store={store}>
-        <div className="h-screen bg-lightblue manage-font">
-          <UploadProduct />
-        </div>
+        <UploadProduct />
+      </Provider>
+    ),
+  },
+  {
+    path: "/manage/product/detail/:id",
+    element: (
+      <Provider store={store}>
+        <ManagementProductDetail />
+      </Provider>
+    ),
+  },
+  {
+    path: "/manage/product/update/:id",
+    element: (
+      <Provider store={store}>
+        <UpdateProduct />
       </Provider>
     ),
   },

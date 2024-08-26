@@ -7,7 +7,7 @@ import { setIsRemoveMode } from "../../../slice/management/productManagementSlic
 
 export default function RemoveSelectedBtn() {
   const { isSelectMode } = useSelector((state) => state.productManagement);
-  // console.log("isSelectMode :", isSelectMode);
+
   return (
     <div
       className={` inline-flex items-center px-4 py-2 mt-3 gap-2
