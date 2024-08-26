@@ -1,9 +1,9 @@
 import React from "react";
 import ProductList from "../../components/management/main/ProductManagement/ProductList";
 import PageNation from "../../components/management/main/ProductManagement/PageNation";
-import SearchBar from "../../components/management/main/ProductManagement/SearchBar";
+import SearchBar from "../../components/management/main/ui/SearchBar";
 import ManagementTitle from "../../components/management/main/ui/ManagementTitle";
-import Filter from "../../components/management/main/ProductManagement/Filter";
+import Filter from "../../components/management/main/ui/Filter";
 import RemoveSelectedBtn from "../../components/management/main/RemoveSeletedBtn";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,20 +12,21 @@ import {
   setActiveStatus,
 } from "../../slice/management/productManagementSlice";
 import GoAddPageButton from "../../components/management/main/ui/GoAddPageButton";
+import Limit from "../../components/management/main/ui/Limit";
 
 const categoryOptions = [
-  { value: "ALL", label: "전체 상품" },
-  { value: "Man", label: "남성" },
-  { value: "Woman", label: "여성" },
-  { value: "Shoes", label: "신발" },
-  { value: "Accessory", label: "악세사리" },
+  { value: "ALL", label: "ALL Products" },
+  { value: "Man", label: "Man" },
+  { value: "Woman", label: "Woman" },
+  { value: "Shoes", label: "Shoes" },
+  { value: "Accessory", label: "Accessory" },
 ];
 
 const statusOptions = [
-  { value: "ALL", label: "전체 상태" },
-  { value: "Sale", label: "판매중" },
-  { value: "Sold Out", label: "품절" },
-  { value: "Hide", label: "숨김" },
+  { value: "ALL", label: "ALL Status" },
+  { value: "Sale", label: "Sale" },
+  { value: "Sold Out", label: "Sold Out" },
+  { value: "Hide", label: "Hide" },
 ];
 
 export default function ProductManagement() {
@@ -59,6 +60,7 @@ export default function ProductManagement() {
           onChange={handleStatusChange}
           value={activeStatus}
         />
+        <Limit />
         <SearchBar />
         <GoAddPageButton url={"/manage/product/new"} />
       </div>
