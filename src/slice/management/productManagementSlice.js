@@ -107,7 +107,6 @@ const productListSlice = createSlice({
     // Remove
     setIsSelectMode: (state, action) => {
       state.isSelectMode = action.payload;
-      console.log(state.isSelectMode);
     },
   },
   extraReducers: (builder) => {
