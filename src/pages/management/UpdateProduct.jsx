@@ -5,13 +5,59 @@ import { useDispatch, useSelector } from "react-redux";
 import RequireOption from "../../components/management/main/UploadProduct/RequireOption";
 import { setNewProduct } from "../../slice/management/createProductSlice";
 import SaveAndCancelBtn from "../../components/management/main/UploadProduct/SaveAndCancelBtn";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
-const category = ["Man", "Woman", "Accessory", "Shoes"];
+const categoryList = ["Man", "Woman", "Accessory", "Shoes"];
 
+const fetchProduct = async (id) => {
+  const { data } = await axios.get(
+    process.env.REACT_APP_GET_PRODUCT_URL + "/" + id
+  );
+  return data;
+};
+
+/**
+ * 1. 일단 이미지를 제외하고 업데이트 해보자.
+ *
+ *
+ * 2. 이미지 업데이트
+ */
 export default function UpdateProduct() {
   const dispatch = useDispatch();
-  const defaultImage = useSelector((state) => state.createProduct.defaultImage);
-  const image = useSelector((state) => state.createProduct.newProduct.image);
+  const location = useLocation();
+
+  const id = location.pathname.split("/")[4];
+
+  const {
+    data: product,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["product", id],
+    queryFn: () => fetchProduct(id),
+    enabled: !!id,
+  });
+  const [updatedProduct, setUpdatedProduct] = useState(null);
+
+  useEffect(() => {
+    setUpdatedProduct(product);
+  }, [product]);
+  console.log(updatedProduct);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!product) {
+    return <div>No product found.</div>;
+  }
+
+  const { name, price, size, color, category, image, description } = product;
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
@@ -45,9 +91,7 @@ export default function UpdateProduct() {
                       name="name"
                       className="w-full outline-none"
                       placeholder="ex) Man's Suit"
-                      value={useSelector(
-                        (state) => state.createProduct.newProduct.name
-                      )}
+                      value={name}
                       required
                       onChange={handleInputChange}
                     />
@@ -65,9 +109,7 @@ export default function UpdateProduct() {
                       className="w-full outline-none"
                       placeholder="100"
                       required
-                      value={useSelector(
-                        (state) => state.createProduct.newProduct.price
-                      )}
+                      value={price}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -83,7 +125,7 @@ export default function UpdateProduct() {
                   </div>
                   <div className="mt-1 ">
                     <div className="">
-                      {category.map((item, index) => (
+                      {categoryList.map((item, index) => (
                         <RadioBtn category={item} key={index} />
                       ))}
                     </div>
@@ -98,9 +140,7 @@ export default function UpdateProduct() {
                       name="size"
                       placeholder="Separate with a comma. ex) S, M, L"
                       className="w-full border-b"
-                      value={useSelector(
-                        (state) => state.createProduct.newProduct.size
-                      )}
+                      value={size}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -114,9 +154,7 @@ export default function UpdateProduct() {
                       name="color"
                       placeholder="Separate with a comma. ex) Black, Red, Blue"
                       className="w-full border-b"
-                      value={useSelector(
-                        (state) => state.createProduct.newProduct.color
-                      )}
+                      value={color}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -144,7 +182,7 @@ export default function UpdateProduct() {
               </div>
               <div className="grow mx-4 mb-4 h-full">
                 <label>
-                  {!image ? (
+                  {/* {!image ? (
                     <img
                       src={defaultImage}
                       className="rounded-md cursor-pointer w-[452.19px] h-[384px]"
@@ -154,7 +192,12 @@ export default function UpdateProduct() {
                       className="rounded-md cursor-pointer w-[452.19px] h-[384px]"
                       src={URL.createObjectURL(image)}
                     />
-                  )}
+                  )} */}
+                  <img
+                    src={image}
+                    className="rounded-md cursor-pointer w-[452.19px] h-[384px]"
+                  />
+
                   <input
                     type="file"
                     accept="image/*"
@@ -175,9 +218,7 @@ export default function UpdateProduct() {
                 <textarea
                   className="w-full h-20 border outline-none resize-none"
                   name="description"
-                  value={useSelector(
-                    (state) => state.createProduct.newProduct.description
-                  )}
+                  value={description}
                   onChange={handleInputChange}
                 ></textarea>
               </div>
