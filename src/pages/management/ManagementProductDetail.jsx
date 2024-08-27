@@ -45,7 +45,10 @@ export default function ManagementProductDetail() {
 
   return (
     <div className="h-screen bg-lightblue manage-font">
-      <div className="max-w-screen-lg w-screen m-auto pt-6">
+      <div className="max-w-screen-lg w-screen m-auto pt-4">
+        <div className="text-2xl mb-2 ">
+          <span className="font-bold">Product Detail</span>
+        </div>
         <div>
           {/* 상단 컨텐츠 */}
           <section className="flex gap-6">
