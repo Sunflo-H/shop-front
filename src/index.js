@@ -22,8 +22,11 @@ import UserManagement from "./pages/management/UserManagement";
 import ManagementHome from "./pages/management/ManagementHome";
 import UpdateProduct from "./pages/management/UpdateProduct";
 import ManagementProductDetail from "./pages/management/ManagementProductDetail";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const queryClient = new QueryClient();
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -110,17 +113,21 @@ const router = createBrowserRouter([
   {
     path: "/manage/product/detail/:id",
     element: (
-      <Provider store={store}>
-        <ManagementProductDetail />
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <ManagementProductDetail />
+        </Provider>
+      </QueryClientProvider>
     ),
   },
   {
     path: "/manage/product/update/:id",
     element: (
-      <Provider store={store}>
-        <UpdateProduct />
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <UpdateProduct />
+        </Provider>
+      </QueryClientProvider>
     ),
   },
 ]);

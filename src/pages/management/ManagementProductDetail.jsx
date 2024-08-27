@@ -1,36 +1,47 @@
 import React from "react";
-import RadioBtn from "../../components/management/main/UploadProduct/RadioBtn";
-import { FaPlus } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import RequireOption from "../../components/management/main/UploadProduct/RequireOption";
-import { setNewProduct } from "../../slice/management/createProductSlice";
 import UpdateAndExitBtn from "../../components/management/main/ManagementProductDetail/UpdateAndExitBtn";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
-const category = ["Man", "Woman", "Accessory", "Shoes"];
+const URL = process.env.REACT_APP_GET_PRODUCT_URL;
+
+const fetchProduct = async (id) => {
+  const { data } = await axios.get(URL + "/" + id);
+  return data;
+};
 
 export default function ManagementProductDetail() {
   const location = useLocation();
+
   const id = location.pathname.split("/")[4];
-  const data = axios.get(`/api/product/${id}`);
-  console.log(data);
 
-  const dispatch = useDispatch();
-  const defaultImage = useSelector((state) => state.createProduct.defaultImage);
-  const image = useSelector((state) => state.createProduct.newProduct.image);
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    const key = name;
-    const value = files[0];
-    dispatch(setNewProduct({ key, value }));
-  };
+  const {
+    data: product,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["product", id],
+    queryFn: () => fetchProduct(id),
+    enabled: !!id, // `id`가 있을 때만 쿼리를 실행 // '!id' id가 false, '!!id' id가 true
+  });
 
-  const handleInputChange = (e) => {
-    const key = e.target.name;
-    const value = e.target.value;
-    dispatch(setNewProduct({ key, value }));
-  };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!product) {
+    return <div>No product found.</div>;
+  }
+
+  let { name, price, category, size, color, image, description } = product;
+
+  size = size.join(",");
+  color = color.join(",");
 
   return (
     <div className="h-screen bg-lightblue manage-font">
@@ -42,134 +53,44 @@ export default function ManagementProductDetail() {
               {/* 좌측 상단 첫번째 컨텐츠 : 상품명, 가격 */}
               <section className="bg-white rounded-md shadow-md p-2">
                 <div className=" py-4 px-4">
-                  <div className="font-bold">
-                    Name <RequireOption />
-                  </div>
-                  <div className="grow text-start border-b mt-1">
-                    <input
-                      type="text"
-                      name="name"
-                      className="w-full outline-none"
-                      placeholder="ex) Man's Suit"
-                      value={useSelector(
-                        (state) => state.createProduct.newProduct.name
-                      )}
-                      required
-                      onChange={handleInputChange}
-                    />
-                  </div>
+                  <div className="font-bold">Name</div>
+                  <div className="grow text-start border-b mt-1">{name}</div>
                 </div>
                 <div className=" py-4 px-4">
-                  <div className="font-bold">
-                    Price
-                    <RequireOption />
-                  </div>
-                  <div className="flex border-b mt-1 ">
-                    <input
-                      type="Number"
-                      name="price"
-                      className="w-full outline-none"
-                      placeholder="100"
-                      required
-                      value={useSelector(
-                        (state) => state.createProduct.newProduct.price
-                      )}
-                      onChange={handleInputChange}
-                    />
-                  </div>
+                  <div className="font-bold">Price</div>
+                  <div className="flex border-b mt-1 ">{price}</div>
                 </div>
               </section>
               {/* 좌측 상단 두번째 컨텐츠 : 카테고리, 사이즈, 컬러 */}
               <section className="bg-white  mt-4 rounded-md shadow-md p-2">
                 {/* 카테고리 */}
                 <div className="py-4 px-4">
-                  <div className="font-bold">
-                    Category
-                    <RequireOption />
-                  </div>
-                  <div className="mt-1 ">
-                    <div className="">
-                      {category.map((item, index) => (
-                        <RadioBtn category={item} key={index} />
-                      ))}
-                    </div>
-                  </div>
+                  <div className="font-bold">Category</div>
+                  <div className="mt-1 border-b">{category}</div>
                 </div>
                 {/* 사이즈 */}
                 <div className="py-4 px-4">
                   <div className="font-bold">Size</div>
-                  <div className="mt-1 ">
-                    <input
-                      type="text"
-                      name="size"
-                      placeholder="Separate with a comma. ex) S, M, L"
-                      className="w-full border-b"
-                      value={useSelector(
-                        (state) => state.createProduct.newProduct.size
-                      )}
-                      onChange={handleInputChange}
-                    />
-                  </div>
+                  <div className="mt-1 border-b">{size}</div>
                 </div>
                 {/* 컬러 */}
                 <div className="py-4 px-4">
                   <div className="font-bold">Color</div>
-                  <div className="mt-1 ">
-                    <input
-                      type="text"
-                      name="color"
-                      placeholder="Separate with a comma. ex) Black, Red, Blue"
-                      className="w-full border-b"
-                      value={useSelector(
-                        (state) => state.createProduct.newProduct.color
-                      )}
-                      onChange={handleInputChange}
-                    />
-                  </div>
+                  <div className="mt-1 border-b">{color}</div>
                 </div>
               </section>
             </div>
-            {/* 우측 상단 컨텐츠 : 이미지 업로드 */}
+
+            {/* 우측 상단 컨텐츠 : 이미지 */}
             <section className="flex flex-col w-1/2 h-[472px] bg-white rounded-md p-2 shadow-md">
               <div className="flex px-4 py-4">
-                <div className="font-bold">
-                  Image <RequireOption />
-                </div>
-                <label className="flex self-center text-blue-500 font-bold ml-auto">
-                  <span className="mr-1 self-center cursor-pointer">Add</span>{" "}
-                  <FaPlus className="self-center" />
-                  <input
-                    type="file"
-                    accept="image/*"
-                    name="image"
-                    required
-                    onChange={handleFileChange}
-                    hidden
-                  />
-                </label>
+                <div className="font-bold">Image</div>
               </div>
               <div className="grow mx-4 mb-4 h-full">
-                <label>
-                  {!image ? (
-                    <img
-                      src={defaultImage}
-                      className="rounded-md cursor-pointer w-[452.19px] h-[384px]"
-                    />
-                  ) : (
-                    <img
-                      className="rounded-md cursor-pointer w-[452.19px] h-[384px]"
-                      src={URL.createObjectURL(image)}
-                    />
-                  )}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    name="image"
-                    required
-                    onChange={handleFileChange}
-                    hidden
-                  />
-                </label>
+                <img
+                  src={image}
+                  className="rounded-md w-[452.19px] h-[384px]"
+                />
               </div>
             </section>
           </section>
@@ -177,19 +98,10 @@ export default function ManagementProductDetail() {
           <section className="bg-white mt-4 rounded-md shadow-md">
             <div className="py-4 px-4">
               <div className="font-bold">Description</div>
-              <div className="flex mt-1 ">
-                <textarea
-                  className="w-full h-20 border outline-none resize-none"
-                  name="description"
-                  value={useSelector(
-                    (state) => state.createProduct.newProduct.description
-                  )}
-                  onChange={handleInputChange}
-                ></textarea>
-              </div>
+              <div className="flex mt-1 border-b">{description}</div>
             </div>
           </section>
-          <UpdateAndExitBtn />
+          <UpdateAndExitBtn id={id} />
         </div>
       </div>
     </div>
