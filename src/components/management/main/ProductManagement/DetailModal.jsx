@@ -1,34 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SelectBox from "../ui/SelectBox";
-import { IoArrowBackOutline } from "react-icons/io5";
-import { GrUpdate } from "react-icons/gr";
-import { FaSignOutAlt } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
-import { FaAngleLeft } from "react-icons/fa";
 import { RxUpdate } from "react-icons/rx";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsOpen } from "../../../../slice/management/detailModalSlice";
 
 const categoryOptions = ["Man", "Woman", "Shoes", "Accessory"];
 const statusOptions = ["Sale", "Sold Out", "Hide"];
 
-export default function ProductDetail({ isShowDetail, product }) {
-  const {
-    name,
-    price,
-    category,
-    status,
-    createdAt,
-    _id,
-    image,
-    color,
-    size,
-    description,
-  } = product || {};
+export default function DetailModal() {
+  const dispatch = useDispatch();
+  const { isOpen, detailData } = useSelector((state) => state.detailModal);
+  const modalRef = useRef();
+  const { name, price, category, status, image, color, size, description } =
+    detailData || {};
+
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeStatus, setActiveStatus] = useState(null);
 
   useEffect(() => {
     setActiveCategory(category);
-  }, [product]);
+    setActiveStatus(status);
+  }, [detailData]);
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (!isOpen) return;
+
+      // 모달이 열려있을 때
+      if (
+        !e.target.classList.contains("product-list-item") && // .product-list-item이 아니고
+        !modalRef.current.contains(e.target) // 모달 내부도 아니라면
+      ) {
+        console.log("아이템이 아니고 모달 내부도 아니다.");
+        dispatch(setIsOpen(false));
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isOpen]);
 
   const handleCategoryChange = (e) => {
     setActiveCategory(e.target.value);
@@ -38,18 +51,25 @@ export default function ProductDetail({ isShowDetail, product }) {
     setActiveStatus(e.target.value);
   };
 
-  const product_origin = { ...product };
-  const [updatedProduct, setUpdatedProduct] = useState(null);
-
   const [isChanged, setIsChanged] = useState(false);
+
+  const handleExitClick = () => {
+    dispatch(setIsOpen(false));
+  };
+
   return (
     <div
+      ref={modalRef}
       className={`absolute top-0 w-96 h-screen bg-[#f7f7f7] border-l-2 border-[#e0e0e0] 
         transition-all shadow-2xl overflow-scroll
-        ${isShowDetail ? "right-0" : "-right-96"}`}
+        ${isOpen ? "right-0" : "-right-96"}
+        `}
     >
       <header className="fixed flex justify-between items-center w-96 h-10 bg-blue-200 px-4">
-        <FaChevronLeft className="text-xl cursor-pointer " />
+        <FaChevronLeft
+          className="text-xl cursor-pointer"
+          onClick={handleExitClick}
+        />
         <div
           className={`flex items-center px-4 py-1 text-white  rounded-md cursor-pointer gap-1 
            ${

@@ -4,15 +4,19 @@ import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsSelectMode } from "../../../../slice/management/productManagementSlice";
 import { Link } from "react-router-dom";
+import {
+  setDetailData,
+  setIsOpen,
+} from "../../../../slice/management/detailModalSlice";
 
 export default function ProductListItem({
   product,
   setCheckboxList,
   checkboxList,
   index,
-  onClick,
 }) {
   const dispatch = useDispatch();
+  const { isOpen } = useSelector((state) => state.detailModal);
   const { name, price, category, status, createdAt, _id } = product;
 
   useEffect(() => {
@@ -36,6 +40,11 @@ export default function ProductListItem({
         [name]: false,
       }));
     }
+  };
+
+  const handleClick = (product) => {
+    dispatch(setDetailData(product));
+    if (!isOpen) dispatch(setIsOpen(true));
   };
 
   return (
@@ -69,13 +78,10 @@ export default function ProductListItem({
           </span>
         </label>
       </div>
-      <div
-        // to={`/manage/product/detail/${_id}`}
-        className="w-60 pl-[2px] text-bold"
-      >
+      <div className="w-60 pl-[2px] text-bold">
         <span
-          onClick={() => onClick(product)}
-          className="cursor-pointer hover:font-bold"
+          onClick={() => handleClick(product)}
+          className="product-list-item  cursor-pointer hover:font-bold"
         >
           {name}
         </span>

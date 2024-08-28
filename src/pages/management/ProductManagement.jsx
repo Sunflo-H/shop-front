@@ -13,7 +13,7 @@ import {
 } from "../../slice/management/productManagementSlice";
 import GoAddPageButton from "../../components/management/main/ui/GoAddPageButton";
 import Limit from "../../components/management/main/ui/Limit";
-import ProductDetail from "../../components/management/main/ProductManagement/ProductDetail";
+import DetailModal from "../../components/management/main/ProductManagement/DetailModal";
 
 const categoryOptions = [
   { value: "ALL", label: "ALL Products" },
@@ -48,6 +48,7 @@ export default function ProductManagement() {
     dispatch(setActiveStatus(status));
     dispatch(fetchProduct({ category: activeCategory, status, page, limit }));
   };
+
   return (
     <div>
       <ManagementTitle text="Product Management" />
@@ -69,7 +70,9 @@ export default function ProductManagement() {
       <RemoveSelectedBtn />
       <ProductList />
       <PageNation />
-      {/* <div className="bg-black absolute top-0 w-screen h-screen"></div> */}
+
+      {/* 모달 */}
+      <DetailModal />
     </div>
   );
 }
