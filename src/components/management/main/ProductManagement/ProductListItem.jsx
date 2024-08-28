@@ -10,6 +10,7 @@ export default function ProductListItem({
   setCheckboxList,
   checkboxList,
   index,
+  onClick,
 }) {
   const dispatch = useDispatch();
   const { name, price, category, status, createdAt, _id } = product;
@@ -68,12 +69,17 @@ export default function ProductListItem({
           </span>
         </label>
       </div>
-      <Link
-        to={`/manage/product/detail/${_id}`}
+      <div
+        // to={`/manage/product/detail/${_id}`}
         className="w-60 pl-[2px] text-bold"
       >
-        {name}
-      </Link>
+        <span
+          onClick={() => onClick(product)}
+          className="cursor-pointer hover:font-bold"
+        >
+          {name}
+        </span>
+      </div>
       <div className="w-40 pl-[2px] ">{price}</div>
       <div className="w-40 pl-[2px] ">{category}</div>
       <div className="w-40 pl-[2px] ">{status}</div>

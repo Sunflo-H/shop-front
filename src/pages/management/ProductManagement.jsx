@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ProductList from "../../components/management/main/ProductManagement/ProductList";
 import PageNation from "../../components/management/main/ProductManagement/PageNation";
 import SearchBar from "../../components/management/main/ui/SearchBar";
@@ -13,6 +13,7 @@ import {
 } from "../../slice/management/productManagementSlice";
 import GoAddPageButton from "../../components/management/main/ui/GoAddPageButton";
 import Limit from "../../components/management/main/ui/Limit";
+import ProductDetail from "../../components/management/main/ProductManagement/ProductDetail";
 
 const categoryOptions = [
   { value: "ALL", label: "ALL Products" },
@@ -31,6 +32,7 @@ const statusOptions = [
 
 export default function ProductManagement() {
   const dispatch = useDispatch();
+
   const { activeCategory, activeStatus, page, limit } = useSelector(
     (state) => state.productManagement
   );
@@ -67,6 +69,7 @@ export default function ProductManagement() {
       <RemoveSelectedBtn />
       <ProductList />
       <PageNation />
+      {/* <div className="bg-black absolute top-0 w-screen h-screen"></div> */}
     </div>
   );
 }

@@ -6,13 +6,15 @@ import {
   fetchAllProduct,
   fetchProduct,
 } from "../../../../slice/management/productManagementSlice";
+import ProductDetail from "./ProductDetail";
 
 export default function ProductList() {
   const dispatch = useDispatch();
   const { activeCategory, activeStatus, page, limit } = useSelector(
     (state) => state.productManagement
   );
-
+  const [isShowDetail, setIsShowDetail] = useState(false);
+  const [product, setProduct] = useState(null);
   const [checkboxList, setCheckboxList] = useState(getCheckboxObj(limit));
 
   useEffect(() => {
@@ -27,6 +29,11 @@ export default function ProductList() {
     );
   }, [dispatch]);
 
+  const handleClick = (product) => {
+    setIsShowDetail((prev) => !prev);
+    setProduct(product);
+  };
+
   const products = useSelector((state) => state.productManagement.products);
 
   return (
@@ -40,9 +47,12 @@ export default function ProductList() {
             index={i}
             checkboxList={checkboxList}
             setCheckboxList={setCheckboxList}
+            onClick={handleClick}
           />
         ))}
       </ul>
+
+      <ProductDetail isShowDetail={isShowDetail} product={product} />
     </div>
   );
 }
