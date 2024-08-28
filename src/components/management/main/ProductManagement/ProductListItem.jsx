@@ -6,7 +6,8 @@ import { setIsSelectMode } from "../../../../slice/management/productManagementS
 import { Link } from "react-router-dom";
 import {
   setDetailData,
-  setIsOpen,
+  closeModal,
+  openModal,
 } from "../../../../slice/management/detailModalSlice";
 
 export default function ProductListItem({
@@ -16,7 +17,7 @@ export default function ProductListItem({
   index,
 }) {
   const dispatch = useDispatch();
-  const { isOpen } = useSelector((state) => state.detailModal);
+  const { isOpen, detailData } = useSelector((state) => state.detailModal);
   const { name, price, category, status, createdAt, _id } = product;
 
   useEffect(() => {
@@ -43,8 +44,14 @@ export default function ProductListItem({
   };
 
   const handleClick = (product) => {
-    dispatch(setDetailData(product));
-    if (!isOpen) dispatch(setIsOpen(true));
+    if (!isOpen) dispatch(openModal());
+
+    if (detailData._id === product._id) {
+      dispatch(closeModal());
+      dispatch(setDetailData({}));
+    } else {
+      dispatch(setDetailData(product));
+    }
   };
 
   return (

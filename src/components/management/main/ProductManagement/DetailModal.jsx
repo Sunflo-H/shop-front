@@ -3,7 +3,7 @@ import SelectBox from "../ui/SelectBox";
 import { FaChevronLeft } from "react-icons/fa";
 import { RxUpdate } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsOpen } from "../../../../slice/management/detailModalSlice";
+import { closeModal } from "../../../../slice/management/detailModalSlice";
 
 const categoryOptions = ["Man", "Woman", "Shoes", "Accessory"];
 const statusOptions = ["Sale", "Sold Out", "Hide"];
@@ -27,13 +27,11 @@ export default function DetailModal() {
     const handleOutsideClick = (e) => {
       if (!isOpen) return;
 
-      // 모달이 열려있을 때
       if (
-        !e.target.classList.contains("product-list-item") && // .product-list-item이 아니고
+        !e.target.classList.contains("product-list-item") && // product-list-item이 아니고
         !modalRef.current.contains(e.target) // 모달 내부도 아니라면
       ) {
-        console.log("아이템이 아니고 모달 내부도 아니다.");
-        dispatch(setIsOpen(false));
+        dispatch(closeModal());
       }
     };
 
@@ -54,13 +52,13 @@ export default function DetailModal() {
   const [isChanged, setIsChanged] = useState(false);
 
   const handleExitClick = () => {
-    dispatch(setIsOpen(false));
+    dispatch(closeModal());
   };
 
   return (
     <div
       ref={modalRef}
-      className={`absolute top-0 w-96 h-screen bg-[#f7f7f7] border-l-2 border-[#e0e0e0] 
+      className={`absolute top-0 w-96 h-screen pb-4 bg-[#f7f7f7] border-l-2 border-[#e0e0e0] 
         transition-all shadow-2xl overflow-scroll
         ${isOpen ? "right-0" : "-right-96"}
         `}

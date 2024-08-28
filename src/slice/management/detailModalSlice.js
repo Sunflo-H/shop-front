@@ -11,8 +11,11 @@ const detailModalSlice = createSlice({
     setSelectedItem: (state, action) => {
       state.selectedItem = action.payload;
     },
-    setIsOpen: (state, action) => {
-      state.isOpen = action.payload;
+    closeModal: (state, action) => {
+      state.isOpen = false;
+    },
+    openModal: (state, action) => {
+      state.isOpen = true;
     },
     setDetailData: (state, action) => {
       state.detailData = action.payload;
@@ -20,5 +23,6 @@ const detailModalSlice = createSlice({
   },
 });
 
-export const { setIsOpen, setData, setDetailData } = detailModalSlice.actions;
+export const { closeModal, openModal, setData, setDetailData } =
+  detailModalSlice.actions;
 export default detailModalSlice.reducer;
