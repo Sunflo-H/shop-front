@@ -27,7 +27,7 @@ export default function ProductListItem({
       : dispatch(setIsSelectMode(false));
   }, [checkboxList]);
 
-  const handleChange = (e) => {
+  const handleCheckboxChange = (e) => {
     const name = "checkbox" + (index + 1);
 
     if (e.target.checked) {
@@ -43,7 +43,7 @@ export default function ProductListItem({
     }
   };
 
-  const handleClick = (product) => {
+  const handleListItemClick = (product) => {
     if (!isOpen) dispatch(openModal());
 
     if (detailData._id === product._id) {
@@ -65,7 +65,7 @@ export default function ProductListItem({
             type="checkbox"
             className={`peer relative h-4 w-4 cursor-pointer appearance-none rounded border-2 border-blue-300 checked:border-blue-400 checked:bg-blue-400 `}
             id="checkbox"
-            onChange={handleChange}
+            onChange={handleCheckboxChange}
           />
           <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
             <svg
@@ -87,7 +87,7 @@ export default function ProductListItem({
       </div>
       <div className="w-60 pl-[2px] text-bold">
         <span
-          onClick={() => handleClick(product)}
+          onClick={() => handleListItemClick(product)}
           className="product-list-item  cursor-pointer hover:font-bold"
         >
           {name}

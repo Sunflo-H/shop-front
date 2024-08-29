@@ -4,6 +4,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import { RxUpdate } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../../../slice/management/detailModalSlice";
+import _ from "lodash";
 
 const categoryOptions = ["Man", "Woman", "Shoes", "Accessory"];
 const statusOptions = ["Sale", "Sold Out", "Hide"];
@@ -12,13 +13,15 @@ export default function DetailModal() {
   const dispatch = useDispatch();
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
   const modalRef = useRef();
-  const { name, price, category, status, image, color, size, description } =
-    detailData || {};
 
+  const [updatedProduct, setUpdatedProduct] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeStatus, setActiveStatus] = useState(null);
-
+  const [isChanged, setIsChanged] = useState(false);
+  const { name, price, category, status, image, color, size, description } =
+    updatedProduct || {};
   useEffect(() => {
+    setUpdatedProduct(detailData);
     setActiveCategory(category);
     setActiveStatus(status);
   }, [detailData]);
@@ -49,11 +52,26 @@ export default function DetailModal() {
     setActiveStatus(e.target.value);
   };
 
-  const [isChanged, setIsChanged] = useState(false);
-
   const handleExitClick = () => {
     dispatch(closeModal());
   };
+
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setUpdatedProduct({
+      ...updatedProduct,
+      [name]: value,
+    });
+  };
+
+  useEffect(() => {
+    if (_.isEqual(detailData, updatedProduct)) {
+      setIsChanged(false);
+    } else {
+      setIsChanged(true);
+    }
+  }, [detailData, updatedProduct]);
 
   return (
     <div
@@ -83,11 +101,22 @@ export default function DetailModal() {
       <main className="mt-12 px-4">
         <div className="border-b border-blue-200">
           <div className="text-sm text-blue-400">Product Name</div>
-          <input className="bg-transparent w-full" value={name} />
+          <input
+            className="bg-transparent w-full"
+            value={name}
+            name="name"
+            onChange={handleInputChange}
+          />
         </div>
         <div className="border-b border-blue-200 mt-3">
           <div className="text-sm text-blue-400">Price</div>
-          <input className="bg-transparent  w-full" value={price} />
+          <input
+            type="number"
+            className="bg-transparent w-full"
+            value={price}
+            name="price"
+            onChange={handleInputChange}
+          />
         </div>
         <div className="mt-3">
           <div className="text-sm text-blue-400">Category</div>
@@ -107,17 +136,29 @@ export default function DetailModal() {
         </div>
         <div className="border-b border-blue-200 mt-3">
           <div className="text-sm text-blue-400">Color</div>
-          <input className="bg-transparent w-full" value={color} />
+          <input
+            className="bg-transparent w-full"
+            value={color}
+            name="color"
+            onChange={handleInputChange}
+          />
         </div>
         <div className="border-b border-blue-200 mt-3">
           <div className="text-sm text-blue-400">Size</div>
-          <input className="bg-transparent w-full" value={size} />
+          <input
+            className="bg-transparent w-full"
+            value={size}
+            name="size"
+            onChange={handleInputChange}
+          />
         </div>
         <div className="border-b border-blue-200 mt-3">
           <div className="text-sm text-blue-400">Description</div>
           <textarea
             className="bg-transparent w-full outline-none resize-none"
             value={description}
+            name="description"
+            onChange={handleInputChange}
           />
         </div>
         <div className="border-b border-blue-200 mt-3  ">

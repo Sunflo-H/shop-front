@@ -5,21 +5,26 @@ const detailModalSlice = createSlice({
   initialState: {
     selectedItem: null,
     isOpen: false,
-    detailData: {},
+    detailData: {}, // 리스트 아이템을 클릭시 그 데이터가 저장되는 변수
+    updatedData: {},
   },
   reducers: {
     setSelectedItem: (state, action) => {
       state.selectedItem = action.payload;
     },
-    closeModal: (state, action) => {
+    closeModal: (state) => {
       state.isOpen = false;
     },
-    openModal: (state, action) => {
+    openModal: (state) => {
       state.isOpen = true;
     },
     setDetailData: (state, action) => {
       state.detailData = action.payload;
     },
+    // setUpdatedData: (state,action)=> {
+    //   const {key,value} = action.payload
+    //   state.updatedData
+    // }
   },
 });
 
