@@ -3,8 +3,15 @@ import SelectBox from "../ui/SelectBox";
 import { FaChevronLeft } from "react-icons/fa";
 import { RxUpdate } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal } from "../../../../slice/management/detailModalSlice";
+import {
+  closeModal,
+  setDetailData,
+} from "../../../../slice/management/detailModalSlice";
 import _ from "lodash";
+import uploadFileToS3 from "../../../../api/aws_uploadToS3";
+import axios from "axios";
+
+const UPDATE_PRODUCT_URL = process.env.REACT_APP_UPDATE_PRODUCT_URL;
 
 const categoryOptions = ["Man", "Woman", "Shoes", "Accessory"];
 const statusOptions = ["Sale", "Sold Out", "Hide"];
@@ -14,16 +21,19 @@ export default function DetailModal() {
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
   const modalRef = useRef();
 
-  const [updatedProduct, setUpdatedProduct] = useState(null);
+  const [product, setProduct] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeStatus, setActiveStatus] = useState(null);
   const [isChanged, setIsChanged] = useState(false);
-  const { name, price, category, status, image, color, size, description } =
-    updatedProduct || {};
+  const { name, price, color, size, description } = product || {};
+  const [image, setImage] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+
   useEffect(() => {
-    setUpdatedProduct(detailData);
-    setActiveCategory(category);
-    setActiveStatus(status);
+    setProduct(detailData);
+    setActiveCategory(detailData.category);
+    setActiveStatus(detailData.status);
+    setImage(detailData.image);
   }, [detailData]);
 
   useEffect(() => {
@@ -46,25 +56,37 @@ export default function DetailModal() {
 
   const handleCategoryChange = (e) => {
     setActiveCategory(e.target.value);
-    setUpdatedProduct({
-      ...updatedProduct,
+    setProduct({
+      ...product,
       category: e.target.value,
     });
   };
 
   const handleStatusChange = (e) => {
     setActiveStatus(e.target.value);
-    setUpdatedProduct({
-      ...updatedProduct,
+    setProduct({
+      ...product,
       status: e.target.value,
     });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+        setImageFile(file);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setUpdatedProduct({
-      ...updatedProduct,
+    setProduct({
+      ...product,
       [name]: value,
     });
   };
@@ -72,13 +94,44 @@ export default function DetailModal() {
   const handleExitClick = () => {
     dispatch(closeModal());
   };
+
+  const handleUpdateClick = async (e) => {
+    try {
+      const imageUrl = await uploadFileToS3(imageFile);
+      const productToUpdate = {
+        ...product,
+        image: imageUrl,
+        category: activeCategory,
+        status: activeStatus,
+      };
+      console.log(productToUpdate);
+      upload(productToUpdate);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
+
+  // !이거를 업데이트 코드로 변경해야해
+  const update = (productToUpdate) => {
+    axios
+      .post(UPDATE_PRODUCT_URL, productToUpdate)
+      .then(function (response) {
+        alert_productUploadSuccess().then(
+          dispatch(setDetailData(productToUpdate))
+        );
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
-    if (_.isEqual(detailData, updatedProduct)) {
+    if (_.isEqual(detailData, product)) {
       setIsChanged(false);
     } else {
       setIsChanged(true);
     }
-  }, [detailData, updatedProduct]);
+  }, [detailData, product]);
 
   return (
     <div
@@ -100,6 +153,7 @@ export default function DetailModal() {
                ? "bg-blue-500 hover:bg-blue-400"
                : "bg-gray-500 pointer-events-none"
            } `}
+          onClick={handleUpdateClick}
         >
           <RxUpdate className="" />
           Update
@@ -109,17 +163,17 @@ export default function DetailModal() {
         <div className="border-b border-blue-200">
           <div className="text-sm text-blue-400">Product Name</div>
           <input
-            className="bg-transparent w-full"
+            className="bg-transparent w-full outline-none focus:bg-blue-100"
             value={name}
             name="name"
             onChange={handleInputChange}
           />
         </div>
         <div className="border-b border-blue-200 mt-3">
-          <div className="text-sm text-blue-400">Price</div>
+          <div className="text-sm text-blue-400 ">Price</div>
           <input
             type="number"
-            className="bg-transparent w-full"
+            className="bg-transparent w-full outline-none focus:bg-blue-100"
             value={price}
             name="price"
             onChange={handleInputChange}
@@ -144,25 +198,25 @@ export default function DetailModal() {
         <div className="border-b border-blue-200 mt-3">
           <div className="text-sm text-blue-400">Color</div>
           <input
-            className="bg-transparent w-full"
+            className="bg-transparent w-full outline-none focus:bg-blue-100"
             value={color}
             name="color"
             onChange={handleInputChange}
           />
         </div>
         <div className="border-b border-blue-200 mt-3">
-          <div className="text-sm text-blue-400">Size</div>
+          <div className="text-sm text-blue-400 ">Size</div>
           <input
-            className="bg-transparent w-full"
+            className="bg-transparent w-full outline-none focus:bg-blue-100"
             value={size}
             name="size"
             onChange={handleInputChange}
           />
         </div>
-        <div className="border-b border-blue-200 mt-3">
+        <div className="flex flex-col border-b border-blue-200 mt-3">
           <div className="text-sm text-blue-400">Description</div>
           <textarea
-            className="bg-transparent w-full outline-none resize-none"
+            className="bg-transparent w-full h-full outline-none resize-none focus:bg-blue-100"
             value={description}
             name="description"
             onChange={handleInputChange}
@@ -170,7 +224,22 @@ export default function DetailModal() {
         </div>
         <div className="border-b border-blue-200 mt-3  ">
           <div className="text-sm text-blue-400">Image</div>
-          <img src={image} className="rounded-md w-full h-96" />
+
+          <label>
+            <img
+              className="rounded-md w-full h-96 border-blue-200 border cursor-pointer"
+              src={image}
+            />
+
+            <input
+              type="file"
+              accept="image/*"
+              name="image"
+              required
+              onChange={handleImageChange}
+              hidden
+            />
+          </label>
         </div>
       </main>
     </div>

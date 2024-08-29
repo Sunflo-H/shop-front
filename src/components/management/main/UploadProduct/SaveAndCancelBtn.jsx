@@ -6,10 +6,10 @@ import {
   resetNewProduct,
   setNewProduct,
 } from "../../../../slice/management/createProductSlice";
-import uploadFileToS3 from "../../header/uploadFunc";
 import { alert_productUploadSuccess } from "../../../../alerts/success";
 import { alert_productUploadCancel } from "../../../../alerts/warning";
 import { alert_requireError } from "../../../../alerts/error";
+import uploadFileToS3 from "../../../../api/aws_uploadToS3";
 
 const CREATE_PRODUCT_URL = process.env.REACT_APP_CREATE_PRODUCT_URL;
 
@@ -20,7 +20,8 @@ export default function SaveAndCancelBtn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (requireCheck(newProduct)) {
+    const allFormComplete = requireCheck(newProduct);
+    if (allFormComplete) {
       try {
         const fileUrl = await uploadFileToS3(newProduct.image);
         const uploadProduct = { ...newProduct, image: fileUrl };

@@ -15,7 +15,11 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
-// S3에 파일 업로드 함수
+/**
+ * S3에 파일을 업로드하는 함수
+ * @param {*} file
+ * @returns imageURL
+ */
 const uploadFileToS3 = async (file) => {
   const params = {
     Bucket: bucketName,
