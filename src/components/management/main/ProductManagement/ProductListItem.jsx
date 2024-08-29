@@ -44,13 +44,17 @@ export default function ProductListItem({
   };
 
   const handleListItemClick = (product) => {
-    if (!isOpen) dispatch(openModal());
-
-    if (detailData._id === product._id) {
-      dispatch(closeModal());
-      dispatch(setDetailData({}));
-    } else {
+    if (!isOpen) {
+      dispatch(openModal());
       dispatch(setDetailData(product));
+      return;
+    } else if (isOpen) {
+      if (detailData._id === product._id) {
+        dispatch(closeModal());
+        dispatch(setDetailData({}));
+      } else {
+        dispatch(setDetailData(product));
+      }
     }
   };
 
