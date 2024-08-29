@@ -46,14 +46,18 @@ export default function DetailModal() {
 
   const handleCategoryChange = (e) => {
     setActiveCategory(e.target.value);
+    setUpdatedProduct({
+      ...updatedProduct,
+      category: e.target.value,
+    });
   };
 
   const handleStatusChange = (e) => {
     setActiveStatus(e.target.value);
-  };
-
-  const handleExitClick = () => {
-    dispatch(closeModal());
+    setUpdatedProduct({
+      ...updatedProduct,
+      status: e.target.value,
+    });
   };
 
   const handleInputChange = (e) => {
@@ -65,6 +69,9 @@ export default function DetailModal() {
     });
   };
 
+  const handleExitClick = () => {
+    dispatch(closeModal());
+  };
   useEffect(() => {
     if (_.isEqual(detailData, updatedProduct)) {
       setIsChanged(false);
