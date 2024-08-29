@@ -10,6 +10,7 @@ import {
 import _ from "lodash";
 import uploadFileToS3 from "../../../../api/aws_uploadToS3";
 import axios from "axios";
+import { alert_productUploadSuccess } from "../../../../alerts/success";
 
 const UPDATE_PRODUCT_URL = process.env.REACT_APP_UPDATE_PRODUCT_URL;
 
@@ -25,7 +26,7 @@ export default function DetailModal() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeStatus, setActiveStatus] = useState(null);
   const [isChanged, setIsChanged] = useState(false);
-  const { name, price, color, size, description } = product || {};
+  const { name, price, color, size, description, _id } = product || {};
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
 
@@ -72,17 +73,24 @@ export default function DetailModal() {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-        setImageFile(file);
-      };
-      reader.readAsDataURL(file);
+    if (!file) {
+      setImage(detailData.image); // 파일 변경 취소하면 원래 이미지 보여준다.
+      return;
     }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result);
+      setImageFile(file);
+      setProduct({
+        ...product,
+        image: "just change check", // 렌더링 하지 않고 이미지가 변화되었는지에만 사용한다.
+      });
+    };
+    reader.readAsDataURL(file);
   };
 
-  const handleInputChange = (e) => {
+  const handleTextChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setProduct({
@@ -104,17 +112,16 @@ export default function DetailModal() {
         category: activeCategory,
         status: activeStatus,
       };
-      console.log(productToUpdate);
-      upload(productToUpdate);
+
+      update(productToUpdate);
     } catch (error) {
       console.error("Error uploading file:", error);
     }
   };
 
-  // !이거를 업데이트 코드로 변경해야해
   const update = (productToUpdate) => {
     axios
-      .post(UPDATE_PRODUCT_URL, productToUpdate)
+      .post(UPDATE_PRODUCT_URL + "/" + _id, productToUpdate)
       .then(function (response) {
         alert_productUploadSuccess().then(
           dispatch(setDetailData(productToUpdate))
@@ -166,7 +173,7 @@ export default function DetailModal() {
             className="bg-transparent w-full outline-none focus:bg-blue-100"
             value={name}
             name="name"
-            onChange={handleInputChange}
+            onChange={handleTextChange}
           />
         </div>
         <div className="border-b border-blue-200 mt-3">
@@ -176,7 +183,7 @@ export default function DetailModal() {
             className="bg-transparent w-full outline-none focus:bg-blue-100"
             value={price}
             name="price"
-            onChange={handleInputChange}
+            onChange={handleTextChange}
           />
         </div>
         <div className="mt-3">
@@ -201,7 +208,7 @@ export default function DetailModal() {
             className="bg-transparent w-full outline-none focus:bg-blue-100"
             value={color}
             name="color"
-            onChange={handleInputChange}
+            onChange={handleTextChange}
           />
         </div>
         <div className="border-b border-blue-200 mt-3">
@@ -210,7 +217,7 @@ export default function DetailModal() {
             className="bg-transparent w-full outline-none focus:bg-blue-100"
             value={size}
             name="size"
-            onChange={handleInputChange}
+            onChange={handleTextChange}
           />
         </div>
         <div className="flex flex-col border-b border-blue-200 mt-3">
@@ -219,7 +226,7 @@ export default function DetailModal() {
             className="bg-transparent w-full h-full outline-none resize-none focus:bg-blue-100"
             value={description}
             name="description"
-            onChange={handleInputChange}
+            onChange={handleTextChange}
           />
         </div>
         <div className="border-b border-blue-200 mt-3  ">
