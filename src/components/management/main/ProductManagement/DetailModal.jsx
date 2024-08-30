@@ -105,14 +105,23 @@ export default function DetailModal() {
 
   const handleUpdateClick = async (e) => {
     try {
-      const imageUrl = await uploadFileToS3(imageFile);
-      const productToUpdate = {
-        ...product,
-        image: imageUrl,
-        category: activeCategory,
-        status: activeStatus,
-      };
-
+      let productToUpdate;
+      const isImageChange = !!imageFile;
+      if (isImageChange) {
+        const imageUrl = await uploadFileToS3(imageFile);
+        productToUpdate = {
+          ...product,
+          image: imageUrl,
+          category: activeCategory,
+          status: activeStatus,
+        };
+      } else {
+        productToUpdate = {
+          ...product,
+          category: activeCategory,
+          status: activeStatus,
+        };
+      }
       update(productToUpdate);
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -123,9 +132,10 @@ export default function DetailModal() {
     axios
       .post(UPDATE_PRODUCT_URL + "/" + _id, productToUpdate)
       .then(function (response) {
-        alert_productUploadSuccess().then(
-          dispatch(setDetailData(productToUpdate))
-        );
+        alert_productUploadSuccess().then(() => {
+          dispatch(setDetailData(productToUpdate));
+          // setProduct(productToUpdate);
+        });
       })
       .catch(function (error) {
         console.log(error);
