@@ -15,6 +15,7 @@ export default function ProductList() {
 
   const [checkboxList, setCheckboxList] = useState(getCheckboxObj(limit));
 
+  const products = useSelector((state) => state.productManagement.products);
   useEffect(() => {
     dispatch(fetchAllProduct());
     dispatch(
@@ -26,8 +27,6 @@ export default function ProductList() {
       })
     );
   }, [dispatch]);
-
-  const products = useSelector((state) => state.productManagement.products);
 
   return (
     <div className="mt-4 bg-white rounded-md shadow-md border border-gray-300 overflow-hidden">

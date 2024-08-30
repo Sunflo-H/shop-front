@@ -1,6 +1,7 @@
 import { Provider } from "react-redux";
 import Main from "../../layout/manage/Main";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import store from "../../store";
 import Nav from "../../layout/manage/Nav";
 
@@ -18,6 +19,7 @@ export default function ManagementApp() {
             </div>
           </div>
         </div>
+        <ReactQueryDevtools initialIsOpen={true} />
       </Provider>
     </QueryClientProvider>
   );

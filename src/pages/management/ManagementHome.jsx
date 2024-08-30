@@ -90,6 +90,7 @@ export default function ManagementHome() {
     { month: "Jul", Man: 4400, Woman: 2400, Accessory: 2200, Shoes: 2800 },
     { month: "Aug", Man: 4600, Woman: 3100, Accessory: 1700, Shoes: 3600 },
   ];
+
   return (
     <div className="flex flex-col min-w-[1080px] overflow-scroll gap-3 mb-4">
       <div className="w-full rounded-md bg-white shadow-md ">

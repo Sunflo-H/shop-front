@@ -11,6 +11,7 @@ import _ from "lodash";
 import uploadFileToS3 from "../../../../api/aws_uploadToS3";
 import axios from "axios";
 import { alert_productUploadSuccess } from "../../../../alerts/success";
+import { fetchProduct } from "../../../../slice/management/productManagementSlice";
 
 const UPDATE_PRODUCT_URL = process.env.REACT_APP_UPDATE_PRODUCT_URL;
 
@@ -20,11 +21,14 @@ const statusOptions = ["Sale", "Sold Out", "Hide"];
 export default function DetailModal() {
   const dispatch = useDispatch();
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
+  const { activeCategory, activeStatus, page, limit } = useSelector(
+    (state) => state.productManagement
+  );
   const modalRef = useRef();
 
   const [product, setProduct] = useState(null);
-  const [activeCategory, setActiveCategory] = useState(null);
-  const [activeStatus, setActiveStatus] = useState(null);
+  const [category, setCategory] = useState(null);
+  const [status, setStatus] = useState(null);
   const [isChanged, setIsChanged] = useState(false);
   const { name, price, color, size, description, _id } = product || {};
   const [image, setImage] = useState(null);
@@ -32,8 +36,8 @@ export default function DetailModal() {
 
   useEffect(() => {
     setProduct(detailData);
-    setActiveCategory(detailData.category);
-    setActiveStatus(detailData.status);
+    setCategory(detailData.category);
+    setStatus(detailData.status);
     setImage(detailData.image);
   }, [detailData]);
 
@@ -56,18 +60,20 @@ export default function DetailModal() {
   }, [isOpen]);
 
   const handleCategoryChange = (e) => {
-    setActiveCategory(e.target.value);
+    const category = e.target.value;
+    setCategory(category);
     setProduct({
       ...product,
-      category: e.target.value,
+      category,
     });
   };
 
   const handleStatusChange = (e) => {
-    setActiveStatus(e.target.value);
+    const status = e.target.value;
+    setStatus(status);
     setProduct({
       ...product,
-      status: e.target.value,
+      status,
     });
   };
 
@@ -112,14 +118,14 @@ export default function DetailModal() {
         productToUpdate = {
           ...product,
           image: imageUrl,
-          category: activeCategory,
-          status: activeStatus,
+          category,
+          status,
         };
       } else {
         productToUpdate = {
           ...product,
-          category: activeCategory,
-          status: activeStatus,
+          category,
+          status,
         };
       }
       update(productToUpdate);
@@ -134,7 +140,14 @@ export default function DetailModal() {
       .then(function (response) {
         alert_productUploadSuccess().then(() => {
           dispatch(setDetailData(productToUpdate));
-          // setProduct(productToUpdate);
+          dispatch(
+            fetchProduct({
+              category: activeCategory,
+              status: activeStatus,
+              page,
+              limit,
+            })
+          );
         });
       })
       .catch(function (error) {
@@ -200,7 +213,7 @@ export default function DetailModal() {
           <div className="text-sm text-blue-400">Category</div>
           <SelectBox
             options={categoryOptions}
-            value={activeCategory}
+            value={category}
             onChange={handleCategoryChange}
           />
         </div>
@@ -208,7 +221,7 @@ export default function DetailModal() {
           <div className="text-sm text-blue-400">Status</div>
           <SelectBox
             options={statusOptions}
-            value={activeStatus}
+            value={status}
             onChange={handleStatusChange}
           />
         </div>
