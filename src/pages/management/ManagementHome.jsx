@@ -6,6 +6,7 @@ import Chart_twoLine from "../../components/management/main/Home/Chart_twoLine";
 import Chart_fourLine from "../../components/management/main/Home/Chart_fourLine";
 
 export default function ManagementHome() {
+  console.log("hihi");
   const HourlySales = [
     { hour: "00:00", sales: 120 },
     { hour: "01:00", sales: 90 },

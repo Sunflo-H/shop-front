@@ -12,6 +12,7 @@ import uploadFileToS3 from "../../../../api/aws_uploadToS3";
 import axios from "axios";
 import { alert_productUploadSuccess } from "../../../../alerts/success";
 import { fetchProduct } from "../../../../slice/management/productManagementSlice";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const UPDATE_PRODUCT_URL = process.env.REACT_APP_UPDATE_PRODUCT_URL;
 
@@ -19,29 +20,33 @@ const categoryOptions = ["Man", "Woman", "Shoes", "Accessory"];
 const statusOptions = ["Sale", "Sold Out", "Hide"];
 
 export default function DetailModal() {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
-  const { activeCategory, activeStatus, page, limit } = useSelector(
-    (state) => state.productManagement
-  );
+  // const { activeCategory, activeStatus, page, limit } = useSelector(
+  //   (state) => state.productManagement
+  // );
   const modalRef = useRef();
 
-  const [product, setProduct] = useState(null);
-  const [category, setCategory] = useState(null);
-  const [status, setStatus] = useState(null);
+  const [product, setProduct] = useState(null); // 업데이트 후 상품데이터
+  const [selectBox, setSelectBox] = useState({ category: "", status: "" });
   const [isChanged, setIsChanged] = useState(false);
+  const [image, setImage] = useState(null); // 보여지는 이미지
+  const [imageFile, setImageFile] = useState(null); // 이미지 파일 정보
+
   const { name, price, color, size, description, _id } = product || {};
-  const [image, setImage] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     setProduct(detailData);
-    setCategory(detailData.category);
-    setStatus(detailData.status);
+    setSelectBox({
+      category: detailData.category,
+      status: detailData.status,
+    });
     setImage(detailData.image);
   }, [detailData]);
 
   useEffect(() => {
+    // 모달 외부를 클릭시 닫히는 이벤트 핸들러
     const handleOutsideClick = (e) => {
       if (!isOpen) return;
 
@@ -59,22 +64,27 @@ export default function DetailModal() {
     };
   }, [isOpen]);
 
-  const handleCategoryChange = (e) => {
-    const category = e.target.value;
-    setCategory(category);
-    setProduct({
-      ...product,
-      category,
-    });
-  };
+  const mutation = useMutation({
+    mutationFn: update,
+    onSuccess: (data) => {
+      alert_productUploadSuccess().then(() => {
+        dispatch(setDetailData(data));
+        queryClient.invalidateQueries(["products"]);
+      });
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
 
-  const handleStatusChange = (e) => {
-    const status = e.target.value;
-    setStatus(status);
-    setProduct({
-      ...product,
-      status,
+  const handleSelectBoxChange = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    setSelectBox({
+      ...selectBox,
+      [name]: value,
     });
+    setProduct({ ...product, [name]: value });
   };
 
   const handleImageChange = (e) => {
@@ -105,10 +115,6 @@ export default function DetailModal() {
     });
   };
 
-  const handleExitClick = () => {
-    dispatch(closeModal());
-  };
-
   const handleUpdateClick = async (e) => {
     try {
       let productToUpdate;
@@ -118,42 +124,27 @@ export default function DetailModal() {
         productToUpdate = {
           ...product,
           image: imageUrl,
-          category,
-          status,
+          category: selectBox.category,
+          status: selectBox.status,
         };
       } else {
         productToUpdate = {
           ...product,
-          category,
-          status,
+          category: selectBox.category,
+          status: selectBox.status,
         };
       }
-      update(productToUpdate);
-    } catch (error) {
-      console.error("Error uploading file:", error);
+      mutation.mutate(productToUpdate);
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  const update = (productToUpdate) => {
-    axios
-      .post(UPDATE_PRODUCT_URL + "/" + _id, productToUpdate)
-      .then(function (response) {
-        alert_productUploadSuccess().then(() => {
-          dispatch(setDetailData(productToUpdate));
-          dispatch(
-            fetchProduct({
-              category: activeCategory,
-              status: activeStatus,
-              page,
-              limit,
-            })
-          );
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  async function update(productToUpdate) {
+    const url = UPDATE_PRODUCT_URL + "/" + _id;
+    const response = await axios.post(url, productToUpdate);
+    return response.data;
+  }
 
   useEffect(() => {
     if (_.isEqual(detailData, product)) {
@@ -174,7 +165,7 @@ export default function DetailModal() {
       <header className="fixed flex justify-between items-center w-96 h-10 bg-blue-200 px-4">
         <FaChevronLeft
           className="text-xl cursor-pointer"
-          onClick={handleExitClick}
+          onClick={() => dispatch(closeModal())}
         />
         <div
           className={`flex items-center px-4 py-1 text-white  rounded-md cursor-pointer gap-1 
@@ -194,7 +185,7 @@ export default function DetailModal() {
           <div className="text-sm text-blue-400">Product Name</div>
           <input
             className="bg-transparent w-full outline-none focus:bg-blue-100"
-            value={name}
+            value={name || "something"}
             name="name"
             onChange={handleTextChange}
           />
@@ -204,7 +195,7 @@ export default function DetailModal() {
           <input
             type="number"
             className="bg-transparent w-full outline-none focus:bg-blue-100"
-            value={price}
+            value={price || "something"}
             name="price"
             onChange={handleTextChange}
           />
@@ -213,23 +204,25 @@ export default function DetailModal() {
           <div className="text-sm text-blue-400">Category</div>
           <SelectBox
             options={categoryOptions}
-            value={category}
-            onChange={handleCategoryChange}
+            value={selectBox.category || "something"}
+            name="category"
+            onChange={handleSelectBoxChange}
           />
         </div>
         <div className="mt-3">
           <div className="text-sm text-blue-400">Status</div>
           <SelectBox
             options={statusOptions}
-            value={status}
-            onChange={handleStatusChange}
+            value={selectBox.status || "something"}
+            name="status"
+            onChange={handleSelectBoxChange}
           />
         </div>
         <div className="border-b border-blue-200 mt-3">
           <div className="text-sm text-blue-400">Color</div>
           <input
             className="bg-transparent w-full outline-none focus:bg-blue-100"
-            value={color}
+            value={color || "something"}
             name="color"
             onChange={handleTextChange}
           />
@@ -238,7 +231,7 @@ export default function DetailModal() {
           <div className="text-sm text-blue-400 ">Size</div>
           <input
             className="bg-transparent w-full outline-none focus:bg-blue-100"
-            value={size}
+            value={size || "something"}
             name="size"
             onChange={handleTextChange}
           />
@@ -247,7 +240,7 @@ export default function DetailModal() {
           <div className="text-sm text-blue-400">Description</div>
           <textarea
             className="bg-transparent w-full h-full outline-none resize-none focus:bg-blue-100"
-            value={description}
+            value={description || "something"}
             name="description"
             onChange={handleTextChange}
           />
@@ -258,7 +251,7 @@ export default function DetailModal() {
           <label>
             <img
               className="rounded-md w-full h-96 border-blue-200 border cursor-pointer"
-              src={image}
+              src={image || "something"}
             />
 
             <input

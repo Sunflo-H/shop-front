@@ -3,30 +3,17 @@ import ProductListItem from "./ProductListItem";
 import { useDispatch, useSelector } from "react-redux";
 import ProductListHeader from "./ProductListHeader";
 import {
-  fetchAllProduct,
+  // fetchAllProduct,
   fetchProduct,
 } from "../../../../slice/management/productManagementSlice";
+import { useQuery } from "@tanstack/react-query";
+import { fetchAllProducts, fetchProducts } from "../../../../api/productApi";
 
-export default function ProductList() {
-  const dispatch = useDispatch();
-  const { activeCategory, activeStatus, page, limit } = useSelector(
-    (state) => state.productManagement
-  );
-
+export default function ProductList({ products }) {
+  // const dispatch = useDispatch();
+  const { limit } = useSelector((state) => state.productManagement);
+  // const products = useSelector((state) => state.productManagement.products);
   const [checkboxList, setCheckboxList] = useState(getCheckboxObj(limit));
-
-  const products = useSelector((state) => state.productManagement.products);
-  useEffect(() => {
-    dispatch(fetchAllProduct());
-    dispatch(
-      fetchProduct({
-        category: activeCategory,
-        status: activeStatus,
-        page,
-        limit,
-      })
-    );
-  }, [dispatch]);
 
   return (
     <div className="mt-4 bg-white rounded-md shadow-md border border-gray-300 overflow-hidden">
