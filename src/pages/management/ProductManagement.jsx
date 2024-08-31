@@ -85,14 +85,12 @@ export default function ProductManagement() {
     const category = e.target.value;
     dispatch(setActiveCategory(category));
     dispatch(setPage(1));
-    // dispatch(fetchProduct({ category, status: activeStatus, page, limit }));
   };
 
   const handleStatusChange = (e) => {
     const status = e.target.value;
     dispatch(setActiveStatus(status));
     dispatch(setPage(1));
-    // dispatch(fetchProduct({ category: activeCategory, status, page, limit }));
   };
 
   return (

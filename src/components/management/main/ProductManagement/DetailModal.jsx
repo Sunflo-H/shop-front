@@ -13,6 +13,7 @@ import axios from "axios";
 import { alert_productUploadSuccess } from "../../../../alerts/success";
 import { fetchProduct } from "../../../../slice/management/productManagementSlice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateProduct } from "../../../../api/productApi";
 
 const UPDATE_PRODUCT_URL = process.env.REACT_APP_UPDATE_PRODUCT_URL;
 
@@ -23,27 +24,28 @@ export default function DetailModal() {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
-  // const { activeCategory, activeStatus, page, limit } = useSelector(
-  //   (state) => state.productManagement
-  // );
   const modalRef = useRef();
 
-  const [product, setProduct] = useState(null); // 업데이트 후 상품데이터
+  const [updatedProduct, setUpdatedProduct] = useState(null); // 업데이트 내용이 담겨있는 상품데이터
   const [selectBox, setSelectBox] = useState({ category: "", status: "" });
   const [isChanged, setIsChanged] = useState(false);
   const [image, setImage] = useState(null); // 보여지는 이미지
   const [imageFile, setImageFile] = useState(null); // 이미지 파일 정보
 
-  const { name, price, color, size, description, _id } = product || {};
+  const { name, price, color, size, description, _id } = updatedProduct || {};
 
   useEffect(() => {
-    setProduct(detailData);
+    setUpdatedProduct(detailData);
     setSelectBox({
       category: detailData.category,
       status: detailData.status,
     });
     setImage(detailData.image);
   }, [detailData]);
+
+  useEffect(() => {
+    console.log(updatedProduct);
+  }, [updatedProduct]);
 
   useEffect(() => {
     // 모달 외부를 클릭시 닫히는 이벤트 핸들러
@@ -65,7 +67,7 @@ export default function DetailModal() {
   }, [isOpen]);
 
   const mutation = useMutation({
-    mutationFn: update,
+    mutationFn: updateProduct,
     onSuccess: (data) => {
       alert_productUploadSuccess().then(() => {
         dispatch(setDetailData(data));
@@ -84,7 +86,7 @@ export default function DetailModal() {
       ...selectBox,
       [name]: value,
     });
-    setProduct({ ...product, [name]: value });
+    setUpdatedProduct({ ...updatedProduct, [name]: value });
   };
 
   const handleImageChange = (e) => {
@@ -98,8 +100,8 @@ export default function DetailModal() {
     reader.onloadend = () => {
       setImage(reader.result);
       setImageFile(file);
-      setProduct({
-        ...product,
+      setUpdatedProduct({
+        ...updatedProduct,
         image: "just change check", // 렌더링 하지 않고 이미지가 변화되었는지에만 사용한다.
       });
     };
@@ -109,8 +111,8 @@ export default function DetailModal() {
   const handleTextChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setProduct({
-      ...product,
+    setUpdatedProduct({
+      ...updatedProduct,
       [name]: value,
     });
   };
@@ -122,37 +124,32 @@ export default function DetailModal() {
       if (isImageChange) {
         const imageUrl = await uploadFileToS3(imageFile);
         productToUpdate = {
-          ...product,
+          ...updatedProduct,
           image: imageUrl,
           category: selectBox.category,
           status: selectBox.status,
         };
       } else {
         productToUpdate = {
-          ...product,
+          ...updatedProduct,
           category: selectBox.category,
           status: selectBox.status,
         };
       }
+      console.log(productToUpdate);
       mutation.mutate(productToUpdate);
     } catch (err) {
       console.error(err);
     }
   };
 
-  async function update(productToUpdate) {
-    const url = UPDATE_PRODUCT_URL + "/" + _id;
-    const response = await axios.post(url, productToUpdate);
-    return response.data;
-  }
-
   useEffect(() => {
-    if (_.isEqual(detailData, product)) {
+    if (_.isEqual(detailData, updatedProduct)) {
       setIsChanged(false);
     } else {
       setIsChanged(true);
     }
-  }, [detailData, product]);
+  }, [detailData, updatedProduct]);
 
   return (
     <div

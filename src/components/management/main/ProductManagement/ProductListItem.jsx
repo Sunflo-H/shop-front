@@ -58,6 +58,8 @@ export default function ProductListItem({
     }
   };
 
+  const handleRemoveClick = () => {};
+
   return (
     <li className="flex py-2 border-b border-dashed	">
       <div className="w-20 flex justify-center items-center ">
@@ -102,9 +104,10 @@ export default function ProductListItem({
       <div className="w-40 pl-[2px] ">{status}</div>
       <div className="w-40 pl-[2px] ">{createdAt}</div>
       <div className="flex items-center px-6 ml-4 gap-5 border-l-[2px] border-lightblue">
-        <Link to={`/manage/product/update/${_id}`}>
-          <FaPen className="cursor-pointer text-deepblue hover:text-blue-500" />
-        </Link>
+        <FaPen
+          className="product-list-item cursor-pointer text-deepblue hover:text-blue-500"
+          onClick={() => handleListItemClick(product)}
+        />
         <FaTrash className="cursor-pointer text-deepblue hover:text-red-500" />
       </div>
     </li>
