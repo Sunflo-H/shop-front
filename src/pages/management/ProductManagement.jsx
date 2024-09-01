@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductList from "../../components/management/main/ProductManagement/ProductList";
 import PageNation from "../../components/management/main/ProductManagement/PageNation";
 import SearchBar from "../../components/management/main/ui/SearchBar";
@@ -10,10 +10,15 @@ import {
   fetchProduct,
   setActiveCategory,
   setActiveStatus,
+  setPage,
 } from "../../slice/management/productManagementSlice";
 import GoAddPageButton from "../../components/management/main/ui/GoAddPageButton";
 import Limit from "../../components/management/main/ui/Limit";
 import DetailModal from "../../components/management/main/ProductManagement/DetailModal";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { fetchProducts } from "../../api/productApi";
+import Swal from "sweetalert2";
 
 const categoryOptions = [
   { value: "ALL", label: "ALL Products" },
@@ -36,17 +41,56 @@ export default function ProductManagement() {
   const { activeCategory, activeStatus, page, limit } = useSelector(
     (state) => state.productManagement
   );
+  const [prevQueryParams, setPrevQueryParams] = useState({
+    category: "ALL",
+    status: "ALL",
+    page: 1,
+    limit: 10,
+  });
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["products", activeCategory, activeStatus, page, limit],
+    queryFn: () => fetchProducts(activeCategory, activeStatus, page, limit),
+  });
+
+  // 데이터가 0개일 때 필터 복구
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (data?.length === 0) {
+      Swal.fire("No data available");
+
+      // 기존 상태로 되돌리기
+      if (activeCategory !== prevQueryParams.category) {
+        dispatch(setActiveCategory(prevQueryParams.category));
+      }
+      if (activeStatus !== prevQueryParams.status) {
+        dispatch(setActiveStatus(prevQueryParams.status));
+      }
+      dispatch(setPage(prevQueryParams.page));
+    } else {
+      setPrevQueryParams({
+        category: activeCategory,
+        status: activeStatus,
+        page,
+        limit,
+      });
+    }
+  }, [data, isLoading, activeCategory, activeStatus]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   const handleCategoryChange = (e) => {
     const category = e.target.value;
     dispatch(setActiveCategory(category));
-    dispatch(fetchProduct({ category, status: activeStatus, page, limit }));
+    dispatch(setPage(1));
   };
 
   const handleStatusChange = (e) => {
     const status = e.target.value;
     dispatch(setActiveStatus(status));
-    dispatch(fetchProduct({ category: activeCategory, status, page, limit }));
+    dispatch(setPage(1));
   };
 
   return (
@@ -68,7 +112,7 @@ export default function ProductManagement() {
         <GoAddPageButton url={"/manage/product/new"} />
       </div>
       <RemoveSelectedBtn />
-      <ProductList />
+      <ProductList products={data} />
       <PageNation />
 
       {/* 모달 */}

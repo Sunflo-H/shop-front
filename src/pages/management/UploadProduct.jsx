@@ -17,7 +17,6 @@ export default function UploadProduct() {
     const { name, files } = e.target;
     const key = name;
     const value = files[0];
-    console.log(value);
     dispatch(setNewProduct({ key, value }));
   };
 

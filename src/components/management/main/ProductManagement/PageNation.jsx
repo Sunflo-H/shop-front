@@ -10,6 +10,8 @@ import {
   setPage,
   setPageGroup,
 } from "../../../../slice/management/productManagementSlice";
+import { fetchProducts } from "../../../../api/productApi";
+import { useQuery } from "@tanstack/react-query";
 
 /**
  ** 페이지 네이션 변수
@@ -31,23 +33,33 @@ export default function PageNation() {
     page,
     limit,
     pageGroup,
-    filteredProducts,
+    // filteredProducts,
   } = useSelector((state) => state.productManagement);
 
-  const productCount = filteredProducts.length;
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["allProducts", activeCategory, activeStatus],
+    queryFn: () => fetchProducts(activeCategory, activeStatus),
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
+
+  // const productCount = filteredProducts.length;
+  const productCount = data.length;
   let maxPage = Math.ceil(productCount / limit);
   let maxPageGroup = Math.ceil(maxPage / PAGE_PER_PAGEGORUP);
 
   const handlePageClick = (page) => {
     dispatch(setPage(page));
-    dispatch(
-      fetchProduct({
-        category: activeCategory,
-        status: activeStatus,
-        page,
-        limit,
-      })
-    );
+    refetch();
+    // dispatch(
+    //   fetchProduct({
+    //     category: activeCategory,
+    //     status: activeStatus,
+    //     page,
+    //     limit,
+    //   })
+    // );
   };
 
   const handlePrevPageGroupClick = () => {
@@ -83,14 +95,15 @@ export default function PageNation() {
     if (page === firstPageInPageGroup) handlePrevPageGroupClick();
     else {
       dispatch(setPage(page - 1));
-      dispatch(
-        fetchProduct({
-          category: activeCategory,
-          status: activeStatus,
-          page: page - 1,
-          limit,
-        })
-      );
+      refetch();
+      // dispatch(
+      //   fetchProduct({
+      //     category: activeCategory,
+      //     status: activeStatus,
+      //     page: page - 1,
+      //     limit,
+      //   })
+      // );
     }
   };
 
@@ -104,14 +117,15 @@ export default function PageNation() {
     if (page === lastPageInPageGroup) handleNextPageGroupClick();
     else {
       dispatch(setPage(page + 1));
-      dispatch(
-        fetchProduct({
-          category: activeCategory,
-          status: activeStatus,
-          page: page + 1,
-          limit,
-        })
-      );
+      refetch();
+      // dispatch(
+      //   fetchProduct({
+      //     category: activeCategory,
+      //     status: activeStatus,
+      //     page: page + 1,
+      //     limit,
+      //   })
+      // );
     }
   };
 

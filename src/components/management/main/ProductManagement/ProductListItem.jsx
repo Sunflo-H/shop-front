@@ -2,13 +2,21 @@ import React, { useEffect, useState } from "react";
 import { FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsSelectMode } from "../../../../slice/management/productManagementSlice";
+import {
+  setIdList,
+  setIsSelectMode,
+} from "../../../../slice/management/productManagementSlice";
 import { Link } from "react-router-dom";
 import {
   setDetailData,
   closeModal,
   openModal,
 } from "../../../../slice/management/detailModalSlice";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteProducts } from "../../../../api/productApi";
+import Swal from "sweetalert2";
+import { alert_deleteProduct } from "../../../../alerts/warning";
+import _ from "lodash";
 
 export default function ProductListItem({
   product,
@@ -16,9 +24,21 @@ export default function ProductListItem({
   checkboxList,
   index,
 }) {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
+  const { idList } = useSelector((state) => state.productManagement);
   const { name, price, category, status, createdAt, _id } = product;
+
+  const mutation = useMutation({
+    mutationFn: deleteProducts,
+    onSuccess: () => {
+      queryClient.invalidateQueries("users");
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
 
   useEffect(() => {
     const isChecked = Object.values(checkboxList).some((checked) => checked);
@@ -27,19 +47,51 @@ export default function ProductListItem({
       : dispatch(setIsSelectMode(false));
   }, [checkboxList]);
 
+  const handleRemoveClick = () => {
+    alert_deleteProduct().then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+        mutation.mutate([_id]);
+      }
+    });
+  };
+
   const handleCheckboxChange = (e) => {
-    const name = "checkbox" + (index + 1);
+    // const name = "checkbox" + (index + 1);
+    // if (e.target.checked) {
+    //   setCheckboxList((prev) => ({
+    //     ...prev,
+    //     [name]: true,
+    //   }));
+    //   dispatch(setIdList(_.union(idList, [_id])));
+    // } else {
+    //   setCheckboxList((prev) => ({
+    //     ...prev,
+    //     [name]: false,
+    //   }));
+    //   dispatch(setIdList(_.without(idList, _id)));
+    // }
 
     if (e.target.checked) {
-      setCheckboxList((prev) => ({
-        ...prev,
-        [name]: true,
-      }));
+      setCheckboxList((prev) =>
+        prev.map((isChecked, i) => {
+          if (i === index) return !isChecked;
+          return isChecked;
+        })
+      );
+      dispatch(setIdList(_.union(idList, [_id])));
     } else {
-      setCheckboxList((prev) => ({
-        ...prev,
-        [name]: false,
-      }));
+      setCheckboxList((prev) =>
+        prev.map((isChecked, i) => {
+          if (i === index) return !isChecked;
+          return isChecked;
+        })
+      );
+      dispatch(setIdList(_.without(idList, _id)));
     }
   };
 
@@ -69,6 +121,7 @@ export default function ProductListItem({
             type="checkbox"
             className={`peer relative h-4 w-4 cursor-pointer appearance-none rounded border-2 border-blue-300 checked:border-blue-400 checked:bg-blue-400 `}
             id="checkbox"
+            checked={checkboxList[index]}
             onChange={handleCheckboxChange}
           />
           <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
@@ -102,10 +155,14 @@ export default function ProductListItem({
       <div className="w-40 pl-[2px] ">{status}</div>
       <div className="w-40 pl-[2px] ">{createdAt}</div>
       <div className="flex items-center px-6 ml-4 gap-5 border-l-[2px] border-lightblue">
-        <Link to={`/manage/product/update/${_id}`}>
-          <FaPen className="cursor-pointer text-deepblue hover:text-blue-500" />
-        </Link>
-        <FaTrash className="cursor-pointer text-deepblue hover:text-red-500" />
+        <FaPen
+          className="product-list-item cursor-pointer text-deepblue hover:text-blue-500"
+          onClick={() => handleListItemClick(product)}
+        />
+        <FaTrash
+          className="cursor-pointer text-deepblue hover:text-red-500"
+          onClick={handleRemoveClick}
+        />
       </div>
     </li>
   );
