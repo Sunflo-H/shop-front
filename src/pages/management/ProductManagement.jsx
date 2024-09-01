@@ -10,6 +10,7 @@ import {
   setActiveCategory,
   setActiveStatus,
   setPage,
+  setSearchQuery,
 } from "../../slice/management/productManagementSlice";
 import GoAddPageButton from "../../components/management/main/ui/GoAddPageButton";
 import Limit from "../../components/management/main/ui/Limit";
@@ -43,6 +44,7 @@ export default function ProductManagement() {
     status: "ALL",
     page: 1,
     limit: 10,
+    searchQuery: "",
   });
 
   const { data, isLoading, error } = useQuery({
@@ -64,14 +66,19 @@ export default function ProductManagement() {
 
     if (data?.length === 0) {
       Swal.fire("No data available");
+      const isCategoryChange = activeCategory !== prevQueryParams.category;
+      const isStatusChange = activeStatus !== prevQueryParams.status;
+      const isSearchQeuryChange = searchQuery !== prevQueryParams.searchQuery;
 
       // 기존 상태로 되돌리기
-      if (activeCategory !== prevQueryParams.category) {
+      if (isCategoryChange)
         dispatch(setActiveCategory(prevQueryParams.category));
-      }
-      if (activeStatus !== prevQueryParams.status) {
-        dispatch(setActiveStatus(prevQueryParams.status));
-      }
+
+      if (isStatusChange) dispatch(setActiveStatus(prevQueryParams.status));
+
+      if (isSearchQeuryChange)
+        dispatch(setSearchQuery(prevQueryParams.searchQuery));
+
       dispatch(setPage(prevQueryParams.page));
     } else {
       setPrevQueryParams({
@@ -79,6 +86,7 @@ export default function ProductManagement() {
         status: activeStatus,
         page,
         limit,
+        searchQuery,
       });
     }
   }, [data, isLoading, activeCategory, activeStatus]);
