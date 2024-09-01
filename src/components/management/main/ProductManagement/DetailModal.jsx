@@ -9,13 +9,9 @@ import {
 } from "../../../../slice/management/detailModalSlice";
 import _ from "lodash";
 import uploadFileToS3 from "../../../../api/aws_uploadToS3";
-import axios from "axios";
 import { alert_productUploadSuccess } from "../../../../alerts/success";
-import { fetchProduct } from "../../../../slice/management/productManagementSlice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateProduct } from "../../../../api/productApi";
-
-const UPDATE_PRODUCT_URL = process.env.REACT_APP_UPDATE_PRODUCT_URL;
 
 const categoryOptions = ["Man", "Woman", "Shoes", "Accessory"];
 const statusOptions = ["Sale", "Sold Out", "Hide"];
@@ -178,7 +174,7 @@ export default function DetailModal() {
           <div className="text-sm text-blue-400">Product Name</div>
           <input
             className="bg-transparent w-full outline-none focus:bg-blue-100"
-            value={name || "something"}
+            value={name || 0}
             name="name"
             onChange={handleTextChange}
           />
@@ -188,7 +184,7 @@ export default function DetailModal() {
           <input
             type="number"
             className="bg-transparent w-full outline-none focus:bg-blue-100"
-            value={price || "something"}
+            value={price || 0}
             name="price"
             onChange={handleTextChange}
           />
@@ -197,7 +193,7 @@ export default function DetailModal() {
           <div className="text-sm text-blue-400">Category</div>
           <SelectBox
             options={categoryOptions}
-            value={selectBox.category || "something"}
+            value={selectBox.category || 0}
             name="category"
             onChange={handleSelectBoxChange}
           />
@@ -206,7 +202,7 @@ export default function DetailModal() {
           <div className="text-sm text-blue-400">Status</div>
           <SelectBox
             options={statusOptions}
-            value={selectBox.status || "something"}
+            value={selectBox.status || 0}
             name="status"
             onChange={handleSelectBoxChange}
           />
@@ -215,7 +211,7 @@ export default function DetailModal() {
           <div className="text-sm text-blue-400">Color</div>
           <input
             className="bg-transparent w-full outline-none focus:bg-blue-100"
-            value={color || "something"}
+            value={color || 0}
             name="color"
             onChange={handleTextChange}
           />
@@ -224,7 +220,7 @@ export default function DetailModal() {
           <div className="text-sm text-blue-400 ">Size</div>
           <input
             className="bg-transparent w-full outline-none focus:bg-blue-100"
-            value={size || "something"}
+            value={size || 0}
             name="size"
             onChange={handleTextChange}
           />
@@ -233,7 +229,7 @@ export default function DetailModal() {
           <div className="text-sm text-blue-400">Description</div>
           <textarea
             className="bg-transparent w-full h-full outline-none resize-none focus:bg-blue-100"
-            value={description || "something"}
+            value={description || 0}
             name="description"
             onChange={handleTextChange}
           />
@@ -244,7 +240,7 @@ export default function DetailModal() {
           <label>
             <img
               className="rounded-md w-full h-96 border-blue-200 border cursor-pointer"
-              src={image || "something"}
+              src={image || 0}
             />
 
             <input

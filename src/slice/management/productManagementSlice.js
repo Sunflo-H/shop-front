@@ -1,38 +1,4 @@
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
-import axios from "axios";
-import Swal from "sweetalert2";
-
-// 필터링된 상품 데이터를 요청
-// export const fetchProduct = createAsyncThunk(
-//   "productList/fetchProduct",
-
-//   async ({ category, status, page, limit }, thunkAPI) => {
-//     let url = `http://localhost:8080/api/product`;
-
-//     if (category === "ALL") category = "";
-//     if (status === "ALL") status = "";
-
-//     const response = await axios.get(url, {
-//       params: { category, status, page, limit },
-//     });
-//     const productData = response.data;
-
-//     return productData;
-//   }
-// );
-
-// 모든 상품데이터를 요청
-// export const fetchAllProduct = createAsyncThunk(
-//   "productList/fetchAllProduct",
-
-//   async () => {
-//     let url = `http://localhost:8080/api/product`;
-
-//     const response = await axios.get(url);
-//     const productData = response.data;
-//     return productData;
-//   }
-// );
+import { createSlice } from "@reduxjs/toolkit";
 
 const productListSlice = createSlice({
   name: "productList",
@@ -49,6 +15,9 @@ const productListSlice = createSlice({
     // remove
     isSelectMode: false,
     idList: [],
+
+    // search
+    searchQuery: "",
   },
   reducers: {
     setActiveCategory: (state, action) => {
@@ -79,6 +48,10 @@ const productListSlice = createSlice({
     setIdList: (state, action) => {
       state.idList = action.payload;
     },
+    // search
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
   },
 });
 
@@ -90,5 +63,6 @@ export const {
   setPageGroup,
   setIsSelectMode,
   setIdList,
+  setSearchQuery,
 } = productListSlice.actions;
 export default productListSlice.reducer;

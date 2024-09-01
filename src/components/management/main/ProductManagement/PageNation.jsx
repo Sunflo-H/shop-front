@@ -10,7 +10,7 @@ import {
   setPage,
   setPageGroup,
 } from "../../../../slice/management/productManagementSlice";
-import { fetchProducts } from "../../../../api/productApi";
+import { fetchPagenation, fetchProducts } from "../../../../api/productApi";
 import { useQuery } from "@tanstack/react-query";
 
 /**
@@ -27,24 +27,18 @@ const ARR_PAGE_PER_PAGEGORUP = [1, 2, 3, 4, 5];
 
 export default function PageNation() {
   const dispatch = useDispatch();
-  const {
-    activeCategory,
-    activeStatus,
-    page,
-    limit,
-    pageGroup,
-    // filteredProducts,
-  } = useSelector((state) => state.productManagement);
+  const { activeCategory, activeStatus, page, limit, pageGroup } = useSelector(
+    (state) => state.productManagement
+  );
 
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["allProducts", activeCategory, activeStatus],
-    queryFn: () => fetchProducts(activeCategory, activeStatus),
+    queryKey: ["productsForPagenation", activeCategory, activeStatus],
+    queryFn: () => fetchPagenation(activeCategory, activeStatus),
   });
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
-  // const productCount = filteredProducts.length;
   const productCount = data.length;
   let maxPage = Math.ceil(productCount / limit);
   let maxPageGroup = Math.ceil(maxPage / PAGE_PER_PAGEGORUP);
@@ -52,14 +46,6 @@ export default function PageNation() {
   const handlePageClick = (page) => {
     dispatch(setPage(page));
     refetch();
-    // dispatch(
-    //   fetchProduct({
-    //     category: activeCategory,
-    //     status: activeStatus,
-    //     page,
-    //     limit,
-    //   })
-    // );
   };
 
   const handlePrevPageGroupClick = () => {
@@ -96,14 +82,6 @@ export default function PageNation() {
     else {
       dispatch(setPage(page - 1));
       refetch();
-      // dispatch(
-      //   fetchProduct({
-      //     category: activeCategory,
-      //     status: activeStatus,
-      //     page: page - 1,
-      //     limit,
-      //   })
-      // );
     }
   };
 
@@ -118,14 +96,6 @@ export default function PageNation() {
     else {
       dispatch(setPage(page + 1));
       refetch();
-      // dispatch(
-      //   fetchProduct({
-      //     category: activeCategory,
-      //     status: activeStatus,
-      //     page: page + 1,
-      //     limit,
-      //   })
-      // );
     }
   };
 

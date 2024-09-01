@@ -4,11 +4,27 @@ const GET_URL = process.env.REACT_APP_GET_PRODUCT_URL;
 const UPDATE_URL = process.env.REACT_APP_UPDATE_PRODUCT_URL;
 const DELETE_URL = process.env.REACT_APP_DELETE_PRODUCT_URL;
 
-export const fetchProducts = async (category, status, page, limit) => {
+export const fetchProducts = async (
+  category,
+  status,
+  page,
+  limit,
+  searchQuery
+) => {
+  console.log(category, status, page, limit, searchQuery);
   if (category === "ALL") category = "";
   if (status === "ALL") status = "";
   const response = await axios.get(GET_URL, {
-    params: { category, status, page, limit },
+    params: { category, status, page, limit, searchQuery },
+  });
+  return response.data;
+};
+
+export const fetchPagenation = async (category, status) => {
+  if (category === "ALL") category = "";
+  if (status === "ALL") status = "";
+  const response = await axios.get(GET_URL, {
+    params: { category, status },
   });
   return response.data;
 };

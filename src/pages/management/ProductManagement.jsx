@@ -36,9 +36,8 @@ const statusOptions = [
 export default function ProductManagement() {
   const dispatch = useDispatch();
 
-  const { activeCategory, activeStatus, page, limit } = useSelector(
-    (state) => state.productManagement
-  );
+  const { activeCategory, activeStatus, page, limit, searchQuery } =
+    useSelector((state) => state.productManagement);
   const [prevQueryParams, setPrevQueryParams] = useState({
     category: "ALL",
     status: "ALL",
@@ -47,8 +46,16 @@ export default function ProductManagement() {
   });
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["products", activeCategory, activeStatus, page, limit],
-    queryFn: () => fetchProducts(activeCategory, activeStatus, page, limit),
+    queryKey: [
+      "products",
+      activeCategory,
+      activeStatus,
+      page,
+      limit,
+      searchQuery,
+    ],
+    queryFn: () =>
+      fetchProducts(activeCategory, activeStatus, page, limit, searchQuery),
   });
 
   // 데이터가 0개일 때 필터 복구
@@ -76,9 +83,6 @@ export default function ProductManagement() {
     }
   }, [data, isLoading, activeCategory, activeStatus]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-
   const handleCategoryChange = (e) => {
     const category = e.target.value;
     dispatch(setActiveCategory(category));
@@ -90,6 +94,9 @@ export default function ProductManagement() {
     dispatch(setActiveStatus(status));
     dispatch(setPage(1));
   };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div>

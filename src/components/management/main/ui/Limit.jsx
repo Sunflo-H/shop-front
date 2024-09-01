@@ -7,19 +7,9 @@ import {
 
 export default function Limit() {
   const dispatch = useDispatch();
-  const { activeCategory, activeStatus, page, limit } = useSelector(
-    (state) => state.productManagement
-  );
+  const { limit } = useSelector((state) => state.productManagement);
   const handleChange = (e) => {
     dispatch(setLimit(e.target.value));
-    // dispatch(
-    //   fetchProduct({
-    //     category: activeCategory,
-    //     status: activeStatus,
-    //     page,
-    //     limit: e.target.value,
-    //   })
-    // );
   };
 
   return (
