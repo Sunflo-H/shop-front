@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const productListSlice = createSlice({
   name: "productList",
@@ -48,9 +48,17 @@ const productListSlice = createSlice({
     setIdList: (state, action) => {
       state.idList = action.payload;
     },
+
     // search
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
+    },
+
+    // resetFilter
+    resetFilter: (state) => {
+      state.activeCategory = "ALL";
+      state.activeStatus = "ALL";
+      state.searchQuery = "";
     },
   },
 });
@@ -64,5 +72,6 @@ export const {
   setIsSelectMode,
   setIdList,
   setSearchQuery,
+  resetFilter,
 } = productListSlice.actions;
 export default productListSlice.reducer;

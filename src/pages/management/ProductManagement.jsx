@@ -18,6 +18,7 @@ import DetailModal from "../../components/management/main/ProductManagement/Deta
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "../../api/productApi";
 import Swal from "sweetalert2";
+import Reset from "../../components/management/main/ui/Reset";
 
 const categoryOptions = [
   { value: "ALL", label: "ALL Products" },
@@ -122,6 +123,7 @@ export default function ProductManagement() {
         />
         <Limit />
         <SearchBar />
+        <Reset />
         <GoAddPageButton url={"/manage/product/new"} />
       </div>
       <RemoveSelectedBtn />
