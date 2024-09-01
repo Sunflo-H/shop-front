@@ -6,7 +6,6 @@ import {
   setIdList,
   setIsSelectMode,
 } from "../../../../slice/management/productManagementSlice";
-import { Link } from "react-router-dom";
 import {
   setDetailData,
   closeModal,
@@ -61,21 +60,6 @@ export default function ProductListItem({
   };
 
   const handleCheckboxChange = (e) => {
-    // const name = "checkbox" + (index + 1);
-    // if (e.target.checked) {
-    //   setCheckboxList((prev) => ({
-    //     ...prev,
-    //     [name]: true,
-    //   }));
-    //   dispatch(setIdList(_.union(idList, [_id])));
-    // } else {
-    //   setCheckboxList((prev) => ({
-    //     ...prev,
-    //     [name]: false,
-    //   }));
-    //   dispatch(setIdList(_.without(idList, _id)));
-    // }
-
     if (e.target.checked) {
       setCheckboxList((prev) =>
         prev.map((isChecked, i) => {

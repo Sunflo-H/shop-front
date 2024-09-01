@@ -14,10 +14,10 @@ export default function ProductListHeader({
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      setCheckboxList((prevList) => prevList.map((isChecked) => true));
+      setCheckboxList((prevList) => prevList.map(() => true));
       dispatch(setIdList(idList));
     } else {
-      setCheckboxList((prevList) => prevList.map((isChecked) => false));
+      setCheckboxList((prevList) => prevList.map(() => false));
       dispatch(setIdList([]));
     }
   };

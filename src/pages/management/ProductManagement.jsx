@@ -7,7 +7,6 @@ import Filter from "../../components/management/main/ui/Filter";
 import RemoveSelectedBtn from "../../components/management/main/RemoveSeletedBtn";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchProduct,
   setActiveCategory,
   setActiveStatus,
   setPage,
@@ -15,8 +14,7 @@ import {
 import GoAddPageButton from "../../components/management/main/ui/GoAddPageButton";
 import Limit from "../../components/management/main/ui/Limit";
 import DetailModal from "../../components/management/main/ProductManagement/DetailModal";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "../../api/productApi";
 import Swal from "sweetalert2";
 

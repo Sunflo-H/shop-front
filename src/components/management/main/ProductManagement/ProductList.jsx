@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import ProductListItem from "./ProductListItem";
-import { useSelector } from "react-redux";
 import ProductListHeader from "./ProductListHeader";
 
 export default function ProductList({ products }) {
-  const { idList } = useSelector((state) => state.productManagement);
-
   const [checkboxList, setCheckboxList] = useState(
     new Array(products.length).fill(false)
   );
-  console.log(checkboxList);
-  console.log(idList);
+
   return (
     <div className="mt-4 bg-white rounded-md shadow-md border border-gray-300 overflow-hidden">
       <ProductListHeader
