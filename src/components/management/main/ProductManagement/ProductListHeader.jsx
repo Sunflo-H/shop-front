@@ -1,8 +1,27 @@
-import React, { useState } from "react";
-import { FaTrash } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import { fetchProducts } from "../../../../api/productApi";
+import { useDispatch } from "react-redux";
+import { setIdList } from "../../../../slice/management/productManagementSlice";
 
-export default function ProductListHeader() {
+export default function ProductListHeader({
+  products,
+  checkboxList,
+  setCheckboxList,
+}) {
+  const dispatch = useDispatch();
+  const idList = products.map((product) => product._id);
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setCheckboxList((prevList) => prevList.map((isChecked) => true));
+      dispatch(setIdList(idList));
+    } else {
+      setCheckboxList((prevList) => prevList.map((isChecked) => false));
+      dispatch(setIdList([]));
+    }
+  };
+
   return (
     <div className="flex py-2 border-b border-gray-300 font-bold bg-blue-100 ">
       <div className="w-20 flex justify-center items-center">
@@ -14,6 +33,7 @@ export default function ProductListHeader() {
             type="checkbox"
             className={`peer relative h-4 w-4 cursor-pointer appearance-none rounded border-2 border-blue-400 bg-white checked:border-blue-400 checked:bg-blue-400 `}
             id="checkbox"
+            onChange={handleSelectAll}
           />
           <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
             <svg

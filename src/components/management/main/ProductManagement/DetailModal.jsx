@@ -44,10 +44,6 @@ export default function DetailModal() {
   }, [detailData]);
 
   useEffect(() => {
-    console.log(updatedProduct);
-  }, [updatedProduct]);
-
-  useEffect(() => {
     // 모달 외부를 클릭시 닫히는 이벤트 핸들러
     const handleOutsideClick = (e) => {
       if (!isOpen) return;

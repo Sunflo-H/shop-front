@@ -48,6 +48,7 @@ const productListSlice = createSlice({
 
     // remove
     isSelectMode: false,
+    idList: [],
   },
   reducers: {
     setActiveCategory: (state, action) => {
@@ -75,6 +76,9 @@ const productListSlice = createSlice({
     setIsSelectMode: (state, action) => {
       state.isSelectMode = action.payload;
     },
+    setIdList: (state, action) => {
+      state.idList = action.payload;
+    },
   },
 });
 
@@ -85,5 +89,6 @@ export const {
   setPage,
   setPageGroup,
   setIsSelectMode,
+  setIdList,
 } = productListSlice.actions;
 export default productListSlice.reducer;
