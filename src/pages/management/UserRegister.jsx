@@ -41,11 +41,11 @@ export default function UserRegister() {
             <section className="bg-white rounded-md shadow-md px-2 py-4">
               <div className=" py-4 px-4">
                 <InputFormTitle title="E-Mail" required={true} />
-                <div className="flex items-center grow text-start mt-1">
+                <div className="flex text-start mt-1">
                   <input
                     type="text"
                     name="emailLocal"
-                    className="w-full outline-none border border-gray-300 rounded-md px-2 py-2 "
+                    className="w-full outline-none border rounded-md px-2 py-2 focus:border-gray-400 "
                     placeholder="Enter your local"
                     value={emailLocal}
                     onChange={handleInputChange}
@@ -55,12 +55,12 @@ export default function UserRegister() {
                     type="text"
                     name="emailDomain"
                     placeholder="Enter your domain"
-                    className="w-full outline-none border border-gray-300 rounded-md px-2 py-2 mr-2"
+                    className="w-full outline-none border rounded-md px-2 py-2 mr-2 focus:border-gray-400 "
                     value={emailDomain}
                     onChange={handleInputChange}
                   />
                   <select
-                    className={`w-28 px-2 py-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:outline-none focus:bg-white cursor-pointer`}
+                    className={`w-28 px-2 py-2 text-gray-700 bg-white border rounded-md cursor-pointer focus:outline-none focus:border-gray-400`}
                     value={options[0]}
                     name="emailDomain"
                     onChange={handleInputChange}
@@ -79,7 +79,7 @@ export default function UserRegister() {
                   <input
                     type="text"
                     name="password"
-                    className="w-full outline-none border border-gray-300 rounded-md px-2 py-2 mr-2"
+                    className="w-full outline-none border  rounded-md px-2 py-2 mr-2 focus:border-gray-400 "
                     placeholder="ex) password1234!@"
                     value={password}
                     onChange={handleInputChange}
@@ -92,7 +92,7 @@ export default function UserRegister() {
                   <input
                     type="text"
                     name="name"
-                    className="w-full outline-none border border-gray-300 rounded-md px-2 py-2"
+                    className="w-full outline-none border  rounded-md px-2 py-2 focus:border-gray-400 "
                     placeholder="ex) hong gil dong"
                     value={name}
                     onChange={handleInputChange}
@@ -105,7 +105,7 @@ export default function UserRegister() {
                   <input
                     type="tel"
                     name="phone"
-                    className="w-full outline-none border border-gray-300 rounded-md px-2 py-2 "
+                    className="w-full outline-none border  rounded-md px-2 py-2 focus:border-gray-400 "
                     placeholder="010-1234-5678"
                     pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
                     value={phone}
@@ -117,7 +117,7 @@ export default function UserRegister() {
                 <InputFormTitle title="Role" required={true} />
                 <div className="mt-1 ">
                   <select
-                    className={`w-full px-2 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:bg-white cursor-pointer`}
+                    className={`w-full px-2 py-2 text-gray-700 bg-white border rounded-md cursor-pointer focus:outline-none  focus:border-gray-400 `}
                     value={role}
                     name="role"
                     onChange={handleInputChange}
