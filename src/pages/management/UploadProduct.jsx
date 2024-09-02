@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import RequireOption from "../../components/management/main/UploadProduct/RequireOption";
 import { setNewProduct } from "../../slice/management/createProductSlice";
 import SaveAndCancelBtn from "../../components/management/main/UploadProduct/SaveAndCancelBtn";
+import InputFormTitle from "../../components/management/main/ui/InputFormTitle";
 
 const category = ["Man", "Woman", "Accessory", "Shoes"];
 
@@ -36,9 +37,7 @@ export default function UploadProduct() {
               {/* 좌측 상단 첫번째 컨텐츠 : 상품명, 가격 */}
               <section className="bg-white rounded-md shadow-md p-2">
                 <div className=" py-4 px-4">
-                  <div className="font-bold">
-                    Name <RequireOption />
-                  </div>
+                  <InputFormTitle title="name" required={true} />
                   <div className="grow text-start border-b mt-1">
                     <input
                       type="text"
@@ -54,10 +53,7 @@ export default function UploadProduct() {
                   </div>
                 </div>
                 <div className=" py-4 px-4">
-                  <div className="font-bold">
-                    Price
-                    <RequireOption />
-                  </div>
+                  <InputFormTitle title="Price" required={true} />
                   <div className="flex border-b mt-1 ">
                     <input
                       type="Number"
@@ -77,10 +73,7 @@ export default function UploadProduct() {
               <section className="bg-white  mt-4 rounded-md shadow-md p-2">
                 {/* 카테고리 */}
                 <div className="py-4 px-4">
-                  <div className="font-bold">
-                    Category
-                    <RequireOption />
-                  </div>
+                  <InputFormTitle title="Category" required={true} />
                   <div className="mt-1 ">
                     <div className="">
                       {category.map((item, index) => (
@@ -91,7 +84,7 @@ export default function UploadProduct() {
                 </div>
                 {/* 사이즈 */}
                 <div className="py-4 px-4">
-                  <div className="font-bold">Size</div>
+                  <InputFormTitle title="Size" />
                   <div className="mt-1 ">
                     <input
                       type="text"
@@ -107,7 +100,7 @@ export default function UploadProduct() {
                 </div>
                 {/* 컬러 */}
                 <div className="py-4 px-4">
-                  <div className="font-bold">Color</div>
+                  <InputFormTitle title="Color" />
                   <div className="mt-1 ">
                     <input
                       type="text"
@@ -126,9 +119,7 @@ export default function UploadProduct() {
             {/* 우측 상단 컨텐츠 : 이미지 업로드 */}
             <section className="flex flex-col w-1/2 h-[472px] bg-white rounded-md p-2 shadow-md">
               <div className="flex px-4 py-4">
-                <div className="font-bold">
-                  Image <RequireOption />
-                </div>
+                <InputFormTitle title="Image" required={true} />
                 <label className="flex self-center text-blue-500 font-bold ml-auto">
                   <span className="mr-1 self-center cursor-pointer">Add</span>{" "}
                   <FaPlus className="self-center" />
@@ -170,7 +161,7 @@ export default function UploadProduct() {
           {/* 하단 컨텐츠 : 상품 설명 */}
           <section className="bg-white mt-4 rounded-md shadow-md">
             <div className="py-4 px-4">
-              <div className="font-bold">Description</div>
+              <InputFormTitle title="Description" />
               <div className="flex mt-1 ">
                 <textarea
                   className="w-full h-20 border outline-none resize-none"

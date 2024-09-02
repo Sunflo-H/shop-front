@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import RadioBtn from "../../components/management/main/UploadProduct/RadioBtn";
 import { useDispatch, useSelector } from "react-redux";
 import RequireOption from "../../components/management/main/UploadProduct/RequireOption";
-import { setNewProduct } from "../../slice/management/createProductSlice";
+
 import SaveAndCancelBtn from "../../components/management/main/UploadProduct/SaveAndCancelBtn";
-import SelectBox from "../../components/management/main/ui/SelectBox";
+import InputFormTitle from "../../components/management/main/ui/InputFormTitle";
 
 const roleOptions = ["User", "Admin"];
 const options = [
@@ -24,34 +23,36 @@ const options = [
 
 export default function UserRegister() {
   const dispatch = useDispatch();
+  // 입력 폼 관련 상태값
+  const [input, setInput] = useState("");
+  const [emailLocal, setEmailLocal] = useState("");
+  const [emailDomain, setEmailDomain] = useState("");
+  const [role, setRole] = useState("");
 
-  // const handleInputChange = (e) => {
-  //   const key = e.target.name;
-  //   const value = e.target.value;
-  //   dispatch(setNewProduct({ key, value }));
-  // };
+  const [isCustomDomain, setIsCustomDomain] = useState(true);
+
+  const handleEmailLocalChange = (e) => {
+    const value = e.target.value;
+    setEmailLocal(value);
+  };
+
+  const handleEmailDomainChange = (e) => {
+    const value = e.target.value;
+    setEmailDomain(value);
+  };
+
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setInput({ ...input, [name]: value });
+  };
 
   const handleSelectBoxChage = (e) => {
     console.log(e.target.name);
     console.log(e.target.value);
+    setRole(e.target.value);
   };
-
-  const [isCustomDomain, setIsCustomDomain] = useState(true);
-  const [emailDomain, setEmailDomain] = useState("");
-
-  const handleDomainChange = (e) => {
-    if (e.target.value === "custom") {
-      setIsCustomDomain(true);
-      setEmailDomain(""); // 직접 입력 필드 초기화
-    } else {
-      setIsCustomDomain(false);
-      setEmailDomain(e.target.value); // 선택된 도메인 설정
-    }
-  };
-
-  const handleInputChange = (e) => {
-    setEmailDomain(e.target.value);
-  };
+  console.log(role);
 
   return (
     <div className="flex h-screen bg-lightblue manage-font">
@@ -62,36 +63,31 @@ export default function UserRegister() {
             {/* 좌측 상단 첫번째 컨텐츠 : 상품명, 가격 */}
             <section className="bg-white rounded-md shadow-md px-2 py-4">
               <div className=" py-4 px-4">
-                <div className="font-bold">
-                  E-Mail <RequireOption />
-                </div>
+                <InputFormTitle title="E-Mail" required={true} />
                 <div className="flex items-center grow text-start mt-1">
                   <input
                     type="text"
                     name="emailLocal"
                     className="w-full outline-none border border-gray-300 rounded-md px-2 py-2 "
                     placeholder="Enter your local"
-                    value={useSelector(
-                      (state) => state.createProduct.newProduct.name
-                    )}
-                    required
-                    onChange={handleInputChange}
+                    value={emailLocal}
+                    onChange={handleEmailLocalChange}
                   />
                   <span className="mx-1">@</span>
                   <input
                     type="text"
-                    name="emailDomain"
+                    name="domain"
                     placeholder="Enter your domain"
                     className="w-full outline-none border border-gray-300 rounded-md px-2 py-2 mr-2"
                     value={emailDomain}
-                    onChange={handleInputChange}
+                    onChange={handleEmailDomainChange}
                   />
                   <select
                     className={`w-28 px-2 py-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:outline-none focus:bg-white cursor-pointer
                        ${isCustomDomain && "bg-gray-200 "}`}
                     value={options[0]}
                     name="emailDomain"
-                    onChange={handleSelectBoxChage}
+                    onChange={handleEmailDomainChange}
                   >
                     {options.map((option, i) => (
                       <option value={option} key={i}>
@@ -102,28 +98,21 @@ export default function UserRegister() {
                 </div>
               </div>
               <div className=" py-4 px-4">
-                <div className="font-bold">
-                  Password <RequireOption />
-                </div>
+                <InputFormTitle title="Password" required={true} />
                 <div className="grow text-start mt-1">
                   <input
                     type="text"
                     name="password"
                     className="w-full outline-none border border-gray-300 rounded-md px-2 py-2 mr-2"
                     placeholder="ex) password1234!@"
-                    value={useSelector(
-                      (state) => state.createProduct.newProduct.name
-                    )}
+                    value={input.password}
                     required
                     onChange={handleInputChange}
                   />
                 </div>
               </div>
               <div className=" py-4 px-4">
-                <div className="font-bold">
-                  Name
-                  <RequireOption />
-                </div>
+                <InputFormTitle title="Name" required={true} />
                 <div className="flex  mt-1 ">
                   <input
                     type="text"
@@ -131,18 +120,13 @@ export default function UserRegister() {
                     className="w-full outline-none border border-gray-300 rounded-md px-2 py-2"
                     placeholder="ex) hong gil dong"
                     required
-                    value={useSelector(
-                      (state) => state.createProduct.newProduct.price
-                    )}
+                    value={input.name}
                     onChange={handleInputChange}
                   />
                 </div>
               </div>
               <div className=" py-4 px-4">
-                <div className="font-bold">
-                  Phone Number
-                  <RequireOption />
-                </div>
+                <InputFormTitle title="Phone Number" required={true} />
                 <div className="flex  mt-1 ">
                   <input
                     type="tel"
@@ -151,22 +135,17 @@ export default function UserRegister() {
                     placeholder="010-1234-5678"
                     pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
                     required
-                    value={useSelector(
-                      (state) => state.createProduct.newProduct.price
-                    )}
+                    value={input.phone}
                     onChange={handleInputChange}
                   />
                 </div>
               </div>
               <div className="py-4 px-4">
-                <div className="font-bold">
-                  Role
-                  <RequireOption />
-                </div>
+                <InputFormTitle title="Role" required={true} />
                 <div className="mt-1 ">
                   <select
                     className={`w-full px-2 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:bg-white cursor-pointer`}
-                    value={roleOptions[0]}
+                    value={role}
                     name="role"
                     onChange={handleSelectBoxChage}
                   >
