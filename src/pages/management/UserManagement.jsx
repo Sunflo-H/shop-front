@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setActiveRole,
   setCheckboxList,
+  setIsSelectMode,
   setLimit,
   setPage,
   setSearchQuery,
@@ -14,12 +15,13 @@ import {
 import GoAddPageButton from "../../components/management/main/ui/GoAddPageButton";
 import Limit from "../../components/management/main/ui/Limit";
 import DetailModal from "../../components/management/main/ProductManagement/DetailModal";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Reset from "../../components/management/main/ui/Reset";
 import UserList from "../../components/management/main/UserManagement/UserList";
-import { fetchUsers } from "../../api/userApi";
-import RemoveSelectedBtn from "../../components/management/main/UserManagement/RemoveSeletedBtn";
+import { deleteProducts, fetchUsers } from "../../api/userApi";
+import RemoveSelectedBtn from "../../components/management/main/ui/RemoveSeletedBtn";
+import { alert_deleteProduct } from "../../alerts/warning";
 
 const roleOptions = [
   { value: "ALL", label: "ALL Role" },
@@ -29,6 +31,7 @@ const roleOptions = [
 
 export default function UserManagement() {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   const { activeRole, page, limit, searchQuery } = useSelector(
     (state) => state.userManagement
@@ -79,6 +82,31 @@ export default function UserManagement() {
     dispatch(setPage(1));
   };
 
+  const { isSelectMode, idList } = useSelector((state) => state.userManagement);
+  const mutation = useMutation({
+    mutationFn: deleteProducts,
+    onSuccess: () => {
+      queryClient.invalidateQueries("products");
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  const handleRemoveClick = () => {
+    alert_deleteProduct().then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+        mutation.mutate(idList);
+        dispatch(setIsSelectMode(false));
+      }
+    });
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
@@ -96,7 +124,10 @@ export default function UserManagement() {
         <Reset />
         <GoAddPageButton url={"/manage/user/new"} />
       </div>
-      <RemoveSelectedBtn />
+      <RemoveSelectedBtn
+        isSelectMode={isSelectMode}
+        onClick={handleRemoveClick}
+      />
       <UserList users={data} />
       <PageNation />
 

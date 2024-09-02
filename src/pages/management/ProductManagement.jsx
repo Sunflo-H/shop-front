@@ -8,6 +8,7 @@ import {
   setActiveCategory,
   setActiveStatus,
   setCheckboxList,
+  setIsSelectMode,
   setLimit,
   setPage,
   setSearchQuery,
@@ -15,12 +16,13 @@ import {
 import GoAddPageButton from "../../components/management/main/ui/GoAddPageButton";
 import Limit from "../../components/management/main/ui/Limit";
 import DetailModal from "../../components/management/main/ProductManagement/DetailModal";
-import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "../../api/productApi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteProducts, fetchProducts } from "../../api/productApi";
 import Swal from "sweetalert2";
 import Reset from "../../components/management/main/ui/Reset";
-import RemoveSelectedBtn from "../../components/management/main/ProductManagement/RemoveSeletedBtn";
+import RemoveSelectedBtn from "../../components/management/main/ui/RemoveSeletedBtn";
 import ProductList from "../../components/management/main/ProductManagement/ProductList";
+import { alert_deleteProduct } from "../../alerts/warning";
 
 const categoryOptions = [
   { value: "ALL", label: "ALL Products" },
@@ -39,6 +41,7 @@ const statusOptions = [
 
 export default function ProductManagement() {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   const { activeCategory, activeStatus, page, limit, searchQuery } =
     useSelector((state) => state.productManagement);
@@ -108,6 +111,34 @@ export default function ProductManagement() {
     dispatch(setPage(1));
   };
 
+  const { isSelectMode, idList } = useSelector(
+    (state) => state.productManagement
+  );
+
+  const mutation = useMutation({
+    mutationFn: deleteProducts,
+    onSuccess: () => {
+      queryClient.invalidateQueries("products");
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  const handleRemoveClick = () => {
+    alert_deleteProduct().then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+        mutation.mutate(idList);
+        dispatch(setIsSelectMode(false));
+      }
+    });
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
@@ -130,7 +161,10 @@ export default function ProductManagement() {
         <Reset />
         <GoAddPageButton url={"/manage/product/new"} />
       </div>
-      <RemoveSelectedBtn />
+      <RemoveSelectedBtn
+        isSelectMode={isSelectMode}
+        onClick={handleRemoveClick}
+      />
       <ProductList products={data} />
       <PageNation />
 
