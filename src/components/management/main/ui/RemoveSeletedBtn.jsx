@@ -1,11 +1,11 @@
-import React from "react";
-import { FaTrash } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteProducts } from "../../../api/productApi";
-import { alert_deleteProduct } from "../../../alerts/warning";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setIsSelectMode } from "../../../../slice/management/productManagementSlice";
+import { deleteProducts } from "../../../../api/productApi";
+import { alert_deleteProduct } from "../../../../alerts/warning";
 import Swal from "sweetalert2";
-import { setIsSelectMode } from "../../../slice/management/productManagementSlice";
+import { FaTrash } from "react-icons/fa";
 
 export default function RemoveSelectedBtn() {
   const queryClient = useQueryClient();

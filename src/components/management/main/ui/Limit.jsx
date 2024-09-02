@@ -1,15 +1,11 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchProduct,
-  setLimit,
-} from "../../../../slice/management/productManagementSlice";
+import { useDispatch } from "react-redux";
+import { setLimit } from "../../../../slice/management/productManagementSlice";
 
-export default function Limit() {
+export default function Limit({ limit, setLimitAction }) {
   const dispatch = useDispatch();
-  const { limit } = useSelector((state) => state.productManagement);
   const handleChange = (e) => {
-    dispatch(setLimit(e.target.value));
+    dispatch(setLimitAction(e.target.value));
   };
 
   return (
@@ -19,9 +15,9 @@ export default function Limit() {
         value={limit}
         onChange={handleChange}
       >
-        <option value="10">Show 10 Products</option>
-        <option value="20">Show 20 Products</option>
-        <option value="30">Show 30 Products</option>
+        <option value={10}>Show 10 Products</option>
+        <option value={20}>Show 20 Products</option>
+        <option value={30}>Show 30 Products</option>
       </select>
     </div>
   );

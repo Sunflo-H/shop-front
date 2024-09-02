@@ -3,7 +3,6 @@ import { FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setCheckboxList,
   setIdList,
   setIsSelectMode,
 } from "../../../../slice/management/productManagementSlice";
@@ -18,7 +17,12 @@ import Swal from "sweetalert2";
 import { alert_deleteProduct } from "../../../../alerts/warning";
 import _ from "lodash";
 
-export default function DataListItem({ product, index }) {
+export default function UserListItem({
+  product,
+  setCheckboxList,
+  checkboxList,
+  index,
+}) {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
@@ -34,8 +38,7 @@ export default function DataListItem({ product, index }) {
       console.log(err);
     },
   });
-  const { checkboxList } = useSelector((state) => state.productManagement);
-  // console.log(checkboxList);
+
   useEffect(() => {
     const isChecked = Object.values(checkboxList).some((checked) => checked);
     isChecked
@@ -57,17 +60,21 @@ export default function DataListItem({ product, index }) {
   };
 
   const handleCheckboxChange = (e) => {
-    dispatch(
-      setCheckboxList(
-        checkboxList.map((isChecked, i) => {
+    if (e.target.checked) {
+      setCheckboxList((prev) =>
+        prev.map((isChecked, i) => {
           if (i === index) return !isChecked;
           return isChecked;
         })
-      )
-    );
-    if (e.target.checked) {
+      );
       dispatch(setIdList(_.union(idList, [_id])));
     } else {
+      setCheckboxList((prev) =>
+        prev.map((isChecked, i) => {
+          if (i === index) return !isChecked;
+          return isChecked;
+        })
+      );
       dispatch(setIdList(_.without(idList, _id)));
     }
   };

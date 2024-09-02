@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import ProductList from "../../components/management/main/ProductManagement/ProductList";
 import PageNation from "../../components/management/main/ProductManagement/PageNation";
 import SearchBar from "../../components/management/main/ui/SearchBar";
 import ManagementTitle from "../../components/management/main/ui/ManagementTitle";
 import Filter from "../../components/management/main/ui/Filter";
-import RemoveSelectedBtn from "../../components/management/main/RemoveSeletedBtn";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setActiveCategory,
   setActiveStatus,
+  setCheckboxList,
+  setLimit,
   setPage,
   setSearchQuery,
 } from "../../slice/management/productManagementSlice";
@@ -19,6 +19,8 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "../../api/productApi";
 import Swal from "sweetalert2";
 import Reset from "../../components/management/main/ui/Reset";
+import RemoveSelectedBtn from "../../components/management/main/ui/RemoveSeletedBtn";
+import ProductList from "../../components/management/main/ProductManagement/ProductList";
 
 const categoryOptions = [
   { value: "ALL", label: "ALL Products" },
@@ -44,7 +46,7 @@ export default function ProductManagement() {
     category: "ALL",
     status: "ALL",
     page: 1,
-    limit: 10,
+    limit: "10",
     searchQuery: "",
   });
 
@@ -61,11 +63,12 @@ export default function ProductManagement() {
       fetchProducts(activeCategory, activeStatus, page, limit, searchQuery),
   });
 
-  // 데이터가 0개일 때 필터 복구
+  // dataFetch onSuccess
   useEffect(() => {
     if (isLoading) return;
 
-    if (data?.length === 0) {
+    if (data.length === 0) {
+      // 데이터가 0개일 때 필터를 이전 상태로 되돌린다.
       Swal.fire("No data available");
       const isCategoryChange = activeCategory !== prevQueryParams.category;
       const isStatusChange = activeStatus !== prevQueryParams.status;
@@ -89,6 +92,7 @@ export default function ProductManagement() {
         limit,
         searchQuery,
       });
+      dispatch(setCheckboxList(new Array(data.length).fill(false)));
     }
   }, [data, isLoading, activeCategory, activeStatus]);
 
@@ -121,7 +125,7 @@ export default function ProductManagement() {
           onChange={handleStatusChange}
           value={activeStatus}
         />
-        <Limit />
+        <Limit limit={limit} setLimitAction={setLimit} />
         <SearchBar />
         <Reset />
         <GoAddPageButton url={"/manage/product/new"} />

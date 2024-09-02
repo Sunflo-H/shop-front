@@ -1,23 +1,30 @@
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { fetchProducts } from "../../../../api/productApi";
-import { useDispatch } from "react-redux";
-import { setIdList } from "../../../../slice/management/productManagementSlice";
-
-export default function ProductListHeader({
-  products,
-  checkboxList,
+import { useDispatch, useSelector } from "react-redux";
+import {
   setCheckboxList,
-}) {
+  setIdList,
+} from "../../../../slice/management/productManagementSlice";
+import DataListHeaderItem from "../ui/DataListHeaderItem";
+
+const headerItem = [
+  { value: "Name", width: 60 },
+  { value: "Price", width: 40 },
+  { value: "Category", width: 40 },
+  { value: "Status", width: 40 },
+  { value: "Creation Date", width: 40 },
+];
+
+export default function ProductListHeader({ products }) {
   const dispatch = useDispatch();
-  const idList = products.map((product) => product._id);
+  const idList = products.map((item) => item._id);
+  const { checkboxList } = useSelector((state) => state.productManagement);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      setCheckboxList((prevList) => prevList.map(() => true));
+      dispatch(setCheckboxList(checkboxList.map(() => true)));
       dispatch(setIdList(idList));
     } else {
-      setCheckboxList((prevList) => prevList.map(() => false));
+      dispatch(setCheckboxList(checkboxList.map(() => false)));
       dispatch(setIdList([]));
     }
   };
@@ -53,11 +60,9 @@ export default function ProductListHeader({
           </span>
         </label>
       </div>
-      <div className="w-60 text-blue-900 uppercase">Name</div>
-      <div className="w-40 text-blue-900 uppercase">Price</div>
-      <div className="w-40 text-blue-900 uppercase">Category</div>
-      <div className="w-40 text-blue-900 uppercase">Status</div>
-      <div className="w-40 text-blue-900 uppercase">Creation Date</div>
+      {headerItem.map((item, index) => (
+        <DataListHeaderItem item={item} key={index} />
+      ))}
     </div>
   );
 }

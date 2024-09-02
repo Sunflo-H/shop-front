@@ -1,7 +1,7 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 
-const productListSlice = createSlice({
-  name: "productList",
+const productManagementSlice = createSlice({
+  name: "productManagement",
   initialState: {
     categoryList: ["ALL", "Man", "Woman", "Accessory", "Shoes"],
 
@@ -9,7 +9,7 @@ const productListSlice = createSlice({
     activeCategory: "ALL",
     activeStatus: "ALL",
     page: 1,
-    limit: 10,
+    limit: "10",
     pageGroup: 1, // 현재 페이지 그룹 1~5, 6~10// 1이면 1~5
 
     // remove
@@ -18,6 +18,9 @@ const productListSlice = createSlice({
 
     // search
     searchQuery: "",
+
+    // checkbox
+    checkboxList: [],
   },
   reducers: {
     setActiveCategory: (state, action) => {
@@ -60,6 +63,11 @@ const productListSlice = createSlice({
       state.activeStatus = "ALL";
       state.searchQuery = "";
     },
+
+    // checkbox
+    setCheckboxList: (state, action) => {
+      state.checkboxList = action.payload;
+    },
   },
 });
 
@@ -73,5 +81,6 @@ export const {
   setIdList,
   setSearchQuery,
   resetFilter,
-} = productListSlice.actions;
-export default productListSlice.reducer;
+  setCheckboxList,
+} = productManagementSlice.actions;
+export default productManagementSlice.reducer;

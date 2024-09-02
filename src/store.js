@@ -3,7 +3,7 @@ import categoryReducer from "./slice/categorySlice";
 import authReducer from "./slice/authSlice";
 import productManagementReducer from "./slice/management/productManagementSlice";
 import detailModalReducer from "./slice/management/detailModalSlice";
-
+import userManagementReducer from "./slice/management/userManagementSlice";
 import pageNationReducer from "./slice/management/pageNationSlice";
 import createProductReducer from "./slice/management/createProductSlice";
 
@@ -16,6 +16,9 @@ export default configureStore({
     // productManagement
     productManagement: productManagementReducer,
     pageNation: pageNationReducer,
+
+    // userManagement
+    userManagement: userManagementReducer,
 
     // Product & User
     detailModal: detailModalReducer,
