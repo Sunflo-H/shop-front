@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import RequireOption from "../../components/management/main/UploadProduct/RequireOption";
-
 import SaveAndCancelBtn from "../../components/management/main/UploadProduct/SaveAndCancelBtn";
 import InputFormTitle from "../../components/management/main/ui/InputFormTitle";
+import { setNewUser } from "../../slice/management/userRegisterSlice";
 
 const roleOptions = ["User", "Admin"];
 const options = [
@@ -23,36 +22,14 @@ const options = [
 
 export default function UserRegister() {
   const dispatch = useDispatch();
-  // 입력 폼 관련 상태값
-  const [input, setInput] = useState("");
-  const [emailLocal, setEmailLocal] = useState("");
-  const [emailDomain, setEmailDomain] = useState("");
-  const [role, setRole] = useState("");
-
-  const [isCustomDomain, setIsCustomDomain] = useState(true);
-
-  const handleEmailLocalChange = (e) => {
-    const value = e.target.value;
-    setEmailLocal(value);
-  };
-
-  const handleEmailDomainChange = (e) => {
-    const value = e.target.value;
-    setEmailDomain(value);
-  };
+  const { newUser } = useSelector((state) => state.userRegister);
+  const { emailLocal, emailDomain, password, name, phone, role } = newUser;
 
   const handleInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setInput({ ...input, [name]: value });
+    dispatch(setNewUser({ ...newUser, [name]: value }));
   };
-
-  const handleSelectBoxChage = (e) => {
-    console.log(e.target.name);
-    console.log(e.target.value);
-    setRole(e.target.value);
-  };
-  console.log(role);
 
   return (
     <div className="flex h-screen bg-lightblue manage-font">
@@ -71,23 +48,22 @@ export default function UserRegister() {
                     className="w-full outline-none border border-gray-300 rounded-md px-2 py-2 "
                     placeholder="Enter your local"
                     value={emailLocal}
-                    onChange={handleEmailLocalChange}
+                    onChange={handleInputChange}
                   />
                   <span className="mx-1">@</span>
                   <input
                     type="text"
-                    name="domain"
+                    name="emailDomain"
                     placeholder="Enter your domain"
                     className="w-full outline-none border border-gray-300 rounded-md px-2 py-2 mr-2"
                     value={emailDomain}
-                    onChange={handleEmailDomainChange}
+                    onChange={handleInputChange}
                   />
                   <select
-                    className={`w-28 px-2 py-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:outline-none focus:bg-white cursor-pointer
-                       ${isCustomDomain && "bg-gray-200 "}`}
+                    className={`w-28 px-2 py-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:outline-none focus:bg-white cursor-pointer`}
                     value={options[0]}
                     name="emailDomain"
-                    onChange={handleEmailDomainChange}
+                    onChange={handleInputChange}
                   >
                     {options.map((option, i) => (
                       <option value={option} key={i}>
@@ -105,8 +81,7 @@ export default function UserRegister() {
                     name="password"
                     className="w-full outline-none border border-gray-300 rounded-md px-2 py-2 mr-2"
                     placeholder="ex) password1234!@"
-                    value={input.password}
-                    required
+                    value={password}
                     onChange={handleInputChange}
                   />
                 </div>
@@ -119,8 +94,7 @@ export default function UserRegister() {
                     name="name"
                     className="w-full outline-none border border-gray-300 rounded-md px-2 py-2"
                     placeholder="ex) hong gil dong"
-                    required
-                    value={input.name}
+                    value={name}
                     onChange={handleInputChange}
                   />
                 </div>
@@ -134,8 +108,7 @@ export default function UserRegister() {
                     className="w-full outline-none border border-gray-300 rounded-md px-2 py-2 "
                     placeholder="010-1234-5678"
                     pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
-                    required
-                    value={input.phone}
+                    value={phone}
                     onChange={handleInputChange}
                   />
                 </div>
@@ -147,7 +120,7 @@ export default function UserRegister() {
                     className={`w-full px-2 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:bg-white cursor-pointer`}
                     value={role}
                     name="role"
-                    onChange={handleSelectBoxChage}
+                    onChange={handleInputChange}
                   >
                     {roleOptions.map((option, i) => (
                       <option value={option} key={i}>
