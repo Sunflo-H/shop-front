@@ -19,7 +19,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "../../api/productApi";
 import Swal from "sweetalert2";
 import Reset from "../../components/management/main/ui/Reset";
-import RemoveSelectedBtn from "../../components/management/main/ui/RemoveSeletedBtn";
+import RemoveSelectedBtn from "../../components/management/main/ProductManagement/RemoveSeletedBtn";
 import ProductList from "../../components/management/main/ProductManagement/ProductList";
 
 const categoryOptions = [

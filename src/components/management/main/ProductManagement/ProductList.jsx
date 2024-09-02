@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ProductListItem from "./ProductListItem";
 import ProductListHeader from "./ProductListHeader";
-import { useSelector } from "react-redux";
 
 export default function ProductList({ products }) {
   return (

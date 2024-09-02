@@ -25,17 +25,19 @@ export default function DataListItem({ product, index }) {
   const { idList } = useSelector((state) => state.productManagement);
   const { name, price, category, status, createdAt, _id } = product;
 
+  // 삭제
   const mutation = useMutation({
     mutationFn: deleteProducts,
     onSuccess: () => {
-      queryClient.invalidateQueries("users");
+      queryClient.invalidateQueries("products");
     },
     onError: (err) => {
       console.log(err);
     },
   });
+
   const { checkboxList } = useSelector((state) => state.productManagement);
-  // console.log(checkboxList);
+
   useEffect(() => {
     const isChecked = Object.values(checkboxList).some((checked) => checked);
     isChecked

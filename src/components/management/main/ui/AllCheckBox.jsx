@@ -1,20 +1,6 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { setIdList } from "../../../../slice/management/productManagementSlice";
 
-export default function AllSelectBox({ users, setCheckboxList }) {
-  const dispatch = useDispatch();
-  const idList = users.map((user) => user._id);
-
-  const handleSelectAll = (e) => {
-    if (e.target.checked) {
-      setCheckboxList((prevList) => prevList.map(() => true));
-      dispatch(setIdList(idList));
-    } else {
-      setCheckboxList((prevList) => prevList.map(() => false));
-      dispatch(setIdList([]));
-    }
-  };
+export default function AllCheckBox({ onChange }) {
   return (
     <div className="w-20 flex justify-center items-center">
       <label
@@ -25,7 +11,7 @@ export default function AllSelectBox({ users, setCheckboxList }) {
           type="checkbox"
           className={`peer relative h-4 w-4 cursor-pointer appearance-none rounded border-2 border-blue-400 bg-white checked:border-blue-400 checked:bg-blue-400 `}
           id="checkbox"
-          onChange={handleSelectAll}
+          onChange={onChange}
         />
         <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
           <svg

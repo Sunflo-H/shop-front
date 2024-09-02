@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setIdList,
-  setIsSelectMode,
-} from "../../../../slice/management/productManagementSlice";
+
 import {
   setDetailData,
   closeModal,
@@ -16,19 +13,20 @@ import { deleteProducts } from "../../../../api/productApi";
 import Swal from "sweetalert2";
 import { alert_deleteProduct } from "../../../../alerts/warning";
 import _ from "lodash";
-
-export default function UserListItem({
-  product,
+import {
   setCheckboxList,
-  checkboxList,
-  index,
-}) {
+  setIdList,
+  setIsSelectMode,
+} from "../../../../slice/management/userManagementSlice";
+
+export default function UserListItem({ user, index }) {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
   const { idList } = useSelector((state) => state.productManagement);
-  const { name, price, category, status, createdAt, _id } = product;
+  const { email, name, role, phone, signUpDate, _id } = user;
 
+  // 삭제
   const mutation = useMutation({
     mutationFn: deleteProducts,
     onSuccess: () => {
@@ -38,6 +36,8 @@ export default function UserListItem({
       console.log(err);
     },
   });
+
+  const { checkboxList } = useSelector((state) => state.userManagement);
 
   useEffect(() => {
     const isChecked = Object.values(checkboxList).some((checked) => checked);
@@ -60,36 +60,32 @@ export default function UserListItem({
   };
 
   const handleCheckboxChange = (e) => {
-    if (e.target.checked) {
-      setCheckboxList((prev) =>
-        prev.map((isChecked, i) => {
+    dispatch(
+      setCheckboxList(
+        checkboxList.map((isChecked, i) => {
           if (i === index) return !isChecked;
           return isChecked;
         })
-      );
+      )
+    );
+    if (e.target.checked) {
       dispatch(setIdList(_.union(idList, [_id])));
     } else {
-      setCheckboxList((prev) =>
-        prev.map((isChecked, i) => {
-          if (i === index) return !isChecked;
-          return isChecked;
-        })
-      );
       dispatch(setIdList(_.without(idList, _id)));
     }
   };
 
-  const handleListItemClick = (product) => {
+  const handleListItemClick = (user) => {
     if (!isOpen) {
       dispatch(openModal());
-      dispatch(setDetailData(product));
+      dispatch(setDetailData(user));
       return;
     } else if (isOpen) {
-      if (detailData._id === product._id) {
+      if (detailData._id === user._id) {
         dispatch(closeModal());
         dispatch(setDetailData({}));
       } else {
-        dispatch(setDetailData(product));
+        dispatch(setDetailData(user));
       }
     }
   };
@@ -128,20 +124,20 @@ export default function UserListItem({
       </div>
       <div className="w-60 pl-[2px] text-bold">
         <span
-          onClick={() => handleListItemClick(product)}
-          className="product-list-item  cursor-pointer hover:font-bold"
+          onClick={() => handleListItemClick(user)}
+          className="user-list-item  cursor-pointer hover:font-bold"
         >
-          {name}
+          {email}
         </span>
       </div>
-      <div className="w-40 pl-[2px] ">{price}</div>
-      <div className="w-40 pl-[2px] ">{category}</div>
-      <div className="w-40 pl-[2px] ">{status}</div>
-      <div className="w-40 pl-[2px] ">{createdAt}</div>
+      <div className="w-40 pl-[2px] ">{name}</div>
+      <div className="w-32 pl-[2px] ">{role}</div>
+      <div className="w-48 pl-[2px] ">{phone}</div>
+      <div className="w-40 pl-[2px] ">{signUpDate}</div>
       <div className="flex items-center px-6 ml-4 gap-5 border-l-[2px] border-lightblue">
         <FaPen
-          className="product-list-item cursor-pointer text-deepblue hover:text-blue-500"
-          onClick={() => handleListItemClick(product)}
+          className="user-list-item cursor-pointer text-deepblue hover:text-blue-500"
+          onClick={() => handleListItemClick(user)}
         />
         <FaTrash
           className="cursor-pointer text-deepblue hover:text-red-500"

@@ -3,7 +3,6 @@ import PageNation from "../../components/management/main/ProductManagement/PageN
 import SearchBar from "../../components/management/main/ui/SearchBar";
 import ManagementTitle from "../../components/management/main/ui/ManagementTitle";
 import Filter from "../../components/management/main/ui/Filter";
-import RemoveSelectedBtn from "../../components/management/main/ui/RemoveSeletedBtn";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setActiveRole,
@@ -16,10 +15,11 @@ import GoAddPageButton from "../../components/management/main/ui/GoAddPageButton
 import Limit from "../../components/management/main/ui/Limit";
 import DetailModal from "../../components/management/main/ProductManagement/DetailModal";
 import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "../../api/productApi";
 import Swal from "sweetalert2";
 import Reset from "../../components/management/main/ui/Reset";
 import UserList from "../../components/management/main/UserManagement/UserList";
+import { fetchUsers } from "../../api/userApi";
+import RemoveSelectedBtn from "../../components/management/main/UserManagement/RemoveSeletedBtn";
 
 const roleOptions = [
   { value: "ALL", label: "ALL Role" },
@@ -43,10 +43,8 @@ export default function UserManagement() {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["users", activeRole, page, limit, searchQuery],
-    queryFn: () => fetchProducts(activeRole, page, limit, searchQuery),
+    queryFn: () => fetchUsers(activeRole, page, limit, searchQuery),
   });
-
-  // dispatch(setCheckboxList(new Array(users.length).fill(false)));
 
   // 데이터가 0개일 때 필터 복구
   useEffect(() => {
@@ -71,6 +69,7 @@ export default function UserManagement() {
         limit,
         searchQuery,
       });
+      dispatch(setCheckboxList(new Array(data.length).fill(false)));
     }
   }, [data, isLoading, activeRole]);
 

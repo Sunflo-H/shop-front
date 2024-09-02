@@ -17,7 +17,7 @@ const userManagementSlice = createSlice({
     searchQuery: "",
 
     // checkbox
-    checkboxList: "",
+    checkboxList: [],
   },
   reducers: {
     setActiveRole: (state, action) => {

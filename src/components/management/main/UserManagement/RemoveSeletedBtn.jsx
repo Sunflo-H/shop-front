@@ -1,18 +1,17 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setIsSelectMode } from "../../../../slice/management/productManagementSlice";
-import { deleteProducts } from "../../../../api/productApi";
+
 import { alert_deleteProduct } from "../../../../alerts/warning";
 import Swal from "sweetalert2";
 import { FaTrash } from "react-icons/fa";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsSelectMode } from "../../../../slice/management/userManagementSlice";
+import { deleteProducts } from "../../../../api/userApi";
 
 export default function RemoveSelectedBtn() {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
-  const { isSelectMode, idList } = useSelector(
-    (state) => state.productManagement
-  );
+  const { isSelectMode, idList } = useSelector((state) => state.userManagement);
   const mutation = useMutation({
     mutationFn: deleteProducts,
     onSuccess: () => {
@@ -36,6 +35,7 @@ export default function RemoveSelectedBtn() {
       }
     });
   };
+
   return (
     <div
       className={` inline-flex items-center px-4 py-2 mt-3 gap-2
