@@ -101,7 +101,7 @@ export default function UserListItem({ user, index }) {
             type="checkbox"
             className={`peer relative h-4 w-4 cursor-pointer appearance-none rounded border-2 border-blue-300 checked:border-blue-400 checked:bg-blue-400 `}
             id="checkbox"
-            checked={checkboxList[index]}
+            checked={checkboxList[index] || false}
             onChange={handleCheckboxChange}
           />
           <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
