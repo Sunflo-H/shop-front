@@ -23,6 +23,7 @@ import ManagementHome from "./pages/management/ManagementHome";
 import UpdateProduct from "./pages/management/UpdateProduct";
 import ManagementProductDetail from "./pages/management/ManagementProductDetail";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import UserRegister from "./pages/management/UserRegister";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -107,6 +108,14 @@ const router = createBrowserRouter([
     element: (
       <Provider store={store}>
         <UploadProduct />
+      </Provider>
+    ),
+  },
+  {
+    path: "/manage/user/register",
+    element: (
+      <Provider store={store}>
+        <UserRegister />
       </Provider>
     ),
   },

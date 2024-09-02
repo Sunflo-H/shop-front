@@ -122,7 +122,7 @@ export default function UserManagement() {
         <Limit limit={limit} setLimitAction={setLimit} />
         <SearchBar setSearchQueryAction={setSearchQuery} />
         <Reset />
-        <GoAddPageButton url={"/manage/user/new"} />
+        <GoAddPageButton url={"/manage/user/register"} />
       </div>
       <RemoveSelectedBtn
         isSelectMode={isSelectMode}

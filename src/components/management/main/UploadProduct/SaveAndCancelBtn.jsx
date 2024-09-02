@@ -69,7 +69,7 @@ export default function SaveAndCancelBtn() {
   };
 
   return (
-    <div className="flex justify-center ml-auto gap-3 mt-4 border">
+    <div className="flex justify-center ml-auto gap-3 mt-4 ">
       <button
         type="submit"
         className="px-6 py-2 text-white font-bold  bg-blue-600 cursor-pointer rounded-md
