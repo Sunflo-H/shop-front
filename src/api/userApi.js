@@ -28,11 +28,11 @@ export const registerUser = async (newData) => {
   }
 };
 
-export const fetchPagenation = async (category, status) => {
-  if (category === "ALL") category = "";
-  if (status === "ALL") status = "";
+export const fetchPagenation = async (role, searchQuery) => {
+  if (role === "ALL") role = "";
+
   const response = await axios.get(GET_URL, {
-    params: { category, status },
+    params: { role, searchQuery },
   });
   return response.data;
 };

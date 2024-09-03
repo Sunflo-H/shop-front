@@ -157,7 +157,7 @@ export default function ProductManagement() {
           value={activeStatus}
         />
         <Limit limit={limit} setLimitAction={setLimit} />
-        <SearchBar />
+        <SearchBar setSearchQueryAction={setSearchQuery} />
         <Reset />
         <GoAddPageButton url={"/manage/product/new"} />
       </div>

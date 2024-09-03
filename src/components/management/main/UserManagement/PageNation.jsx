@@ -5,13 +5,12 @@ import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Page from "../ui/Page";
+import { useQuery } from "@tanstack/react-query";
+import { fetchPagenation } from "../../../../api/userApi";
 import {
-  fetchProduct,
   setPage,
   setPageGroup,
-} from "../../../../slice/management/productManagementSlice";
-import { fetchPagenation, fetchProducts } from "../../../../api/productApi";
-import { useQuery } from "@tanstack/react-query";
+} from "../../../../slice/management/userManagementSlice";
 
 /**
  ** 페이지 네이션 변수
@@ -27,17 +26,13 @@ const ARR_PAGE_PER_PAGEGORUP = [1, 2, 3, 4, 5];
 
 export default function PageNation() {
   const dispatch = useDispatch();
-  const { activeCategory, activeStatus, page, limit, pageGroup, searchQuery } =
-    useSelector((state) => state.productManagement);
+  const { activeRole, page, limit, pageGroup, searchQuery } = useSelector(
+    (state) => state.userManagement
+  );
 
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: [
-      "productsForPagenation",
-      activeCategory,
-      activeStatus,
-      searchQuery,
-    ],
-    queryFn: () => fetchPagenation(activeCategory, activeStatus, searchQuery),
+    queryKey: ["usersForPagenation", activeRole, searchQuery],
+    queryFn: () => fetchPagenation(activeRole, searchQuery),
   });
 
   if (isLoading) return <div>Loading...</div>;

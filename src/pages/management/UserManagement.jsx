@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PageNation from "../../components/management/main/ProductManagement/PageNation";
 import SearchBar from "../../components/management/main/ui/SearchBar";
 import ManagementTitle from "../../components/management/main/ui/ManagementTitle";
 import Filter from "../../components/management/main/ui/Filter";
@@ -22,6 +21,7 @@ import { deleteUser, fetchUsers } from "../../api/userApi";
 import RemoveSelectedBtn from "../../components/management/main/ui/RemoveSeletedBtn";
 import { alert_deleteProduct } from "../../alerts/warning";
 import DetailModal from "../../components/management/main/UserManagement/DetailModal";
+import PageNation from "../../components/management/main/UserManagement/PageNation";
 
 const roleOptions = [
   { value: "ALL", label: "ALL Role" },
