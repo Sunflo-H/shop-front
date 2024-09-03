@@ -9,7 +9,6 @@ import {
   openModal,
 } from "../../../../slice/management/detailModalSlice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteProducts } from "../../../../api/productApi";
 import Swal from "sweetalert2";
 import { alert_deleteProduct } from "../../../../alerts/warning";
 import _ from "lodash";
@@ -18,17 +17,18 @@ import {
   setIdList,
   setIsSelectMode,
 } from "../../../../slice/management/userManagementSlice";
+import { deleteUser } from "../../../../api/userApi";
 
 export default function UserListItem({ user, index }) {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
-  const { idList } = useSelector((state) => state.productManagement);
+  const { idList } = useSelector((state) => state.userManagement);
   const { email, name, role, phone, signUpDate, _id } = user;
 
   // 삭제
   const mutation = useMutation({
-    mutationFn: deleteProducts,
+    mutationFn: deleteUser,
     onSuccess: () => {
       queryClient.invalidateQueries("users");
     },
@@ -44,6 +44,7 @@ export default function UserListItem({ user, index }) {
     isChecked
       ? dispatch(setIsSelectMode(true))
       : dispatch(setIsSelectMode(false));
+    console.log(idList);
   }, [checkboxList]);
 
   const handleRemoveClick = () => {

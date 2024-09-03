@@ -52,8 +52,7 @@ const userManagementSlice = createSlice({
 
     // resetFilter
     resetFilter: (state) => {
-      state.activeCategory = "ALL";
-      state.activeStatus = "ALL";
+      state.activeRole = "ALL";
       state.searchQuery = "";
     },
 

@@ -50,7 +50,7 @@ export const updateProduct = async (productToUpdate) => {
   return response.data;
 };
 
-export const deleteProducts = async (idList) => {
+export const deleteUser = async (idList) => {
   try {
     const response = await axios.delete(DELETE_URL, { data: idList });
     return response.data;

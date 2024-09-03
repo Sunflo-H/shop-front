@@ -19,7 +19,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Reset from "../../components/management/main/ui/Reset";
 import UserList from "../../components/management/main/UserManagement/UserList";
-import { deleteProducts, fetchUsers } from "../../api/userApi";
+import { deleteUser, fetchUsers } from "../../api/userApi";
 import RemoveSelectedBtn from "../../components/management/main/ui/RemoveSeletedBtn";
 import { alert_deleteProduct } from "../../alerts/warning";
 
@@ -84,7 +84,7 @@ export default function UserManagement() {
 
   const { isSelectMode, idList } = useSelector((state) => state.userManagement);
   const mutation = useMutation({
-    mutationFn: deleteProducts,
+    mutationFn: deleteUser,
     onSuccess: () => {
       queryClient.invalidateQueries("products");
     },
