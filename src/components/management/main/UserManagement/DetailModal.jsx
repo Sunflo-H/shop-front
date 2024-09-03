@@ -10,7 +10,6 @@ import {
 import _ from "lodash";
 import { alert_productUploadSuccess } from "../../../../alerts/success";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateProduct } from "../../../../api/productApi";
 import { updateUser } from "../../../../api/userApi";
 
 const roleOptions = ["User", "Admin"];

@@ -87,7 +87,11 @@ export default function ProductManagement() {
       if (isSearchQeuryChange)
         dispatch(setSearchQuery(prevQueryParams.searchQuery));
 
+      // console.log(page);
       dispatch(setPage(prevQueryParams.page));
+      // console.log(data);
+      // if (!products) dispatch(setPage(page - 1));
+      // console.log(page);
     } else {
       setPrevQueryParams({
         category: activeCategory,
@@ -115,11 +119,11 @@ export default function ProductManagement() {
   const { isSelectMode, idList } = useSelector(
     (state) => state.productManagement
   );
-
   const mutation = useMutation({
     mutationFn: deleteProducts,
-    onSuccess: () => {
+    onSuccess: (deleteCount) => {
       queryClient.invalidateQueries("products");
+      if (deleteCount === data.length) dispatch(setPage(page - 1));
     },
     onError: (err) => {
       console.log(err);

@@ -128,7 +128,6 @@ export default function DetailModal() {
           status: selectBox.status,
         };
       }
-      console.log(productToUpdate);
       mutation.mutate(productToUpdate);
     } catch (err) {
       console.error(err);

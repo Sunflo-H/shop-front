@@ -6,6 +6,7 @@ import {
   setCheckboxList,
   setIdList,
   setIsSelectMode,
+  setPage,
 } from "../../../../slice/management/productManagementSlice";
 import {
   setDetailData,
@@ -18,23 +19,13 @@ import Swal from "sweetalert2";
 import { alert_deleteProduct } from "../../../../alerts/warning";
 import _ from "lodash";
 
-export default function DataListItem({ product, index }) {
-  const queryClient = useQueryClient();
+export default function DataListItem({ product, index, mutation }) {
   const dispatch = useDispatch();
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
   const { idList } = useSelector((state) => state.productManagement);
   const { name, price, category, status, createdAt, _id } = product;
 
   // 삭제
-  const mutation = useMutation({
-    mutationFn: deleteProducts,
-    onSuccess: () => {
-      queryClient.invalidateQueries("products");
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
 
   const { checkboxList } = useSelector((state) => state.productManagement);
 
@@ -100,7 +91,7 @@ export default function DataListItem({ product, index }) {
             type="checkbox"
             className={`peer relative h-4 w-4 cursor-pointer appearance-none rounded border-2 border-blue-300 checked:border-blue-400 checked:bg-blue-400 `}
             id="checkbox"
-            checked={checkboxList[index] || null}
+            checked={checkboxList[index] || false}
             onChange={handleCheckboxChange}
           />
           <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
