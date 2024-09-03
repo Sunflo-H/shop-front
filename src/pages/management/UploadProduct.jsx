@@ -1,24 +1,34 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import RadioBtn from "../../components/management/main/UploadProduct/RadioBtn";
 import { FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import RequireOption from "../../components/management/main/UploadProduct/RequireOption";
-import { setNewProduct } from "../../slice/management/createProductSlice";
+import {
+  resetNewProduct,
+  setNewProduct,
+} from "../../slice/management/createProductSlice";
 import SaveAndCancelBtn from "../../components/management/main/UploadProduct/SaveAndCancelBtn";
 import InputFormTitle from "../../components/management/main/ui/InputFormTitle";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { uploadProduct } from "../../api/productApi";
+import { alert_productUploadSuccess } from "../../alerts/success";
 
 const category = ["Man", "Woman", "Accessory", "Shoes"];
+const requireOptions = ["name", "price", "category", "image"];
 
 export default function UploadProduct() {
   const dispatch = useDispatch();
-  const defaultImage = useSelector((state) => state.createProduct.defaultImage);
-  const image = useSelector((state) => state.createProduct.newProduct.image);
+  const queryClient = useQueryClient();
+  const { newProduct, defaultImage } = useSelector(
+    (state) => state.createProduct
+  );
+  const { image } = newProduct;
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     const key = name;
     const value = files[0];
     dispatch(setNewProduct({ key, value }));
+    e.target.value = null; // 파일 업로드 후 동일한 이미지를 업로드 할 때 필요한 코드
   };
 
   const handleInputChange = (e) => {
@@ -26,6 +36,18 @@ export default function UploadProduct() {
     const value = e.target.value;
     dispatch(setNewProduct({ key, value }));
   };
+
+  const mutation = useMutation({
+    mutationFn: uploadProduct,
+    onSuccess: async (data) => {
+      await alert_productUploadSuccess();
+      dispatch(resetNewProduct());
+      queryClient.invalidateQueries("products");
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
 
   return (
     <div className="h-screen bg-lightblue manage-font">
@@ -47,7 +69,6 @@ export default function UploadProduct() {
                       value={useSelector(
                         (state) => state.createProduct.newProduct.name
                       )}
-                      required
                       onChange={handleInputChange}
                     />
                   </div>
@@ -60,7 +81,6 @@ export default function UploadProduct() {
                       name="price"
                       className="w-full outline-none"
                       placeholder="100"
-                      required
                       value={useSelector(
                         (state) => state.createProduct.newProduct.price
                       )}
@@ -127,7 +147,6 @@ export default function UploadProduct() {
                     type="file"
                     accept="image/*"
                     name="image"
-                    required
                     onChange={handleFileChange}
                     hidden
                   />
@@ -150,7 +169,6 @@ export default function UploadProduct() {
                     type="file"
                     accept="image/*"
                     name="image"
-                    required
                     onChange={handleFileChange}
                     hidden
                   />
@@ -174,7 +192,12 @@ export default function UploadProduct() {
               </div>
             </div>
           </section>
-          <SaveAndCancelBtn />
+          <SaveAndCancelBtn
+            newData={newProduct}
+            requireOptions={requireOptions}
+            mutation={mutation}
+            addBtnText={"Add Product"}
+          />
         </div>
       </div>
     </div>

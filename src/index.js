@@ -106,17 +106,21 @@ const router = createBrowserRouter([
   {
     path: "/manage/product/new",
     element: (
-      <Provider store={store}>
-        <UploadProduct />
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <UploadProduct />
+        </Provider>
+      </QueryClientProvider>
     ),
   },
   {
     path: "/manage/user/register",
     element: (
-      <Provider store={store}>
-        <UserRegister />
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <UserRegister />
+        </Provider>
+      </QueryClientProvider>
     ),
   },
   {
