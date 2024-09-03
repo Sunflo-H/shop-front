@@ -78,7 +78,7 @@ export default function UserRegister() {
                     value={emailLocal}
                     onChange={handleInputChange}
                   />
-                  <span className="mx-1">@</span>
+                  <span className="flex items-center mx-1">@</span>
                   <input
                     type="text"
                     name="emailDomain"
