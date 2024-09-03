@@ -20,7 +20,6 @@ import Register from "./pages/shop/Register";
 import ProductManagement from "./pages/management/ProductManagement";
 import UserManagement from "./pages/management/UserManagement";
 import ManagementHome from "./pages/management/ManagementHome";
-import UpdateProduct from "./pages/management/UpdateProduct";
 import ManagementProductDetail from "./pages/management/ManagementProductDetail";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserRegister from "./pages/management/UserRegister";
@@ -129,16 +128,6 @@ const router = createBrowserRouter([
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
           <ManagementProductDetail />
-        </Provider>
-      </QueryClientProvider>
-    ),
-  },
-  {
-    path: "/manage/product/update/:id",
-    element: (
-      <QueryClientProvider client={queryClient}>
-        <Provider store={store}>
-          <UpdateProduct />
         </Provider>
       </QueryClientProvider>
     ),

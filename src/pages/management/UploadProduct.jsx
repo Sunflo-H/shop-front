@@ -6,8 +6,9 @@ import {
   resetNewProduct,
   setNewProduct,
 } from "../../slice/management/createProductSlice";
-import SaveAndCancelBtn from "../../components/management/main/UploadProduct/SaveAndCancelBtn";
+
 import InputFormTitle from "../../components/management/main/ui/InputFormTitle";
+import SaveAndCancelBtn from "../../components/management/main/ui/SaveAndCancelBtn";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { uploadProduct } from "../../api/productApi";
 import { alert_productUploadSuccess } from "../../alerts/success";

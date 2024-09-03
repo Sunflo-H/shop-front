@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import SaveAndCancelBtn from "../../components/management/main/UploadProduct/SaveAndCancelBtn";
+import SaveAndCancelBtn from "../../components/management/main/ui/SaveAndCancelBtn";
 import InputFormTitle from "../../components/management/main/ui/InputFormTitle";
 import {
   resetNewUser,

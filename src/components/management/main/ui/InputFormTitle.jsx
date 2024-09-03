@@ -1,5 +1,5 @@
 import React from "react";
-import RequireOption from "../UploadProduct/RequireOption";
+import RequireOption from "./RequireOption";
 
 export default function InputFormTitle({ title, required }) {
   return (

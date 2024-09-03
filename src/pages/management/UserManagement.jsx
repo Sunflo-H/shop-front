@@ -14,7 +14,6 @@ import {
 } from "../../slice/management/userManagementSlice";
 import GoAddPageButton from "../../components/management/main/ui/GoAddPageButton";
 import Limit from "../../components/management/main/ui/Limit";
-import DetailModal from "../../components/management/main/ProductManagement/DetailModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Reset from "../../components/management/main/ui/Reset";
@@ -22,6 +21,7 @@ import UserList from "../../components/management/main/UserManagement/UserList";
 import { deleteUser, fetchUsers } from "../../api/userApi";
 import RemoveSelectedBtn from "../../components/management/main/ui/RemoveSeletedBtn";
 import { alert_deleteProduct } from "../../alerts/warning";
+import DetailModal from "../../components/management/main/UserManagement/DetailModal";
 
 const roleOptions = [
   { value: "ALL", label: "ALL Role" },
