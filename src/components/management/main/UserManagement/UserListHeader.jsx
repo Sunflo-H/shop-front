@@ -3,6 +3,7 @@ import DataListHeaderItem from "../ui/DataListHeaderItem";
 import AllCheckBox from "../ui/AllCheckBox";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setAllCheckbox,
   setCheckboxList,
   setIdList,
 } from "../../../../slice/management/userManagementSlice";
@@ -18,20 +19,24 @@ const headerItem = [
 export default function UserListHeader({ users }) {
   const dispatch = useDispatch();
   const idList = users.map((user) => user._id);
-  const { checkboxList } = useSelector((state) => state.userManagement);
+  const { checkboxList, allCheckBox } = useSelector(
+    (state) => state.userManagement
+  );
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
+      dispatch(setAllCheckbox(true));
       dispatch(setCheckboxList(checkboxList.map(() => true)));
       dispatch(setIdList(idList));
     } else {
+      dispatch(setAllCheckbox(false));
       dispatch(setCheckboxList(checkboxList.map(() => false)));
       dispatch(setIdList([]));
     }
   };
   return (
     <div className="flex py-2 border-b border-gray-300 font-bold bg-blue-100 ">
-      <AllCheckBox onChange={handleSelectAll} />
+      <AllCheckBox onChange={handleSelectAll} allCheckBox={allCheckBox} />
       {headerItem.map((item, index) => (
         <DataListHeaderItem item={item} key={index} />
       ))}

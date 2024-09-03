@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   resetFilter,
   setActiveRole,
+  setAllCheckbox,
   setCheckboxList,
   setIsSelectMode,
   setLimit,
@@ -86,8 +87,9 @@ export default function UserManagement() {
   const { isSelectMode, idList } = useSelector((state) => state.userManagement);
   const mutation = useMutation({
     mutationFn: deleteUser,
-    onSuccess: () => {
-      queryClient.invalidateQueries("products");
+    onSuccess: (deleteCount) => {
+      queryClient.invalidateQueries("users");
+      if (deleteCount === data.length) dispatch(setPage(page - 1));
     },
     onError: (err) => {
       console.log(err);
@@ -104,6 +106,7 @@ export default function UserManagement() {
         });
         mutation.mutate(idList);
         dispatch(setIsSelectMode(false));
+        dispatch(setAllCheckbox(false));
       }
     });
   };

@@ -18,6 +18,7 @@ const userManagementSlice = createSlice({
 
     // checkbox
     checkboxList: [],
+    allCheckBox: false,
   },
   reducers: {
     setActiveRole: (state, action) => {
@@ -60,6 +61,9 @@ const userManagementSlice = createSlice({
     setCheckboxList: (state, action) => {
       state.checkboxList = action.payload;
     },
+    setAllCheckbox: (state, action) => {
+      state.allCheckBox = action.payload;
+    },
   },
 });
 
@@ -73,5 +77,6 @@ export const {
   setSearchQuery,
   resetFilter,
   setCheckboxList,
+  setAllCheckbox,
 } = userManagementSlice.actions;
 export default userManagementSlice.reducer;

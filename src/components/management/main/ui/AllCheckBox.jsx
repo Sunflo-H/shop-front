@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function AllCheckBox({ onChange }) {
+export default function AllCheckBox({ onChange, allCheckBox }) {
   return (
     <div className="w-20 flex justify-center items-center">
       <label
@@ -11,6 +11,7 @@ export default function AllCheckBox({ onChange }) {
           type="checkbox"
           className={`peer relative h-4 w-4 cursor-pointer appearance-none rounded border-2 border-blue-400 bg-white checked:border-blue-400 checked:bg-blue-400 `}
           id="checkbox"
+          checked={allCheckBox}
           onChange={onChange}
         />
         <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">

@@ -20,6 +20,7 @@ const productManagementSlice = createSlice({
     searchQuery: "",
 
     // checkbox
+    allCheckbox: false,
     checkboxList: [],
   },
   reducers: {
@@ -68,6 +69,9 @@ const productManagementSlice = createSlice({
     setCheckboxList: (state, action) => {
       state.checkboxList = action.payload;
     },
+    setAllCheckBox: (state, action) => {
+      state.allCheckbox = action.payload;
+    },
   },
 });
 
@@ -82,5 +86,6 @@ export const {
   setSearchQuery,
   resetFilter,
   setCheckboxList,
+  setAllCheckBox,
 } = productManagementSlice.actions;
 export default productManagementSlice.reducer;

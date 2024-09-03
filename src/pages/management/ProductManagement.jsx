@@ -8,6 +8,7 @@ import {
   resetFilter,
   setActiveCategory,
   setActiveStatus,
+  setAllCheckBox,
   setCheckboxList,
   setIsSelectMode,
   setLimit,
@@ -140,6 +141,7 @@ export default function ProductManagement() {
         });
         mutation.mutate(idList);
         dispatch(setIsSelectMode(false));
+        dispatch(setAllCheckBox(false));
       }
     });
   };

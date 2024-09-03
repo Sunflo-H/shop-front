@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setAllCheckBox,
   setCheckboxList,
   setIdList,
 } from "../../../../slice/management/productManagementSlice";
@@ -18,13 +19,17 @@ const headerItem = [
 export default function ProductListHeader({ products }) {
   const dispatch = useDispatch();
   const idList = products.map((item) => item._id);
-  const { checkboxList } = useSelector((state) => state.productManagement);
+  const { checkboxList, allCheckBox } = useSelector(
+    (state) => state.productManagement
+  );
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
+      dispatch(setAllCheckBox(true));
       dispatch(setCheckboxList(checkboxList.map(() => true)));
       dispatch(setIdList(idList));
     } else {
+      dispatch(setAllCheckBox(false));
       dispatch(setCheckboxList(checkboxList.map(() => false)));
       dispatch(setIdList([]));
     }
@@ -32,7 +37,7 @@ export default function ProductListHeader({ products }) {
 
   return (
     <div className="flex py-2 border-b border-gray-300 font-bold bg-blue-100 ">
-      <AllCheckBox onChange={handleSelectAll} />
+      <AllCheckBox onChange={handleSelectAll} allCheckBox={allCheckBox} />
       {headerItem.map((item, index) => (
         <DataListHeaderItem item={item} key={index} />
       ))}

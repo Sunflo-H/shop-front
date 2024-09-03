@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +8,6 @@ import {
   closeModal,
   openModal,
 } from "../../../../slice/management/detailModalSlice";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { alert_deleteProduct } from "../../../../alerts/warning";
 import _ from "lodash";
@@ -17,25 +16,12 @@ import {
   setIdList,
   setIsSelectMode,
 } from "../../../../slice/management/userManagementSlice";
-import { deleteUser } from "../../../../api/userApi";
 
-export default function UserListItem({ user, index }) {
-  const queryClient = useQueryClient();
+export default function UserListItem({ user, index, mutation }) {
   const dispatch = useDispatch();
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
   const { idList } = useSelector((state) => state.userManagement);
   const { email, name, role, phone, signUpDate, _id } = user;
-
-  // 삭제
-  const mutation = useMutation({
-    mutationFn: deleteUser,
-    onSuccess: () => {
-      queryClient.invalidateQueries("users");
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
 
   const { checkboxList } = useSelector((state) => state.userManagement);
 
