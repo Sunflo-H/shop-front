@@ -44,7 +44,6 @@ export default function UserListItem({ user, index }) {
     isChecked
       ? dispatch(setIsSelectMode(true))
       : dispatch(setIsSelectMode(false));
-    console.log(idList);
   }, [checkboxList]);
 
   const handleRemoveClick = () => {

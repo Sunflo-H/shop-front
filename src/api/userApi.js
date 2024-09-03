@@ -6,7 +6,6 @@ const DELETE_URL = process.env.REACT_APP_DELETE_USER_URL;
 const REGISTER_URL = process.env.REACT_APP_REGISTER_URL;
 
 export const fetchUsers = async (role, page, limit, searchQuery) => {
-  console.log(role, page, limit, searchQuery);
   if (role === "ALL") role = "";
 
   const response = await axios.get(GET_URL, {
@@ -18,14 +17,10 @@ export const fetchUsers = async (role, page, limit, searchQuery) => {
 
 export const registerUser = async (newData) => {
   try {
-    console.log(newData);
     const { emailLocal, emailDomain } = newData;
-    console.log(emailLocal, emailDomain);
     const email = emailLocal + "@" + emailDomain;
-    console.log(email);
 
     const newUser = { ...newData, email };
-    console.log(newUser);
     const response = await axios.post(REGISTER_URL, newUser);
     return response.data;
   } catch (err) {
@@ -42,10 +37,10 @@ export const fetchPagenation = async (category, status) => {
   return response.data;
 };
 
-export const updateProduct = async (productToUpdate) => {
+export const updateUser = async (userToUpdate) => {
   const response = await axios.post(
-    `${UPDATE_URL}/${productToUpdate._id}`,
-    productToUpdate
+    `${UPDATE_URL}/${userToUpdate._id}`,
+    userToUpdate
   );
   return response.data;
 };

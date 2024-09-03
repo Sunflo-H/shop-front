@@ -8,13 +8,12 @@ import {
   setDetailData,
 } from "../../../../slice/management/detailModalSlice";
 import _ from "lodash";
-import uploadFileToS3 from "../../../../api/aws_uploadToS3";
 import { alert_productUploadSuccess } from "../../../../alerts/success";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateProduct } from "../../../../api/productApi";
+import { updateUser } from "../../../../api/userApi";
 
-const categoryOptions = ["Man", "Woman", "Shoes", "Accessory"];
-const statusOptions = ["Sale", "Sold Out", "Hide"];
+const roleOptions = ["User", "Admin"];
 
 export default function DetailModal() {
   const queryClient = useQueryClient();
@@ -22,21 +21,18 @@ export default function DetailModal() {
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
   const modalRef = useRef();
 
-  const [updatedProduct, setUpdatedProduct] = useState(null); // 업데이트 내용이 담겨있는 상품데이터
-  const [selectBox, setSelectBox] = useState({ category: "", status: "" });
+  const [updatedUser, setUpdatedUser] = useState(null); // 업데이트 내용이 담겨있는 상품데이터
+  const [selectBox, setSelectBox] = useState({ role: "" });
   const [isChanged, setIsChanged] = useState(false);
-  const [image, setImage] = useState(null); // 보여지는 이미지
-  const [imageFile, setImageFile] = useState(null); // 이미지 파일 정보
 
-  const { name, price, color, size, description, _id } = updatedProduct || {};
+  const { email, name, phone, role } = updatedUser || {};
 
   useEffect(() => {
-    setUpdatedProduct(detailData);
+    setUpdatedUser(detailData);
     setSelectBox({
       category: detailData.category,
       status: detailData.status,
     });
-    setImage(detailData.image);
   }, [detailData]);
 
   useEffect(() => {
@@ -45,7 +41,7 @@ export default function DetailModal() {
       if (!isOpen) return;
 
       if (
-        !e.target.classList.contains("product-list-item") && // product-list-item이 아니고
+        !e.target.classList.contains("user-list-item") && // product-list-item이 아니고
         !modalRef.current.contains(e.target) // 모달 내부도 아니라면
       ) {
         dispatch(closeModal());
@@ -59,11 +55,11 @@ export default function DetailModal() {
   }, [isOpen]);
 
   const mutation = useMutation({
-    mutationFn: updateProduct,
+    mutationFn: updateUser,
     onSuccess: (data) => {
       alert_productUploadSuccess().then(() => {
         dispatch(setDetailData(data));
-        queryClient.invalidateQueries(["products"]);
+        queryClient.invalidateQueries(["users"]);
       });
     },
     onError: (err) => {
@@ -78,70 +74,39 @@ export default function DetailModal() {
       ...selectBox,
       [name]: value,
     });
-    setUpdatedProduct({ ...updatedProduct, [name]: value });
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) {
-      setImage(detailData.image); // 파일 변경 취소하면 원래 이미지 보여준다.
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImage(reader.result);
-      setImageFile(file);
-      setUpdatedProduct({
-        ...updatedProduct,
-        image: "just change check", // 렌더링 하지 않고 이미지가 변화되었는지에만 사용한다.
-      });
-    };
-    reader.readAsDataURL(file);
+    setUpdatedUser({ ...updatedUser, [name]: value });
   };
 
   const handleTextChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setUpdatedProduct({
-      ...updatedProduct,
+    setUpdatedUser({
+      ...updatedUser,
       [name]: value,
     });
   };
 
   const handleUpdateClick = async (e) => {
     try {
-      let productToUpdate;
-      const isImageChange = !!imageFile;
-      if (isImageChange) {
-        const imageUrl = await uploadFileToS3(imageFile);
-        productToUpdate = {
-          ...updatedProduct,
-          image: imageUrl,
-          category: selectBox.category,
-          status: selectBox.status,
-        };
-      } else {
-        productToUpdate = {
-          ...updatedProduct,
-          category: selectBox.category,
-          status: selectBox.status,
-        };
-      }
-      console.log(productToUpdate);
-      mutation.mutate(productToUpdate);
+      let userToUpdate;
+
+      userToUpdate = {
+        ...updatedUser,
+        role: selectBox.role,
+      };
+      mutation.mutate(userToUpdate);
     } catch (err) {
       console.error(err);
     }
   };
 
   useEffect(() => {
-    if (_.isEqual(detailData, updatedProduct)) {
+    if (_.isEqual(detailData, updatedUser)) {
       setIsChanged(false);
     } else {
       setIsChanged(true);
     }
-  }, [detailData, updatedProduct]);
+  }, [detailData, updatedUser]);
 
   return (
     <div
@@ -171,7 +136,16 @@ export default function DetailModal() {
       </header>
       <main className="mt-12 px-4">
         <div className="border-b border-blue-200">
-          <div className="text-sm text-blue-400">Product Name</div>
+          <div className="text-sm text-blue-400">E-mail</div>
+          <input
+            className="bg-transparent w-full outline-none focus:bg-blue-100"
+            value={email || 0}
+            name="email"
+            onChange={handleTextChange}
+          />
+        </div>
+        <div className="border-b border-blue-200 mt-3">
+          <div className="text-sm text-blue-400">Name</div>
           <input
             className="bg-transparent w-full outline-none focus:bg-blue-100"
             value={name || 0}
@@ -180,78 +154,22 @@ export default function DetailModal() {
           />
         </div>
         <div className="border-b border-blue-200 mt-3">
-          <div className="text-sm text-blue-400 ">Price</div>
+          <div className="text-sm text-blue-400">phone</div>
           <input
-            type="number"
             className="bg-transparent w-full outline-none focus:bg-blue-100"
-            value={price || 0}
-            name="price"
+            value={phone || 0}
+            name="phone"
             onChange={handleTextChange}
           />
         </div>
         <div className="mt-3">
-          <div className="text-sm text-blue-400">Category</div>
+          <div className="text-sm text-blue-400">Role</div>
           <SelectBox
-            options={categoryOptions}
-            value={selectBox.category || 0}
-            name="category"
+            options={roleOptions}
+            value={selectBox.role || 0}
+            name="role"
             onChange={handleSelectBoxChange}
           />
-        </div>
-        <div className="mt-3">
-          <div className="text-sm text-blue-400">Status</div>
-          <SelectBox
-            options={statusOptions}
-            value={selectBox.status || 0}
-            name="status"
-            onChange={handleSelectBoxChange}
-          />
-        </div>
-        <div className="border-b border-blue-200 mt-3">
-          <div className="text-sm text-blue-400">Color</div>
-          <input
-            className="bg-transparent w-full outline-none focus:bg-blue-100"
-            value={color || 0}
-            name="color"
-            onChange={handleTextChange}
-          />
-        </div>
-        <div className="border-b border-blue-200 mt-3">
-          <div className="text-sm text-blue-400 ">Size</div>
-          <input
-            className="bg-transparent w-full outline-none focus:bg-blue-100"
-            value={size || 0}
-            name="size"
-            onChange={handleTextChange}
-          />
-        </div>
-        <div className="flex flex-col border-b border-blue-200 mt-3">
-          <div className="text-sm text-blue-400">Description</div>
-          <textarea
-            className="bg-transparent w-full h-full outline-none resize-none focus:bg-blue-100"
-            value={description || 0}
-            name="description"
-            onChange={handleTextChange}
-          />
-        </div>
-        <div className="border-b border-blue-200 mt-3  ">
-          <div className="text-sm text-blue-400">Image</div>
-
-          <label>
-            <img
-              className="rounded-md w-full h-96 border-blue-200 border cursor-pointer"
-              src={image || 0}
-            />
-
-            <input
-              type="file"
-              accept="image/*"
-              name="image"
-              required
-              onChange={handleImageChange}
-              hidden
-            />
-          </label>
         </div>
       </main>
     </div>
