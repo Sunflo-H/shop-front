@@ -5,6 +5,7 @@ import ManagementTitle from "../../components/management/main/ui/ManagementTitle
 import Filter from "../../components/management/main/ui/Filter";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  resetFilter,
   setActiveCategory,
   setActiveStatus,
   setCheckboxList,
@@ -141,7 +142,7 @@ export default function ProductManagement() {
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
-
+  console.log(resetFilter);
   return (
     <div>
       <ManagementTitle text="Product Management" />
@@ -158,7 +159,7 @@ export default function ProductManagement() {
         />
         <Limit limit={limit} setLimitAction={setLimit} />
         <SearchBar setSearchQueryAction={setSearchQuery} />
-        <Reset />
+        <Reset resetFilterAction={resetFilter} />
         <GoAddPageButton url={"/manage/product/new"} />
       </div>
       <RemoveSelectedBtn

@@ -1,12 +1,13 @@
 import React from "react";
 import { GrPowerReset } from "react-icons/gr";
 import { useDispatch } from "react-redux";
-import { resetFilter } from "../../../../slice/management/userManagementSlice";
 
-export default function Reset() {
+export default function Reset({ resetFilterAction }) {
   const dispatch = useDispatch();
   const handleResetClick = () => {
-    dispatch(resetFilter());
+    console.log(resetFilterAction);
+    console.log(1);
+    dispatch(resetFilterAction());
   };
   return (
     <div className="flex items-center">

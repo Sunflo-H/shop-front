@@ -4,6 +4,7 @@ import ManagementTitle from "../../components/management/main/ui/ManagementTitle
 import Filter from "../../components/management/main/ui/Filter";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  resetFilter,
   setActiveRole,
   setCheckboxList,
   setIsSelectMode,
@@ -121,7 +122,7 @@ export default function UserManagement() {
         />
         <Limit limit={limit} setLimitAction={setLimit} />
         <SearchBar setSearchQueryAction={setSearchQuery} />
-        <Reset />
+        <Reset resetFilterAction={resetFilter} />
         <GoAddPageButton url={"/manage/user/register"} />
       </div>
       <RemoveSelectedBtn
