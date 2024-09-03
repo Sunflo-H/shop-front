@@ -53,7 +53,7 @@ export default function UserManagement() {
   useEffect(() => {
     if (isLoading) return;
 
-    if (data?.length === 0) {
+    if (data.length === 0) {
       Swal.fire("No data available");
       const isRoleChange = activeRole !== prevQueryParams.role;
       const isSearchQeuryChange = searchQuery !== prevQueryParams.searchQuery;

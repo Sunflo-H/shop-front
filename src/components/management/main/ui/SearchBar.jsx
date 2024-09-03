@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useDispatch } from "react-redux";
-import { setSearchQuery } from "../../../../slice/management/productManagementSlice";
+import { setSearchQuery } from "../../../../slice/management/userManagementSlice";
 
 export default function SearchBar() {
   const dispatch = useDispatch();

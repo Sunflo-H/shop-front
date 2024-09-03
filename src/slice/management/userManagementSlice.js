@@ -21,7 +21,7 @@ const userManagementSlice = createSlice({
   },
   reducers: {
     setActiveRole: (state, action) => {
-      state.activeCategory = action.payload;
+      state.activeRole = action.payload;
     },
 
     //pageNation
