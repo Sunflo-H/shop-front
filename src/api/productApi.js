@@ -21,11 +21,11 @@ export const fetchProducts = async (
   return response.data;
 };
 
-export const fetchPagenation = async (category, status) => {
+export const fetchPagenation = async (category, status, searchQuery) => {
   if (category === "ALL") category = "";
   if (status === "ALL") status = "";
   const response = await axios.get(GET_URL, {
-    params: { category, status },
+    params: { category, status, searchQuery },
   });
   return response.data;
 };

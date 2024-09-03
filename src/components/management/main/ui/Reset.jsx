@@ -5,8 +5,6 @@ import { useDispatch } from "react-redux";
 export default function Reset({ resetFilterAction }) {
   const dispatch = useDispatch();
   const handleResetClick = () => {
-    console.log(resetFilterAction);
-    console.log(1);
     dispatch(resetFilterAction());
   };
   return (

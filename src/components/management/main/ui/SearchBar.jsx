@@ -15,6 +15,12 @@ export default function SearchBar({ setSearchQueryAction }) {
     dispatch(setSearchQueryAction(input));
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      dispatch(setSearchQueryAction(input));
+    }
+  };
+
   return (
     <div className="border border-gray-300 rounded-md overflow-hidden">
       <div className="flex justify-between h-full bg-white">
@@ -24,6 +30,7 @@ export default function SearchBar({ setSearchQueryAction }) {
           placeholder="title search"
           value={input}
           onChange={handleChangeInput}
+          onKeyDown={handleKeyDown}
         />
         <CiSearch
           className="text-2xl self-center mr-4 cursor-pointer"

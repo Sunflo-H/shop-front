@@ -39,6 +39,7 @@ export default function PageNation() {
     ],
     queryFn: () => fetchPagenation(activeCategory, activeStatus, searchQuery),
   });
+  console.log(data);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;

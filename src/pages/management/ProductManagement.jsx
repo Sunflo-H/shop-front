@@ -142,7 +142,7 @@ export default function ProductManagement() {
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
-  console.log(resetFilter);
+
   return (
     <div>
       <ManagementTitle text="Product Management" />
