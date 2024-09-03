@@ -2,8 +2,22 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SaveAndCancelBtn from "../../components/management/main/UploadProduct/SaveAndCancelBtn";
 import InputFormTitle from "../../components/management/main/ui/InputFormTitle";
-import { setNewUser } from "../../slice/management/userRegisterSlice";
+import {
+  resetNewUser,
+  setNewUser,
+} from "../../slice/management/userRegisterSlice";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { registerUser } from "../../api/userApi";
+import { alert_productUploadSuccess } from "../../alerts/success";
 
+const requireOptions = [
+  "emailLocal",
+  "emailDomain",
+  "password",
+  "name",
+  "phone",
+  "role",
+];
 const roleOptions = ["User", "Admin"];
 const options = [
   "- Select -",
@@ -22,8 +36,22 @@ const options = [
 
 export default function UserRegister() {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
   const { newUser } = useSelector((state) => state.userRegister);
   const { emailLocal, emailDomain, password, name, phone, role } = newUser;
+
+  const mutation = useMutation({
+    mutationFn: registerUser,
+    onSuccess: async (data) => {
+      await alert_productUploadSuccess();
+      dispatch(resetNewUser());
+      queryClient.invalidateQueries("users");
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
 
   const handleInputChange = (e) => {
     const name = e.target.name;
@@ -133,7 +161,12 @@ export default function UserRegister() {
             </section>
           </div>
         </section>
-        <SaveAndCancelBtn />
+        <SaveAndCancelBtn
+          newData={newUser}
+          requireOptions={requireOptions}
+          mutation={mutation}
+          addBtnText={"Register User"}
+        />
       </div>
     </div>
   );

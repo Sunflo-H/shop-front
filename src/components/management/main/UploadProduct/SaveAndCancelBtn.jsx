@@ -1,12 +1,5 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  resetNewProduct,
-  setNewProduct,
-} from "../../../../slice/management/createProductSlice";
-import { alert_productUploadSuccess } from "../../../../alerts/success";
 import { alert_productUploadCancel } from "../../../../alerts/warning";
 import { alert_requireError } from "../../../../alerts/error";
 import uploadFileToS3 from "../../../../api/aws_uploadToS3";
@@ -31,8 +24,11 @@ export default function SaveAndCancelBtn({
     e.preventDefault();
     const allFormComplete = requireCheck(requireOptions, newData);
     if (allFormComplete)
-      if (!newData.image) mutation.mutate(newData);
+      if (!newData.image)
+        // 유저 등록할 때
+        mutation.mutate(newData);
       else {
+        // 상품 등록할 때
         try {
           const fileUrl = await uploadFileToS3(newData.image);
           const uploadProduct = { ...newData, image: fileUrl };
