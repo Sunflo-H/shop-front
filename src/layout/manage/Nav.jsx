@@ -5,24 +5,24 @@ import { Link, useLocation } from "react-router-dom";
 
 const navItem = ["Home", "Products", "Users"];
 
-function getNav(pathname) {
-  const basePath = "/manage";
-  const path = pathname.substring(basePath.length);
+// function getNav(pathname) {
+//   const basePath = "/manage";
+//   const path = pathname.substring(basePath.length);
+//   let nav = "";
+//   if (!path) nav = "Home";
+//   else nav = path.substring(1) + "s";
+//   return capitalizeFirstLetter(nav);
+// }
 
-  let nav = "";
-  if (!path) nav = "Home";
-  else nav = path.substring(1) + "s";
-  return capitalizeFirstLetter(nav);
-}
-
-function capitalizeFirstLetter(str) {
-  if (str.length === 0) return str; // 빈 문자열 처리
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-}
+// // 첫글자 대문자로 변환
+// function capitalizeFirstLetter(str) {
+//   if (str.length === 0) return str; // 빈 문자열 처리
+//   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+// }
 
 export default function Nav() {
-  const location = useLocation();
-  const [activePage, setActivePage] = useState(getNav(location.pathname));
+  // const location = useLocation();
+  // const [activePage, setActivePage] = useState(getNav(location.pathname));
 
   return (
     // 높이 고정인 nav
@@ -31,8 +31,8 @@ export default function Nav() {
         {navItem.map((item, index) => (
           <NavItem
             item={item}
-            activePage={activePage}
-            setActivePage={setActivePage}
+            // activePage={activePage}
+            // setActivePage={setActivePage}
             key={index}
           />
         ))}
