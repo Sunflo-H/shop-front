@@ -9,6 +9,7 @@ import {
   getProduct_all,
   uploadProductToFirebase,
 } from "../api/firebase_db";
+import { fetchProducts } from "../api/productApi";
 
 const SEC = 1000;
 /**
@@ -20,7 +21,8 @@ export default function useProducts(category) {
   // 상품 정보를 불러온다.
   const productsQuery = useQuery({
     queryKey: ["products", category],
-    queryFn: async () => getProduct(category),
+    // queryFn: async () => getProduct(category),
+    queryFn: async () => fetchProducts(category),
     staleTime: SEC * 60,
   });
 

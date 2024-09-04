@@ -4,12 +4,20 @@ import NavItem from "./NavItem";
 export default function Nav() {
   const navItemList = [
     "Home",
-    "Men",
-    "Women",
-    "Accessories",
+    "Man",
+    "Woman",
+    "Accessory",
     "Shoes",
     "Recommend",
   ];
+  // const navItemList = [
+  //   "Home",
+  //   "Men",
+  //   "Women",
+  //   "Accessories",
+  //   "Shoes",
+  //   "Recommend",
+  // ];
 
   return (
     <nav className="hidden md:flex grow">
