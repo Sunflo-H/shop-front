@@ -2,6 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
 import useFavorites from "../../hooks/useFavorites";
+import { IKImage } from "imagekitio-react";
+
+const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
 export default function ProductCard({ product, currentCategory }) {
   const { name, image, category, price, id } = product;
@@ -23,12 +26,16 @@ export default function ProductCard({ product, currentCategory }) {
   return (
     <div className="flex flex-col ">
       <div className="w-full cursor-pointer grow" onClick={handleProductClick}>
-        <img
-          src={image}
+        <IKImage
+          urlEndpoint={IMAGEKIT_ENDPOINT}
+          path={getImage(image)}
+          transformation={[{ height: 600, width: 400 }]}
           loading="lazy"
+          height="600"
+          width="400"
           alt={name}
-          className="w-full h-full object-cover" // object-cover를 추가해 이미지의 비율을 유지하며 컨테이너에 맞춤
         />
+        {/* <img src={`${IMAGEKIT_ENDPOINT}${getImage(image)}`} /> */}
       </div>
       <div className="flex justify-between mt-2">
         <div className="font-bold">{name}</div>{" "}
@@ -43,4 +50,17 @@ export default function ProductCard({ product, currentCategory }) {
       </div>
     </div>
   );
+}
+
+/**
+ * aws s3 image url에서 맨뒤 image파일명만 추출하는 함수
+ * @param {*} imageUrl aws s3 image url
+ * @returns image filename
+ */
+function getImage(imageUrl) {
+  const imageUrlSplit = imageUrl.split("/");
+  const length = imageUrlSplit.length;
+  const image = imageUrlSplit[length - 1];
+
+  return image;
 }

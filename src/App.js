@@ -20,7 +20,7 @@ function App() {
           <Header />
           <Main />
           <Footer />
-          {/* <ReactQueryDevtools initialIsOpen={true} /> */}
+          <ReactQueryDevtools initialIsOpen={true} />
         </QueryClientProvider>
       </Provider>
     </div>

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import useProducts from "../../hooks/useProducts";
 import ProductCard from "../../components/product/ProductCard";
+import { IKImage, IKVideo, IKContext, IKUpload } from "imagekitio-react";
 
 export default function Products() {
   const { category } = useParams();
@@ -18,7 +19,7 @@ export default function Products() {
   return (
     <section className="pt-20">
       <div
-        className={`grid grid-cols-1 m-auto mt-6 max-w-screen-xl gap-10 border
+        className={`grid grid-cols-1 m-auto mt-6 max-w-screen-xl gap-10
         md:grid-cols-3`}
       >
         {productList &&
