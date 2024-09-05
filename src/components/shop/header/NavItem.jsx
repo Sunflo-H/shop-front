@@ -7,7 +7,7 @@ export default function NavItem({ navItem }) {
   return (
     <Link
       to={link}
-      className=" border-b-2 border-transparent hover:border-black  h-full pt-5 pb-3 px-2"
+      className="font-bold border-b-2 border-transparent hover:border-black pt-5 pb-3 px-2"
     >
       {navItem}
     </Link>
