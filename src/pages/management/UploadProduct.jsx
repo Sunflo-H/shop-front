@@ -26,9 +26,38 @@ export default function UploadProduct() {
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
+
     const key = name;
-    const value = files[0];
-    dispatch(setNewProduct({ key, value }));
+    const file = files[0];
+
+    if (file) {
+      const img = new Image();
+      const objectUrl = URL.createObjectURL(file);
+
+      img.onload = () => {
+        const maxSizeInMB = 20; // 20MB 까지만 업로드 가능
+        const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+        const maxMegaPixels = 25 * 1000000; // 25MP 까지만 업로드 가능
+        const width = img.width;
+        const height = img.height;
+        const size = file.size;
+        console.log(width * height <= maxMegaPixels);
+
+        if (width * height <= maxMegaPixels && size <= maxSizeInBytes) {
+          // 파일 업로드 폼을 초기화하여 업로드되지 않게 함
+          dispatch(setNewProduct({ key, value: file }));
+        } else {
+          alert(`Image is too big! Minimum-Pixels: 25MP , Minimum-size: 20MB`);
+          // e.target.value = null;
+        }
+
+        // 메모리 해제
+        URL.revokeObjectURL(objectUrl);
+      };
+
+      img.src = objectUrl; // 이미지 객체에 URL 할당
+    }
+
     e.target.value = null; // 파일 업로드 후 동일한 이미지를 업로드 할 때 필요한 코드
   };
 
