@@ -20,7 +20,7 @@ export default function SignAndUser() {
       {!username && (
         <Link
           to="login"
-          className="hidden font-bold border-b-2 border-transparent px-2 pt-5 pb-3 cursor-pointer 
+          className="hidden font-bold font-sm border-b-2 border-transparent px-2 pt-5 pb-3 cursor-pointer 
           md:block hover:border-black"
         >
           Sign In

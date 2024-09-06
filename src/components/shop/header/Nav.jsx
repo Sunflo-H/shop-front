@@ -13,17 +13,18 @@ export default function Nav() {
   }, [category]);
 
   return (
-    <nav className="hidden md:flex grow">
-      <div className={`flex gap-1 lg:gap-5 xl:gap-10`}>
-        {navItemList.map((navItem, i) => (
-          <NavItem
-            navItem={navItem}
-            activeNav={activeNav}
-            setActiveNav={setActiveNav}
-            key={i}
-          />
-        ))}
-      </div>
+    <nav
+      className="hidden grow items-center gap-1 h-100vh 
+    md:flex lg:gap-5 xl:gap-6"
+    >
+      {navItemList.map((navItem, i) => (
+        <NavItem
+          navItem={navItem}
+          activeNav={activeNav}
+          setActiveNav={setActiveNav}
+          key={i}
+        />
+      ))}
     </nav>
   );
 }

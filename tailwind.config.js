@@ -56,6 +56,7 @@ module.exports = {
         "btn-show": "show 1.5s 1.3s ease forwards",
         hide: "hide 1.7s ease forwards",
         toast: "toast 3s ease forwards",
+        marquee: "marquee 10s linear infinite",
       },
       keyframes: {
         "move-left": {
@@ -82,6 +83,10 @@ module.exports = {
           "30%": { transform: "translate(-50%, 80px)", opacity: 1 },
           "90%": { transform: "translate(-50%, 80px)", opacity: 1 },
           "100%": { transform: "translate(-50%,70px)", opacity: 0 },
+        },
+        marquee: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-100%)" },
         },
       },
     },

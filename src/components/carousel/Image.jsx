@@ -19,12 +19,11 @@ export default function Image({ num, slider, isBtnClicked, text }) {
   }, [isBtnClicked]);
 
   return (
-    <section className=" slide relative mb-20 ">
+    <section className=" slide relative mb-20">
       <div className=" slide bg-white ">
         <div
-          className={` bg-cover bg-no-repeat banner${num} banner-img
-          bg-left40
-           opacity-0
+          className={`bg-cover bg-no-repeat banner${num} banner-img
+          bg-left40 opacity-0
            ${num !== slider && "animate-hide"}
            ${
              num === slider &&
@@ -34,18 +33,17 @@ export default function Image({ num, slider, isBtnClicked, text }) {
           `}
         ></div>
       </div>
-      <div className="text-box ">
-        <h2
+      <div className="text-box">
+        <div
           className={`text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-10 text-zinc-900 opacity-0
             translate-x-10
             ${num !== slider && "animate-hide"}
             ${num === slider && isAni && "animate-banner-text"}
           `}
         >
-          Discover
-          <br />
-          your new styles
-        </h2>
+          <div>Discover</div>
+          <div>your new styles</div>
+        </div>
 
         <Button
           text={"Shop Now"}

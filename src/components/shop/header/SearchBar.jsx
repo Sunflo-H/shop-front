@@ -1,0 +1,20 @@
+import { AiOutlineSearch } from "react-icons/ai";
+
+export default function SearchBar() {
+  const handleSearchClick = () => {
+    // searchModalOpen 기능이 들어가야함
+    console.log(1);
+  };
+  return (
+    <div className="hidden md:block mx-2 h-full" onClick={handleSearchClick}>
+      <div className="flex items-center border focus:border-black mt-3.5 ">
+        <input
+          type="text"
+          placeholder="Search Adonis"
+          className="p-2 text-sm focus:outline-none"
+        />
+        <AiOutlineSearch className="text-2xl mr-2 cursor-pointer" />
+      </div>
+    </div>
+  );
+}
