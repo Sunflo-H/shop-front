@@ -11,6 +11,7 @@ export default function HomeProducts() {
   );
   const { productsQuery } = useProducts(currentCategory);
   const products = productsQuery.data?.slice(0, MAX_PRODUCTS_COUNT);
+  console.log(products);
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 ">

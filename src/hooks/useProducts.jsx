@@ -21,7 +21,6 @@ export default function useProducts(category) {
   // 상품 정보를 불러온다.
   const productsQuery = useQuery({
     queryKey: ["products", category],
-    // queryFn: async () => getProduct(category),
     queryFn: async () => fetchProducts(category),
     staleTime: SEC * 60,
   });
@@ -59,7 +58,7 @@ export default function useProducts(category) {
   let productData = {
     productsQuery,
     uploadProduct,
-    productsQuery_all,
+    // productsQuery_all,
     productsQueries,
   };
 

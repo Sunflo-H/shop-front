@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import useProducts from "../../hooks/useProducts";
 import ProductCard from "../../components/product/ProductCard";
-import { IKImage, IKVideo, IKContext, IKUpload } from "imagekitio-react";
 
 export default function Products() {
   const { category } = useParams();
@@ -17,18 +16,18 @@ export default function Products() {
   }, [category]);
 
   return (
-    <section className="pt-20">
+    <section className="pt-24">
       <div
-        className={`grid grid-cols-1 m-auto mt-6 max-w-screen-xl gap-10
-        md:grid-cols-3`}
+        className={`grid grid-cols-2 mx-4  max-w-screen-xl gap-10
+        md:grid-cols-3 md:m-auto`}
       >
         {productList &&
-          productList.map((product, index) => {
+          productList.map((product, i) => {
             return (
               <ProductCard
                 product={product}
                 currentCategory={category}
-                key={index}
+                key={product._id}
               />
             );
           })}
@@ -36,9 +35,3 @@ export default function Products() {
     </section>
   );
 }
-
-// function getTitleByCategory(category) {
-//   return category === "Men" || category === "Women"
-//     ? `SHOP ALL ${category.toUpperCase()}'S CLOTHING ` // 카테고리 : 남성, 여성일 때
-//     : `The ${category} Shop`; // 카테고리 : 악세사리, 신발일 때
-// }

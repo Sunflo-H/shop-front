@@ -16,7 +16,7 @@ export default function Header() {
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
 
   return (
-    <header className="fixed w-full z-50 shadow-sm bg-white ">
+    <header className="fixed w-full z-50 border-b border-gray-300 bg-white shadow-sm">
       <AnimatedTextBanner
         text1={"2024 Fall Collection"}
         text2={"New Season, New Style"}

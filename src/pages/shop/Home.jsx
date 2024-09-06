@@ -7,7 +7,7 @@ import Layout_carousel from "../../components/shop/main/Home/homeContents/Layout
 
 export default function Home() {
   return (
-    <div className="pt-20">
+    <div className="pt-14">
       <main className="px-5 md:px-10 m-auto max-w-screen-2xl ">
         <Layout_carousel />
         <Layout_summer2023 />
