@@ -56,7 +56,7 @@ module.exports = {
         "btn-show": "show 1.5s 1.3s ease forwards",
         hide: "hide 1.7s ease forwards",
         toast: "toast 3s ease forwards",
-        marquee: "marquee 10s linear infinite",
+        marquee: "marquee 12s linear infinite",
       },
       keyframes: {
         "move-left": {
