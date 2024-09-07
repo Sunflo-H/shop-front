@@ -7,7 +7,7 @@ import { IKImage } from "imagekitio-react";
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
 export default function ProductCard({ product, currentCategory }) {
-  const { name, image, category, price, id } = product;
+  const { name, image, category, price, _id } = product;
   const { isFavorite, updateFavorites } = useFavorites(
     product,
     currentCategory
@@ -16,7 +16,7 @@ export default function ProductCard({ product, currentCategory }) {
   const navigate = useNavigate();
 
   const handleProductClick = () => {
-    navigate(`/products/${category}/${id}`, { state: { product } });
+    navigate(`/products/${category}/${_id}`, { state: { product } });
   };
 
   const handleFavoritesClick = () => {
@@ -31,11 +31,9 @@ export default function ProductCard({ product, currentCategory }) {
           path={getImage(image)}
           transformation={[{ height: 600, width: 400 }]}
           loading="lazy"
-          height="600"
-          width="400"
           alt={name}
+          className="m-auto"
         />
-        {/* <img src={`${IMAGEKIT_ENDPOINT}${getImage(image)}`} /> */}
       </div>
       <div className="flex justify-between mt-2">
         <div className="font-bold">{name}</div>{" "}
@@ -46,7 +44,7 @@ export default function ProductCard({ product, currentCategory }) {
       </div>
       <div className="text-lg font-semibold text-gray-600">
         {price}
-        <span className="text-base">$</span>
+        <span className="text-base ml-1">$</span>
       </div>
     </div>
   );

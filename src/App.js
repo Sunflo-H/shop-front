@@ -6,8 +6,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AuthCheck from "./components/authCheck/AuthCheck";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Main from "./layout/shop/Main";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
 
 function App() {
   const queryClient = new QueryClient();
