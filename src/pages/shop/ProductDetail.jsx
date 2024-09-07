@@ -4,12 +4,9 @@ import useCart from "../../hooks/useCart";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import useFavorites from "../../hooks/useFavorites";
 import Swal from "sweetalert2";
-import SizeOption from "../../components/product/SizeOption";
 import ColorOption from "../../components/product/ColorOption";
 import { useSelector } from "react-redux";
-
-const DEFAULT_SIZE = "S";
-const DEFAULT_COLOR = "Black";
+import SizeSelectBox from "../../components/product/SizeSelectBox";
 
 export default function ProductDetail() {
   const user = useSelector((state) => state.auth.user);
@@ -19,11 +16,13 @@ export default function ProductDetail() {
   const {
     state: { product },
   } = useLocation();
-  const { id, title, imageUrl, price, description, size, color, category } =
+  const { id, name, image, price, description, size, color, category } =
     product;
+  console.log(color);
+  console.log(size);
 
-  const [currentSize, setCurrentSize] = useState(DEFAULT_SIZE);
-  const [currentColor, setCurrentColor] = useState(DEFAULT_COLOR);
+  const [currentSize, setCurrentSize] = useState(null);
+  const [currentColor, setCurrentColor] = useState(color[0]);
 
   const { isFavorite, updateFavorites } = useFavorites(product);
 
@@ -33,13 +32,13 @@ export default function ProductDetail() {
 
   const handleAddCartClick = (e) => {
     if (user) {
-      // navigate로 가져온 'product'의 옵션(size,color)을 변경할 수 있습니다.
+      // 장바구니에 담을 때 'product'의 옵션(size,color)을 변경할 수 있습니다.
       // 그렇기 때문에 product를 바로 addCart 하면 안됩니다.
       // 변경된 옵션 정보를 가지고 있는 product를 addCart 해야합니다.
       const product = {
         id,
-        title,
-        imageUrl,
+        name,
+        image,
         price,
         size: currentSize, // 옵션 SIZE
         color: currentColor, // 옵션 COLOR
@@ -76,35 +75,45 @@ export default function ProductDetail() {
   };
 
   return (
-    <section className=" px-4 md:px-20 pt-20">
+    <section className="px-4 md:px-0 pt-28">
       <div
-        className="flex flex-col lg:flex-row w-full justify-center m-auto max-w-screen-2xl 
-                      gap-0 md:gap-20 "
+        className="flex flex-col gap-0 justify-center m-auto max-w-screen-2xl 
+        lg:flex-row md:gap-16 "
       >
-        <div className="w-full basis-4/12">
-          <div className="text-xl ml-2 mb-4">
-            <Link to="/"> Home </Link> /{" "}
-            <Link to={`/products/${category}`} state={category}>
+        <div className=" w-5/12 ">
+          <div className="flex text-[12px] ml-2 mb-4 gap-1">
+            <Link to="/" className="h-4 font-bold border-b border-black ">
+              Home
+            </Link>
+            /
+            <Link
+              to={`/products/${category}`}
+              state={category}
+              className="h-4 font-bold border-b border-black"
+            >
               {category}
             </Link>
           </div>
-          <img src={imageUrl} alt="" className="w-full" />
+          <img src={image} alt="" className="w-full" />
         </div>
-        <div className="w-full basis-4/12 pt-14 ">
-          <div className="text-2xl font-bold">{title}</div>
-          <div className="font-bold py-2 text-xl">$ {price}</div>
-          <div className="py-2">{description}</div>
+        <div className=" w-[344px] pt-8 ">
+          <div className="text-[20px] text-gray-600">{name}</div>
+          <div className="product-detail-font mt-4 pb-2 text-2xl ">
+            <span className=" mr-2">KRW</span>
+            {price}
+          </div>
+
           <div className="py-2">
             <div className="w-full ">
-              <SizeOption
-                sizeList={size}
-                currentSize={currentSize}
-                onChange={handleSizeChange}
-              />
               <ColorOption
                 colorList={color}
                 currentColor={currentColor}
                 onChange={handleColorChange}
+              />
+              <SizeSelectBox
+                sizeList={size}
+                currentSize={currentSize}
+                onChange={handleSizeChange}
               />
             </div>
             <div className="flex items-center my-10 gap-4">
