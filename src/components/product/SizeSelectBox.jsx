@@ -10,9 +10,11 @@ export default function SizeSelectBox({ sizeList, currentSize, onChange }) {
     control: (provided) => ({
       ...provided,
       borderColor: "black",
+      borderRadius: "0px",
       boxShadow: "none",
       "&:hover": {
-        borderColor: "darkblue",
+        // borderColor: "darkblue",
+        cursor: "pointer",
       },
     }),
     option: (provided, state) => ({
@@ -20,15 +22,28 @@ export default function SizeSelectBox({ sizeList, currentSize, onChange }) {
       backgroundColor: state.isSelected ? "rgb(229 231 235)" : "white",
       // color: state.isSelected ? "white" : "black",
       color: "black",
+      borderColor: "black",
       "&:hover": {
         backgroundColor: "rgb(229 231 235)",
+        cursor: "pointer",
       },
     }),
     menu: (provided) => ({
       ...provided,
-      borderRadius: "8px",
-      marginTop: "1px",
+      borderRadius: "0px",
+      marginTop: "0px",
+      paddingTop: "0px",
+      borderColor: "black",
     }),
+    menuList: (provided) => ({
+      ...provided,
+
+      borderColor: "black",
+      borderWidth: "1px",
+      borderTop: "0px",
+      padding: "0px",
+    }),
+
     singleValue: (provided) => ({
       ...provided,
       color: "black",
@@ -41,6 +56,7 @@ export default function SizeSelectBox({ sizeList, currentSize, onChange }) {
       options={options}
       styles={customStyles}
       // defaultValue={defaultOption}
+      isSearchable={false}
       placeholder={"- Select a Size"}
     />
   );
