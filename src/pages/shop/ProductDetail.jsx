@@ -7,7 +7,10 @@ import Swal from "sweetalert2";
 import ColorOption from "../../components/product/ColorOption";
 import { useSelector } from "react-redux";
 import SizeSelectBox from "../../components/product/SizeSelectBox";
+import Cautions from "../../components/shop/main/product/Cautions";
+import Description from "../../components/shop/main/product/Description";
 
+// 각 경고당 타이틀, 서브타이틀, 인포[] 가 필요해
 export default function ProductDetail() {
   const user = useSelector((state) => state.auth.user);
   const { uid } = user ?? {};
@@ -18,8 +21,6 @@ export default function ProductDetail() {
   } = useLocation();
   const { id, name, image, price, description, size, color, category } =
     product;
-  console.log(color);
-  console.log(size);
 
   const [currentSize, setCurrentSize] = useState(null);
   const [currentColor, setCurrentColor] = useState(color[0]);
@@ -116,14 +117,18 @@ export default function ProductDetail() {
                 onChange={handleSizeChange}
               />
             </div>
+            <div className="mt-6 border-t border-gray-400">
+              <Description description={description} />
+              <Cautions />
+            </div>
             <div className="flex items-center my-10 gap-4">
               <div
-                className="block w-full bg-black m-auto py-3 text-white text-xl font-bold text-center cursor-pointer"
+                className="block w-full bg-black py-3 text-white text-xl font-bold text-center cursor-pointer"
                 onClick={handleAddCartClick}
               >
                 Add Cart
               </div>
-              <div className="flex items-center px-10 py-3 border border-black">
+              <div className="flex items-center px-8 py-3 border border-black">
                 {isFavorite ? (
                   <AiFillHeart
                     className={`text-2xl  cursor-pointer ${
