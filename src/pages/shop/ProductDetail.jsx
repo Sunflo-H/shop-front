@@ -6,11 +6,11 @@ import useFavorites from "../../hooks/useFavorites";
 import Swal from "sweetalert2";
 import ColorOption from "../../components/product/ColorOption";
 import { useSelector } from "react-redux";
-import SizeSelectBox from "../../components/product/SizeSelectBox";
+
 import Cautions from "../../components/shop/main/product/Cautions";
 import Description from "../../components/shop/main/product/Description";
+import SizeSelectBox from "../../components/shop/main/product/SizeSelectBox";
 
-// 각 경고당 타이틀, 서브타이틀, 인포[] 가 필요해
 export default function ProductDetail() {
   const user = useSelector((state) => state.auth.user);
   const { uid } = user ?? {};

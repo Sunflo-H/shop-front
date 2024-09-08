@@ -22,7 +22,10 @@ export default function SizeSelectBox({ sizeList, currentSize, onChange }) {
       backgroundColor: state.isSelected ? "rgb(229 231 235)" : "white",
       // color: state.isSelected ? "white" : "black",
       color: "black",
-      borderColor: "black",
+      borderColor: "rgb(229 231 235)",
+      borderWidth: "1px",
+      borderTop: "0px",
+
       "&:hover": {
         backgroundColor: "rgb(229 231 235)",
         cursor: "pointer",
