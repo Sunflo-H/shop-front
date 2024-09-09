@@ -14,10 +14,10 @@ export const alert_registerSuccess = () => {
   return Swal.fire({
     position: "middle",
     icon: "success",
-    title: "Registration successful! ",
-    text: "Redirecting HomePage",
+    title: "Sign up successful! ",
+    text: "Try to sign in",
     showConfirmButton: true,
-    ConfirmButtonColor: "black",
+    confirmButtonColor: "#000",
   });
 };
 

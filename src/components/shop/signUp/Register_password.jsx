@@ -1,22 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import InputFormTitle from "../../management/main/ui/InputFormTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { setNewUser, setProgress } from "../../../slice/userRegisterSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { alert_registerError } from "../../../alerts/error";
 
 export default function Register_password() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { newUser, progress } = useSelector((state) => state.userRegister);
+  const { newUser } = useSelector((state) => state.userRegister);
   const { password } = newUser;
+  const [confirmPwd, setConfirmPwd] = useState("");
 
-  const handlePasswordChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     dispatch(setNewUser({ ...newUser, [name]: value }));
   };
 
+  console.log(password === confirmPwd);
   const handleNextClick = () => {
-    dispatch(setProgress({ ...progress, password: true }));
+    if (!password) {
+      alert_registerError("Password is empty");
+      return;
+    }
+    password === confirmPwd
+      ? navigate("/register/info")
+      : alert_registerError("Passwords do not match");
   };
 
   useEffect(() => {
@@ -34,29 +44,27 @@ export default function Register_password() {
             className="w-full outline-none border  rounded-md px-2 py-2 mr-2 focus:border-gray-400 "
             placeholder="ex) password1234!@"
             value={password}
-            onChange={handlePasswordChange}
+            onChange={handleInputChange}
           />
         </div>
         <div className="mt-4">
           <InputFormTitle title="Confirm Password" />
           <input
-            name="confirmPassword"
             type="password"
             className="w-full outline-none border  rounded-md px-2 py-2 mr-2 focus:border-gray-400 "
             placeholder="Confirm Password"
-            value={password}
-            onChange={handlePasswordChange}
+            value={confirmPwd}
+            onChange={(e) => setConfirmPwd(e.target.value)}
           />
         </div>
       </div>
       <div className="px-4">
-        <Link
-          to={"/register/info"}
-          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+        <div
+          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black cursor-pointer"
           onClick={handleNextClick}
         >
           Next
-        </Link>
+        </div>
       </div>
     </>
   );

@@ -13,7 +13,7 @@ export default function Register_email() {
   const { newUser } = useSelector((state) => state.userRegister);
   const { email } = newUser;
 
-  const handleEmailChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     dispatch(setNewUser({ ...newUser, [name]: value }));
   };
@@ -53,7 +53,7 @@ export default function Register_email() {
             className="manage-font w-full outline-none border rounded-md px-2 py-2 focus:border-gray-400 "
             placeholder="example@adonis.com"
             value={email}
-            onChange={handleEmailChange}
+            onChange={handleInputChange}
           />
         </div>
       </div>

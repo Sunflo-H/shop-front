@@ -2,21 +2,33 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNewUser, setProgress } from "../../../slice/userRegisterSlice";
 import InputFormTitle from "../../management/main/ui/InputFormTitle";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { alert_registerSuccess } from "../../../alerts/success";
+import { alert_registerError } from "../../../alerts/error";
 
 export default function Register_info() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { newUser, progress } = useSelector((state) => state.userRegister);
-  const { password } = newUser;
+  const { newUser } = useSelector((state) => state.userRegister);
+  const { name, phone } = newUser;
 
-  const handlePasswordChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     dispatch(setNewUser({ ...newUser, [name]: value }));
   };
 
-  const handleNextClick = () => {
-    dispatch(setProgress({ ...progress, password: true }));
+  const handleNextClick = async () => {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:8080/api/user/register",
+        newUser
+      );
+      alert_registerSuccess().then(navigate("/"));
+    } catch (err) {
+      alert_registerError("Do not register");
+    }
   };
 
   useEffect(() => {
@@ -28,23 +40,23 @@ export default function Register_info() {
         <InputFormTitle title="Name" />
         <div className="grow text-start mt-1">
           <input
-            type="password"
-            name="password"
+            type="text"
+            name="name"
             className="w-full outline-none border  rounded-md px-2 py-2 mr-2 focus:border-gray-400 "
             placeholder="Hong Gil Dong"
-            value={password}
-            onChange={handlePasswordChange}
+            value={name}
+            onChange={handleInputChange}
           />
         </div>
         <div className="mt-4">
           <InputFormTitle title="Phone number" />
           <input
-            name="confirmPassword"
-            type="password"
+            type="text"
+            name="phone"
             className="w-full outline-none border  rounded-md px-2 py-2 mr-2 focus:border-gray-400 "
             placeholder="010-1234-5678"
-            value={password}
-            onChange={handlePasswordChange}
+            value={phone}
+            onChange={handleInputChange}
           />
         </div>
       </div>
@@ -54,7 +66,7 @@ export default function Register_info() {
           className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
           onClick={handleNextClick}
         >
-          Next
+          Submit
         </Link>
       </div>
     </>
