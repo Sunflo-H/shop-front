@@ -2,12 +2,15 @@ import React, { useEffect } from "react";
 import InputFormTitle from "../../management/main/ui/InputFormTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { setNewUser, setProgress } from "../../../slice/userRegisterSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { alert_emailError, alert_registerError } from "../../../alerts/error";
+import axios from "axios";
 
 export default function Register_email() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { newUser, progress } = useSelector((state) => state.userRegister);
+  const { newUser } = useSelector((state) => state.userRegister);
   const { email } = newUser;
 
   const handleEmailChange = (e) => {
@@ -15,8 +18,24 @@ export default function Register_email() {
     dispatch(setNewUser({ ...newUser, [name]: value }));
   };
 
-  const handleNextClick = () => {
-    dispatch(setProgress({ ...progress, email: true }));
+  const handleNextClick = async () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const isValidEmail = (email) => emailRegex.test(email);
+
+    // 이메일이 형식에 맞는지 체크 -> 이메일이 중복인지 체크
+    if (!isValidEmail(email))
+      alert_registerError("Please enter a valid email address");
+    else {
+      const { data } = await axios.post(
+        "http://localhost:8080/api/user/isUser",
+        {
+          email,
+        }
+      );
+      data.length > 0
+        ? alert_registerError("This email address is already in use.")
+        : navigate("/register/password");
+    }
   };
 
   useEffect(() => {
@@ -39,13 +58,12 @@ export default function Register_email() {
         </div>
       </div>
       <div className="px-4">
-        <Link
-          to={"/register/password"}
-          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+        <div
+          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black cursor-pointer"
           onClick={handleNextClick}
         >
           Next
-        </Link>
+        </div>
       </div>
     </>
   );
