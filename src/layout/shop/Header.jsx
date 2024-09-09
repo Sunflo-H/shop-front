@@ -3,17 +3,19 @@ import Nav from "../../components/shop/header/Nav";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Cart from "../../components/shop/header/Cart";
 import SideNav from "../../components/shop/header/SideNav";
-import SignAndUser from "../../components/shop/header/SignAndUser";
+import Login from "../../components/shop/header/Login";
 import { GrClose } from "react-icons/gr";
 import Logo from "../../components/shop/header/Logo";
 import { useSelector } from "react-redux";
 import SearchBar from "../../components/shop/header/SearchBar";
 import SearchIcon_mobile from "../../components/shop/header/SearchIcon_mobile";
 import AnimatedTextBanner from "../../components/shop/header/AnimatedTextBanner";
+import User from "../../components/shop/header/User";
 
 export default function Header() {
   const user = useSelector((state) => state.auth.user);
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+  console.log(user);
 
   return (
     <header className="fixed w-full z-50 border-b border-gray-300 bg-white shadow-sm">
@@ -29,8 +31,9 @@ export default function Header() {
         <Nav />
         <div className="flex items-center gap-2 font-semibold shrink-0 ">
           <SearchBar />
+          {!user && <Login />}
+          {user && <User />}
           {user && <Cart />}
-          <SignAndUser />
         </div>
 
         {/* 모바일 버전 */}
