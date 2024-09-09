@@ -16,7 +16,7 @@ export default function Products() {
   }, [category]);
 
   return (
-    <section className="pt-24">
+    <section className="pt-32">
       <div
         className={`grid grid-cols-2 mx-4  max-w-screen-xl gap-10
         md:grid-cols-3 md:m-auto`}

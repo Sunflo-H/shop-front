@@ -3,27 +3,28 @@ import { Link, useLocation } from "react-router-dom";
 import useCart from "../../hooks/useCart";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import useFavorites from "../../hooks/useFavorites";
-import Swal from "sweetalert2";
 import ColorOption from "../../components/shop/main/product/ColorOption";
 import { useSelector } from "react-redux";
 
 import Cautions from "../../components/shop/main/product/Cautions";
 import Description from "../../components/shop/main/product/Description";
 import SizeSelectBox from "../../components/shop/main/product/SizeSelectBox";
+import { IKImage } from "imagekitio-react";
+import AddCartBtn from "../../components/shop/main/product/AddCartBtn";
+
+const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
 export default function ProductDetail() {
   const user = useSelector((state) => state.auth.user);
-  const { uid } = user ?? {};
 
-  const { addCart } = useCart();
   const {
     state: { product },
   } = useLocation();
   const { id, name, image, price, description, size, color, category } =
     product;
 
-  const [currentSize, setCurrentSize] = useState(null);
-  const [currentColor, setCurrentColor] = useState(color[0]);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(color[0]);
 
   const { isFavorite, updateFavorites } = useFavorites(product);
 
@@ -31,44 +32,12 @@ export default function ProductDetail() {
     window.scrollTo(0, 0);
   }, [id]);
 
-  const handleAddCartClick = (e) => {
-    if (user) {
-      // 장바구니에 담을 때 'product'의 옵션(size,color)을 변경할 수 있습니다.
-      // 그렇기 때문에 product를 바로 addCart 하면 안됩니다.
-      // 변경된 옵션 정보를 가지고 있는 product를 addCart 해야합니다.
-      const product = {
-        id,
-        name,
-        image,
-        price,
-        size: currentSize, // 옵션 SIZE
-        color: currentColor, // 옵션 COLOR
-        quantity: 1, // 옵션 개수
-      };
-
-      addCart.mutate({ product, uid });
-
-      Swal.fire({
-        icon: "success",
-        title: "Added",
-        confirmButtonColor: "#222",
-      });
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Sign in first!",
-        confirmButtonColor: "#222",
-      });
-    }
-  };
-
   const handleSizeChange = (e) => {
-    setCurrentSize(e.target.value);
+    setSelectedSize(e.target.value);
   };
 
   const handleColorChange = (e) => {
-    setCurrentColor(e.target.value);
+    setSelectedColor(e.target.value);
   };
 
   const handleFavoriteClick = (e) => {
@@ -95,7 +64,17 @@ export default function ProductDetail() {
               {category}
             </Link>
           </div>
-          <img src={image} alt="" className="w-full" />
+          <IKImage
+            urlEndpoint={IMAGEKIT_ENDPOINT}
+            path={getImage(image)}
+            width={640}
+            height={960}
+            transformation={[{ width: 640, height: 960 }]}
+            loading="lazy"
+            alt={name}
+            className={`m-auto`}
+            lqip={{ active: true, quality: 10 }} // 로딩이 완료되기 전에 흐린 이미지를 보여준다.
+          />
         </div>
         <div className=" w-[344px] pt-8 ">
           <div className="text-[20px] text-gray-600">{name}</div>
@@ -108,12 +87,12 @@ export default function ProductDetail() {
             <div className="w-full ">
               <ColorOption
                 colorList={color}
-                currentColor={currentColor}
+                selectedColor={selectedColor}
                 onChange={handleColorChange}
               />
               <SizeSelectBox
                 sizeList={size}
-                currentSize={currentSize}
+                // selectedSize={selectedSize}
                 onChange={handleSizeChange}
               />
             </div>
@@ -122,12 +101,11 @@ export default function ProductDetail() {
               <Cautions />
             </div>
             <div className="flex items-center my-10 gap-4">
-              <div
-                className="block w-full bg-black py-3 text-white text-xl font-bold text-center cursor-pointer"
-                onClick={handleAddCartClick}
-              >
-                Add Cart
-              </div>
+              <AddCartBtn
+                productToAddCart={product}
+                selectedColor={selectedColor}
+                selectedSize={selectedSize}
+              />
               <div className="flex items-center px-8 py-3 border border-black">
                 {isFavorite ? (
                   <AiFillHeart
@@ -151,4 +129,17 @@ export default function ProductDetail() {
       </div>
     </section>
   );
+}
+
+/**
+ * aws s3 image url에서 맨뒤 image파일명만 추출하는 함수
+ * @param {*} imageUrl aws s3 image url
+ * @returns image filename
+ */
+function getImage(imageUrl) {
+  const imageUrlSplit = imageUrl.split("/");
+  const length = imageUrlSplit.length;
+  const image = imageUrlSplit[length - 1];
+
+  return image;
 }

@@ -1,27 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
-
+import useFavorites from "../../../../hooks/useFavorites";
 import { IKImage } from "imagekitio-react";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
 export default function ProductCard({ product, currentCategory }) {
-  const { name, image, category, price, _id } = product;
-  // const { isFavorite, updateFavorites } = useFavorites(
-  //   product,
-  //   currentCategory
-  // );
-
   const navigate = useNavigate();
-
+  const { name, image, category, price, _id } = product;
+  const { isFavorite, updateFavorites } = useFavorites(
+    product,
+    currentCategory
+  );
   const handleProductClick = () => {
     navigate(`/products/${category}/${_id}`, { state: { product } });
   };
 
-  // const handleFavoritesClick = () => {
-  //   updateFavorites.mutate();
-  // };
+  const handleFavoritesClick = () => {
+    updateFavorites.mutate();
+  };
 
   return (
     <div className="flex flex-col ">
@@ -29,18 +27,21 @@ export default function ProductCard({ product, currentCategory }) {
         <IKImage
           urlEndpoint={IMAGEKIT_ENDPOINT}
           path={getImage(image)}
-          transformation={[{ height: 600, width: 400 }]}
+          width={400}
+          height={600}
+          transformation={[{ width: 400, height: 600 }]}
           loading="lazy"
           alt={name}
-          className="m-auto"
+          className={`m-auto`}
+          lqip={{ active: true, quality: 20 }} // 로딩이 완료되기 전에 흐린 이미지를 보여준다.
         />
       </div>
       <div className="flex justify-between mt-2">
         <div className="font-bold">{name}</div>{" "}
-        {/* <AiFillHeart
+        <AiFillHeart
           className={`text-2xl cursor-pointer ${isFavorite && "text-rose-500"}`}
           onClick={handleFavoritesClick}
-        /> */}
+        />
       </div>
       <div className="text-lg font-semibold text-gray-600">
         {price}
