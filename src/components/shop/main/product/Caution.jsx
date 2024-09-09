@@ -22,8 +22,10 @@ export default function Caution({ title, subTitle, info }) {
       <div className="h-full text-xs mt-2 mb-3">
         <div className="font-bold mb-1">{subTitle}</div>
 
-        {info.map((item) => (
-          <div className="py-1 font-semibold">• {item}</div>
+        {info.map((item, i) => (
+          <div className="py-1 font-semibold" key={i}>
+            • {item}
+          </div>
         ))}
       </div>
     </div>

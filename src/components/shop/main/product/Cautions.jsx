@@ -2,9 +2,9 @@ import React from "react";
 import Caution from "./Caution";
 
 export default function Cautions() {
-  return cautions.map((caution) => {
+  return cautions.map((caution, i) => {
     const { title, subTitle, info } = caution;
-    return <Caution title={title} subTitle={subTitle} info={info} />;
+    return <Caution title={title} subTitle={subTitle} info={info} key={i} />;
   });
 }
 

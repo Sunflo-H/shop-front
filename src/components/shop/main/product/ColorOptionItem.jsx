@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ColorOptionItem({ color, currentColor, onChange }) {
+export default function ColorOptionItem({ color, selectedColor, onChange }) {
   let bg;
   switch (color) {
     case "Black":
@@ -34,7 +34,7 @@ export default function ColorOptionItem({ color, currentColor, onChange }) {
 
       <label
         className={`border p-0.5 cursor-pointer rounded-full shadow-md 
-          ${color === currentColor ? `border-black` : "border-gary-200"}`}
+          ${color === selectedColor ? `border-black` : "border-gary-200"}`}
         htmlFor={color}
       >
         <div className={`w-5 h-5 ${bg} rounded-full `}></div>
