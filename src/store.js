@@ -6,7 +6,7 @@ import detailModalReducer from "./slice/management/detailModalSlice";
 import userManagementReducer from "./slice/management/userManagementSlice";
 import pageNationReducer from "./slice/management/pageNationSlice";
 import createProductReducer from "./slice/management/createProductSlice";
-import userRegisterReducer from "./slice/management/userRegisterSlice";
+import userRegisterReducer from "./slice/userRegisterSlice";
 
 export default configureStore({
   reducer: {

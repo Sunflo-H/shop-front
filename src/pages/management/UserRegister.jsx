@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SaveAndCancelBtn from "../../components/management/main/ui/SaveAndCancelBtn";
 import InputFormTitle from "../../components/management/main/ui/InputFormTitle";
-import {
-  resetNewUser,
-  setNewUser,
-} from "../../slice/management/userRegisterSlice";
+import { resetNewUser, setNewUser } from "../../slice/userRegisterSlice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { registerUser } from "../../api/userApi";
 import { alert_productUploadSuccess } from "../../alerts/success";
@@ -62,11 +59,10 @@ export default function UserRegister() {
   return (
     <div className="flex h-screen bg-lightblue manage-font">
       <div className="max-w-screen-lg w-screen m-auto pt-6">
-        {/* 상단 컨텐츠 */}
         <section className="flex justify-center gap-6 mb-12">
           <div className="w-1/2">
-            {/* 좌측 상단 첫번째 컨텐츠 : 상품명, 가격 */}
             <section className="bg-white rounded-md shadow-md px-2 py-4">
+              {/* email */}
               <div className=" py-4 px-4">
                 <InputFormTitle title="E-Mail" required={true} />
                 <div className="flex text-start mt-1">
@@ -101,6 +97,7 @@ export default function UserRegister() {
                   </select>
                 </div>
               </div>
+              {/* password */}
               <div className=" py-4 px-4">
                 <InputFormTitle title="Password" required={true} />
                 <div className="grow text-start mt-1">
@@ -114,6 +111,7 @@ export default function UserRegister() {
                   />
                 </div>
               </div>
+              {/* name */}
               <div className=" py-4 px-4">
                 <InputFormTitle title="Name" required={true} />
                 <div className="flex  mt-1 ">
@@ -127,6 +125,7 @@ export default function UserRegister() {
                   />
                 </div>
               </div>
+              {/* phone */}
               <div className=" py-4 px-4">
                 <InputFormTitle title="Phone Number" required={true} />
                 <div className="flex  mt-1 ">
@@ -141,6 +140,7 @@ export default function UserRegister() {
                   />
                 </div>
               </div>
+              {/* role */}
               <div className="py-4 px-4">
                 <InputFormTitle title="Role" required={true} />
                 <div className="mt-1 ">

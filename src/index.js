@@ -23,6 +23,10 @@ import ManagementHome from "./pages/management/ManagementHome";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserRegister from "./pages/management/UserRegister";
+import Register_email from "./components/shop/signUp/Register_email";
+import Register_password from "./components/shop/signUp/Register_password";
+import Register_personal from "./components/shop/signUp/Register_info";
+import Register_info from "./components/shop/signUp/Register_info";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -82,6 +86,20 @@ const router = createBrowserRouter([
         <Register />
       </Provider>
     ),
+    children: [
+      {
+        index: true,
+        element: <Register_email />,
+      },
+      {
+        path: "/register/password",
+        element: <Register_password />,
+      },
+      {
+        path: "/register/info",
+        element: <Register_info />,
+      },
+    ],
   },
   {
     path: "/manage",

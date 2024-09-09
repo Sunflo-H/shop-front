@@ -4,12 +4,18 @@ const UserRegisterSlice = createSlice({
   name: "userRegister",
   initialState: {
     newUser: {
+      email: "",
       emailLocal: "",
       emailDomain: "",
       password: "",
       name: "",
       phone: "",
       role: "User",
+    },
+    progress: {
+      email: false,
+      password: false,
+      info: false,
     },
   },
   reducers: {
@@ -26,8 +32,12 @@ const UserRegisterSlice = createSlice({
         role: "User",
       };
     },
+    setProgress: (state, action) => {
+      state.progress = action.payload;
+    },
   },
 });
 
-export const { setNewUser, resetNewUser } = UserRegisterSlice.actions;
+export const { setNewUser, resetNewUser, setProgress } =
+  UserRegisterSlice.actions;
 export default UserRegisterSlice.reducer;
