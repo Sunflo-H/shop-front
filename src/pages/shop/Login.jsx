@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const token = await login(email, password);
-      saveToken(token);
+      saveToken_localstorage(token);
       navigate("/");
       console.log("Login successful");
     } catch (err) {
@@ -37,7 +37,8 @@ const Login = () => {
       alert_loginError(errMassage);
     }
   }
-  function saveToken(token) {
+
+  function saveToken_localstorage(token) {
     localStorage.setItem("jwt", token);
   }
 
@@ -53,9 +54,6 @@ const Login = () => {
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="email" className="sr-only">
-                Email
-              </label>
               <input
                 name="email"
                 type="text"
@@ -67,9 +65,6 @@ const Login = () => {
               />
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
               <input
                 name="password"
                 type="password"

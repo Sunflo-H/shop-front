@@ -28,8 +28,8 @@ export default function Header() {
         <Logo />
         <Nav />
         <div className="flex items-center gap-2 font-semibold shrink-0 ">
-          {user && <Cart />}
           <SearchBar />
+          {user && <Cart />}
           <SignAndUser />
         </div>
 

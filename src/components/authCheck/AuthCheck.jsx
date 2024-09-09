@@ -10,7 +10,7 @@ export default function AuthCheck() {
     const token = localStorage.getItem("jwt");
     async function fetchUser() {
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           "http://localhost:8080/api/protected-route",
           {
             headers: {
@@ -19,13 +19,14 @@ export default function AuthCheck() {
             },
           }
         );
-        const username = response.data;
-        dispatch(setUser(username));
+
+        dispatch(setUser(data));
       } catch (error) {
         console.log("jwt fetch error");
       }
     }
     token && fetchUser();
   }, []);
+
   return <></>;
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import useProducts from "../../hooks/useProducts";
-import ProductCard from "../../components/product/ProductCard";
+import ProductCard from "../../components/shop/main/product/ProductCard";
 
 export default function Products() {
   const { category } = useParams();

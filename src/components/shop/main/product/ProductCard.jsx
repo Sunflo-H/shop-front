@@ -1,17 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
-import useFavorites from "../../hooks/useFavorites";
+
 import { IKImage } from "imagekitio-react";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
 export default function ProductCard({ product, currentCategory }) {
   const { name, image, category, price, _id } = product;
-  const { isFavorite, updateFavorites } = useFavorites(
-    product,
-    currentCategory
-  );
+  // const { isFavorite, updateFavorites } = useFavorites(
+  //   product,
+  //   currentCategory
+  // );
 
   const navigate = useNavigate();
 
@@ -19,9 +19,9 @@ export default function ProductCard({ product, currentCategory }) {
     navigate(`/products/${category}/${_id}`, { state: { product } });
   };
 
-  const handleFavoritesClick = () => {
-    updateFavorites.mutate();
-  };
+  // const handleFavoritesClick = () => {
+  //   updateFavorites.mutate();
+  // };
 
   return (
     <div className="flex flex-col ">
@@ -37,10 +37,10 @@ export default function ProductCard({ product, currentCategory }) {
       </div>
       <div className="flex justify-between mt-2">
         <div className="font-bold">{name}</div>{" "}
-        <AiFillHeart
+        {/* <AiFillHeart
           className={`text-2xl cursor-pointer ${isFavorite && "text-rose-500"}`}
           onClick={handleFavoritesClick}
-        />
+        /> */}
       </div>
       <div className="text-lg font-semibold text-gray-600">
         {price}

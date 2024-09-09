@@ -3,7 +3,7 @@ import Category from "../Category";
 import Button from "../../../../ui/Button";
 import { useSelector } from "react-redux";
 import useCategoryNavigation from "../../../../../hooks/useCategoryNavigation";
-import HomeProducts from "../../../../product/HomeProducts";
+import HomeProducts from "../../product/HomeProducts";
 
 export default function Layout_productsByCategory() {
   const currentCategory = useSelector(

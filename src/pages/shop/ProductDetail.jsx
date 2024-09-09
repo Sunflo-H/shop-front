@@ -4,7 +4,7 @@ import useCart from "../../hooks/useCart";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import useFavorites from "../../hooks/useFavorites";
 import Swal from "sweetalert2";
-import ColorOption from "../../components/product/ColorOption";
+import ColorOption from "../../components/shop/main/product/ColorOption";
 import { useSelector } from "react-redux";
 
 import Cautions from "../../components/shop/main/product/Cautions";
