@@ -3,16 +3,16 @@ import { MdArrowDropDown } from "react-icons/md";
 import User from "./User";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, setUserName } from "../../../slice/authSlice";
+import { logout, setUser } from "../../../slice/authSlice";
 
 export default function SignAndUser() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
-  const username = useSelector((state) => state.auth.username) ?? "";
+  const { username } = useSelector((state) => state.auth.user) ?? "";
 
   function logout() {
     localStorage.removeItem("jwt");
-    dispatch(setUserName(""));
+    dispatch(setUser(""));
   }
 
   return (

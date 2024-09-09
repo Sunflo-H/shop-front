@@ -2,19 +2,19 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { alert_loginError } from "../../alerts/error";
-import { login, setUser, setUserName } from "../../slice/authSlice";
+import { login, setUser } from "../../slice/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const token = await login(username, password);
+      const token = await login(email, password);
       saveToken(token);
       navigate("/");
       console.log("Login successful");
@@ -23,14 +23,14 @@ const Login = () => {
     }
   };
 
-  async function login(username, password) {
+  async function login(email, password) {
     try {
       const response = await axios.post(process.env.REACT_APP_LOGIN_URL, {
-        username,
+        email,
         password,
       });
       const { token, user } = response.data;
-      dispatch(setUserName(user.username));
+      dispatch(setUser(user));
       return token;
     } catch (error) {
       const errMassage = error.response.data.msg;
@@ -53,18 +53,17 @@ const Login = () => {
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="username" className="sr-only">
-                Username
+              <label htmlFor="email" className="sr-only">
+                Email
               </label>
               <input
-                id="username"
-                name="username"
+                name="email"
                 type="text"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-black rounded-t-md focus:outline-none focus:ring-black focus:border-black focus:z-10 sm:text-sm"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
@@ -72,7 +71,6 @@ const Login = () => {
                 Password
               </label>
               <input
-                id="password"
                 name="password"
                 type="password"
                 required

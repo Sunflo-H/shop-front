@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setUserName } from "../../slice/authSlice";
+import { setUser } from "../../slice/authSlice";
 import axios from "axios";
 
 // jwt를 확인하여 데이터를 가지고오는 컴포넌트입니다.
@@ -11,7 +11,7 @@ export default function AuthCheck() {
     async function fetchUser() {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/protected-route",
+          "http://localhost:8080/api/protected-route",
           {
             headers: {
               Authorization: `Bearer ${token}`, // JWT 토큰을 Authorization 헤더에 포함
@@ -20,7 +20,7 @@ export default function AuthCheck() {
           }
         );
         const username = response.data;
-        dispatch(setUserName(username));
+        dispatch(setUser(username));
       } catch (error) {
         console.log("jwt fetch error");
       }
