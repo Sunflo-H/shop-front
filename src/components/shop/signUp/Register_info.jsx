@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setNewUser, setProgress } from "../../../slice/userRegisterSlice";
+import {
+  resetNewUser,
+  setNewUser,
+  setProgress,
+} from "../../../slice/userRegisterSlice";
 import InputFormTitle from "../../management/main/ui/InputFormTitle";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -25,7 +29,10 @@ export default function Register_info() {
         "http://localhost:8080/api/user/register",
         newUser
       );
-      alert_registerSuccess().then(navigate("/"));
+      alert_registerSuccess().then(() => {
+        navigate("/");
+        dispatch(resetNewUser());
+      });
     } catch (err) {
       alert_registerError("Do not register");
     }
