@@ -5,32 +5,23 @@ import useCart from "../../../hooks/useCart";
 
 export default function Cart() {
   const [isHover, setIsHover] = useState(false);
+  //! 나중에 useCart 코드 필요없는건 삭제하기 위해 일단 냅둬
   const {
     cartQuery: { data: productsInCart },
   } = useCart();
 
   return (
     <Link
-      className="absolute right-5 md:static flex h-full pt-5 pb-4 border-t-transparent border-b-2 border-b-transparent  hover:border-black"
+      className="absolute right-5 md:static h-full content-center text-center pt-2 border-b-2 border-b-transparent hover:border-b-black"
       to="/carts"
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
       {isHover ? (
-        <BsBagFill className="text-xl mr-1" />
+        <BsBagFill className="text-xl " />
       ) : (
-        <BsBag className="text-xl mr-1 " />
+        <BsBag className="text-xl " />
       )}
-
-      {/* {productsInCart && (
-        <span className="hidden md:inline text-sm font-normal ">
-          $
-          {productsInCart.reduce(
-            (acc, cur) => acc + Number(cur.price * cur.quantity),
-            0
-          )}
-        </span>
-      )} */}
     </Link>
   );
 }
