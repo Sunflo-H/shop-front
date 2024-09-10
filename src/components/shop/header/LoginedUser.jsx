@@ -3,15 +3,29 @@ import { MdArrowDropDown } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../../slice/authSlice";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getLoginedUserByJWT } from "../../../api/userApi";
 
-export default function User() {
-  const [isOpen, setIsOpen] = useState(false);
+export default function LoginedUser() {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth) ?? "";
+  const token = localStorage.getItem("jwt");
+  const [isOpen, setIsOpen] = useState(false);
+  // const { user } = useSelector((state) => state.auth) ?? "";
+  const { data: user } = useQuery({ queryKey: ["user"] });
+
   function logout() {
     localStorage.removeItem("jwt");
     dispatch(setUser(""));
   }
+
+  const mutation = useMutation({
+    queryFn: async () => getLoginedUserByJWT(token),
+    onSuccess: () => {
+      queryClient.invalidateQueries("user");
+    },
+  });
+
   return (
     <div
       className="relative"

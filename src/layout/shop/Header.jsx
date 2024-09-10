@@ -10,11 +10,13 @@ import { useSelector } from "react-redux";
 import SearchBar from "../../components/shop/header/SearchBar";
 import SearchIcon_mobile from "../../components/shop/header/SearchIcon_mobile";
 import AnimatedTextBanner from "../../components/shop/header/AnimatedTextBanner";
-import User from "../../components/shop/header/User";
+import LoginedUser from "../../components/shop/header/LoginedUser";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Header() {
-  const user = useSelector((state) => state.auth.user);
+  // const user = useSelector((state) => state.auth.user);
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+  const { data: user } = useQuery({ queryKey: ["user"] });
 
   return (
     <header className="fixed w-full z-50 border-b border-gray-300 bg-white shadow-sm">
@@ -31,7 +33,7 @@ export default function Header() {
         <div className="flex items-center gap-2 font-semibold shrink-0 ">
           <SearchBar />
           {!user && <Login />}
-          {user && <User />}
+          {user && <LoginedUser />}
           {user && <Cart />}
         </div>
 

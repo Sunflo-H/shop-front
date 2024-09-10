@@ -17,9 +17,9 @@ const Login = () => {
     mutationFn: async ({ email, password }) => login(email, password),
     onSuccess: (data) => {
       const { token, user } = data;
-      saveToken_localstorage(token);
+      localStorage.setItem("jwt", token);
       navigate("/");
-      dispatch(setUser(user));
+      // dispatch(setUser(user));
     },
     onError: (err) => {
       alert_loginError("Email and password do not match");
@@ -30,10 +30,6 @@ const Login = () => {
     e.preventDefault();
     mutation.mutate({ email, password });
   };
-
-  function saveToken_localstorage(token) {
-    localStorage.setItem("jwt", token);
-  }
 
   return (
     <div className="shop-font min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">

@@ -84,7 +84,7 @@ export async function login(email, password) {
   }
 }
 
-export async function getLoginedUser(token) {
+export async function getLoginedUserByJWT(token) {
   try {
     const { data } = await axios.get(
       "http://localhost:8080/api/protected-route",
