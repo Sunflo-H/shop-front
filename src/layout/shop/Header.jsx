@@ -11,7 +11,6 @@ import SearchBar from "../../components/shop/header/SearchBar";
 import SearchIcon_mobile from "../../components/shop/header/SearchIcon_mobile";
 import AnimatedTextBanner from "../../components/shop/header/AnimatedTextBanner";
 import LoginedUser from "../../components/shop/header/LoginedUser";
-import { useQuery } from "@tanstack/react-query";
 
 export default function Header() {
   const { isLogined } = useSelector((state) => state.auth);

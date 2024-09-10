@@ -11,18 +11,18 @@ export default function Cart() {
 
   return (
     <Link
-      className="absolute right-5 md:static flex h-full pt-5 pb-4 border-b-2 border-transparent hover:border-black"
+      className="absolute right-5 md:static flex h-full pt-5 pb-4 border-t-transparent border-b-2 border-b-transparent  hover:border-black"
       to="/carts"
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
       {isHover ? (
-        <BsBagFill className="text-lg mr-1" />
+        <BsBagFill className="text-xl mr-1" />
       ) : (
-        <BsBag className="text-lg mr-1 " />
+        <BsBag className="text-xl mr-1 " />
       )}
 
-      {productsInCart && (
+      {/* {productsInCart && (
         <span className="hidden md:inline text-sm font-normal ">
           $
           {productsInCart.reduce(
@@ -30,7 +30,7 @@ export default function Cart() {
             0
           )}
         </span>
-      )}
+      )} */}
     </Link>
   );
 }

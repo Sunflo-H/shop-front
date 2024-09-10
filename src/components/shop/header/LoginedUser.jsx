@@ -31,7 +31,7 @@ export default function LoginedUser() {
         My Account <MdArrowDropDown className="text-2xl" />
       </div>
       {isOpen && (
-        <ul className="absolute top-15 -left-14 w-44 px-4 pt-4 border border-gray-300 bg-white z-10 text-sm text-center">
+        <ul className="absolute top-15 -left-0 w-44 px-4 pt-4 border border-gray-300 bg-white z-10 text-sm text-center">
           <li className="mb-4">
             <UserInfo username={user?.name} />
           </li>
