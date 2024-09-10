@@ -74,9 +74,11 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: (
-      <Provider store={store}>
-        <Login />
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <Login />
+        </Provider>
+      </QueryClientProvider>
     ),
   },
   {

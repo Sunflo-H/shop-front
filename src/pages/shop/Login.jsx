@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { alert_loginError } from "../../alerts/error";
 import { setUser } from "../../slice/authSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "../../api/userApi";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,32 +13,23 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const token = await login(email, password);
+  const mutation = useMutation({
+    mutationFn: async ({ email, password }) => login(email, password),
+    onSuccess: (data) => {
+      const { token, user } = data;
       saveToken_localstorage(token);
       navigate("/");
-      console.log("Login successful");
-    } catch (err) {
-      console.log("Login failed : ", err);
-    }
-  };
-
-  async function login(email, password) {
-    try {
-      const response = await axios.post(process.env.REACT_APP_LOGIN_URL, {
-        email,
-        password,
-      });
-      const { token, user } = response.data;
       dispatch(setUser(user));
-      return token;
-    } catch (error) {
-      const errMassage = error.response.data.msg;
-      alert_loginError(errMassage);
-    }
-  }
+    },
+    onError: (err) => {
+      alert_loginError("Email and password do not match");
+    },
+  });
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    mutation.mutate({ email, password });
+  };
 
   function saveToken_localstorage(token) {
     localStorage.setItem("jwt", token);

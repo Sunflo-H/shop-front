@@ -12,7 +12,7 @@ export default function AddCartBtn({
     productToAddCart;
   const user = useSelector((state) => state.auth.user);
   const { addCart } = useCart();
-  const { uid } = user ?? {}; // !이거 왜 쓰는거지?
+  const { _id } = user ?? {};
   const handleAddCartClick = (e) => {
     if (user) {
       // 장바구니에 담을 때 'product'의 옵션(size,color)을 변경할 수 있습니다.
@@ -28,7 +28,7 @@ export default function AddCartBtn({
         quantity: 1, // 옵션 개수
       };
 
-      addCart.mutate({ product, uid });
+      addCart.mutate({ product, _id });
 
       Swal.fire({
         icon: "success",

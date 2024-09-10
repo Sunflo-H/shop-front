@@ -21,20 +21,24 @@ export default function Register_email() {
   const handleNextClick = async () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const isValidEmail = (email) => emailRegex.test(email);
-
+    console.log(email);
     // 이메일이 형식에 맞는지 체크 -> 이메일이 중복인지 체크
     if (!isValidEmail(email))
       alert_registerError("Please enter a valid email address");
     else {
-      const { data } = await axios.post(
-        "http://localhost:8080/api/user/isUser",
-        {
-          email,
-        }
-      );
-      data.length > 0
-        ? alert_registerError("This email address is already in use.")
-        : navigate("/register/password");
+      try {
+        const { data } = await axios.post(
+          "http://localhost:8080/api/user/isUser",
+          {
+            email,
+          }
+        );
+        data.length > 0
+          ? alert_registerError("This email address is already in use.")
+          : navigate("/register/password");
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 

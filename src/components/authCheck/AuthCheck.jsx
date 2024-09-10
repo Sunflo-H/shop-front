@@ -1,32 +1,30 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../slice/authSlice";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { getLoginedUser } from "../../api/userApi";
 
 // jwt를 확인하여 데이터를 가지고오는 컴포넌트입니다.
 export default function AuthCheck() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    async function fetchUser() {
-      try {
-        const { data } = await axios.get(
-          "http://localhost:8080/api/protected-route",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // JWT 토큰을 Authorization 헤더에 포함
-              "Content-Type": "application/json", // 요청의 데이터 형식을 JSON으로 지정
-            },
-          }
-        );
+  const { user } = useSelector((state) => state.auth);
+  const token = localStorage.getItem("jwt");
 
-        dispatch(setUser(data));
-      } catch (error) {
-        console.log("jwt fetch error");
-      }
-    }
-    token && fetchUser();
+  const { data, refetch } = useQuery({
+    queryKey: ["user", user?._id],
+    queryFn: async () => getLoginedUser(token),
+    enabled: !!token,
+  });
+
+  useEffect(() => {
+    refetch();
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setUser(data)); // 유저 데이터를 Redux 스토어에 저장
+    }
+  }, [data, dispatch]);
 
   return <></>;
 }

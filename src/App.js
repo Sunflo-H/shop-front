@@ -13,8 +13,8 @@ function App() {
   return (
     <div className="shop-font">
       <Provider store={store}>
-        <AuthCheck />
         <QueryClientProvider client={queryClient}>
+          <AuthCheck />
           <Header />
           <Main />
           <Footer />

@@ -15,7 +15,6 @@ import User from "../../components/shop/header/User";
 export default function Header() {
   const user = useSelector((state) => state.auth.user);
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
-  console.log(user);
 
   return (
     <header className="fixed w-full z-50 border-b border-gray-300 bg-white shadow-sm">

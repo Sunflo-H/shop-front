@@ -93,6 +93,7 @@ export default function DetailModal() {
         ...updatedUser,
         role: selectBox.role,
       };
+      console.log(userToUpdate);
       mutation.mutate(userToUpdate);
     } catch (err) {
       console.error(err);
@@ -153,7 +154,7 @@ export default function DetailModal() {
           />
         </div>
         <div className="border-b border-blue-200 mt-3">
-          <div className="text-sm text-blue-400">phone</div>
+          <div className="text-sm text-blue-400">Phone Number</div>
           <input
             className="bg-transparent w-full outline-none focus:bg-blue-100"
             value={phone || 0}
