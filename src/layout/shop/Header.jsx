@@ -14,9 +14,8 @@ import LoginedUser from "../../components/shop/header/LoginedUser";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Header() {
-  // const user = useSelector((state) => state.auth.user);
+  const { isLogined } = useSelector((state) => state.auth);
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
-  const { data: user } = useQuery({ queryKey: ["user"] });
 
   return (
     <header className="fixed w-full z-50 border-b border-gray-300 bg-white shadow-sm">
@@ -32,9 +31,9 @@ export default function Header() {
         <Nav />
         <div className="flex items-center gap-2 font-semibold shrink-0 ">
           <SearchBar />
-          {!user && <Login />}
-          {user && <LoginedUser />}
-          {user && <Cart />}
+          {!isLogined && <Login />}
+          {isLogined && <LoginedUser />}
+          {isLogined && <Cart />}
         </div>
 
         {/* 모바일 버전 */}

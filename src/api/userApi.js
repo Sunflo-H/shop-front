@@ -70,9 +70,8 @@ export const addCart = async ({ userId, productToAddCart }) => {
 };
 
 export async function login(email, password) {
-  console.log(email, password);
   try {
-    // {token, user} 데이터
+    // data = {token, user}
     const { data } = await axios.post(LOGIN_URL, {
       email,
       password,

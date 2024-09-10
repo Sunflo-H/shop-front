@@ -1,30 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../../slice/authSlice";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getLoginedUserByJWT } from "../../../api/userApi";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { setIsLogined } from "../../../slice/authSlice";
 
 export default function LoginedUser() {
-  const queryClient = useQueryClient();
   const dispatch = useDispatch();
-  const token = localStorage.getItem("jwt");
+  const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
-  // const { user } = useSelector((state) => state.auth) ?? "";
   const { data: user } = useQuery({ queryKey: ["user"] });
 
-  function logout() {
+  const handleLogout = () => {
     localStorage.removeItem("jwt");
-    dispatch(setUser(""));
-  }
-
-  const mutation = useMutation({
-    queryFn: async () => getLoginedUserByJWT(token),
-    onSuccess: () => {
-      queryClient.invalidateQueries("user");
-    },
-  });
+    queryClient.removeQueries(["user"]); // ["user"] 쿼리 캐시 무효화
+    queryClient.invalidateQueries(["user"]); // 쿼리 리패칭
+    dispatch(setIsLogined(false));
+  };
 
   return (
     <div
@@ -41,7 +33,7 @@ export default function LoginedUser() {
       {isOpen && (
         <ul className="absolute top-15 -left-14 w-44 px-4 pt-4 border border-gray-300 bg-white z-10 text-sm text-center">
           <li className="mb-4">
-            <UserInfo username={user.name} />
+            <UserInfo username={user?.name} />
           </li>
           <li className="mb-4 ">
             <Link
@@ -54,7 +46,7 @@ export default function LoginedUser() {
           <li className="mb-4">
             <span
               className="border-b-2 border-transparent hover:border-black pb-1 cursor-pointer"
-              onClick={() => logout()}
+              onClick={handleLogout}
             >
               Sign Out
             </span>

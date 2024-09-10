@@ -19,7 +19,6 @@ const Login = () => {
       const { token, user } = data;
       localStorage.setItem("jwt", token);
       navigate("/");
-      // dispatch(setUser(user));
     },
     onError: (err) => {
       alert_loginError("Email and password do not match");
