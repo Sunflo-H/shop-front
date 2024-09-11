@@ -9,7 +9,6 @@ import SizeSelectBox from "../../components/shop/main/product/SizeSelectBox";
 import { IKImage } from "imagekitio-react";
 import AddCartBtn from "../../components/shop/main/product/AddCartBtn";
 import Quantity from "../../components/shop/main/product/Quantity";
-import { Label } from "recharts";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
@@ -17,9 +16,8 @@ export default function ProductDetail() {
   const {
     state: { product },
   } = useLocation();
-  const { id, name, image, price, description, size, color, category } =
+  const { _id, name, image, price, description, size, color, category } =
     product;
-
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(color[0]);
   const [quantity, setQuantity] = useState(1);
@@ -27,7 +25,7 @@ export default function ProductDetail() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [_id]);
 
   const handleSizeChange = (selectedOption) => {
     setSelectedSize(selectedOption.value);
@@ -101,7 +99,7 @@ export default function ProductDetail() {
             <Quantity quantity={quantity} setQuantity={setQuantity} />
             <div className="flex items-center my-10 gap-4">
               <AddCartBtn
-                productToAddCart={product}
+                productId={_id}
                 selectedColor={selectedColor}
                 selectedSize={selectedSize}
                 quantity={quantity}

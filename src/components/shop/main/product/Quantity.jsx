@@ -5,7 +5,7 @@ export default function Quantity({ quantity, setQuantity }) {
   return (
     <div className="my-2 mt-4">
       <div className="text-xs font-bold">QTY</div>
-      <div className="flex items-center text-sm gap-4 mt-3">
+      <div className="flex items-center text-sm gap-4 mt-3 select-none">
         <FiMinus
           className="cursor-pointer"
           onClick={() =>
@@ -15,7 +15,7 @@ export default function Quantity({ quantity, setQuantity }) {
             })
           }
         />
-        {quantity}
+        <span className="pointer-events-none">{quantity}</span>
         <FiPlus
           className="cursor-pointer"
           onClick={() => setQuantity((prev) => prev + 1)}

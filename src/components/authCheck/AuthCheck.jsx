@@ -22,7 +22,7 @@ export default function AuthCheck() {
   });
 
   useEffect(() => {
-    dispatch(setIsLogined(true));
+    if (data) dispatch(setIsLogined(true));
   }, [data]);
 
   return <></>;
