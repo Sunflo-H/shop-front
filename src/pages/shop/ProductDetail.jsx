@@ -9,6 +9,7 @@ import SizeSelectBox from "../../components/shop/main/product/SizeSelectBox";
 import { IKImage } from "imagekitio-react";
 import AddCartBtn from "../../components/shop/main/product/AddCartBtn";
 import Quantity from "../../components/shop/main/product/Quantity";
+import { Label } from "recharts";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
@@ -28,8 +29,8 @@ export default function ProductDetail() {
     window.scrollTo(0, 0);
   }, [id]);
 
-  const handleSizeChange = (e) => {
-    setSelectedSize(e.target.value);
+  const handleSizeChange = (selectedOption) => {
+    setSelectedSize(selectedOption.value);
   };
 
   const handleColorChange = (e) => {
@@ -103,6 +104,7 @@ export default function ProductDetail() {
                 productToAddCart={product}
                 selectedColor={selectedColor}
                 selectedSize={selectedSize}
+                quantity={quantity}
               />
               <div className="flex items-center px-8 py-3 border border-black rounded-md cursor-pointer">
                 {isFavorite ? (
