@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import useCart from "../../hooks/useCart";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import useFavorites from "../../hooks/useFavorites";
 import ColorOption from "../../components/shop/main/product/ColorOption";
-import { useSelector } from "react-redux";
-
 import Cautions from "../../components/shop/main/product/Cautions";
 import Description from "../../components/shop/main/product/Description";
 import SizeSelectBox from "../../components/shop/main/product/SizeSelectBox";
 import { IKImage } from "imagekitio-react";
 import AddCartBtn from "../../components/shop/main/product/AddCartBtn";
+import Quantity from "../../components/shop/main/product/Quantity";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
 export default function ProductDetail() {
-  const user = useSelector((state) => state.auth.user);
-
   const {
     state: { product },
   } = useLocation();
@@ -25,7 +21,7 @@ export default function ProductDetail() {
 
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(color[0]);
-
+  const [quantity, setQuantity] = useState(1);
   const { isFavorite, updateFavorites } = useFavorites(product);
 
   useEffect(() => {
@@ -92,7 +88,7 @@ export default function ProductDetail() {
               />
               <SizeSelectBox
                 sizeList={size}
-                // selectedSize={selectedSize}
+                selectedSize={selectedSize}
                 onChange={handleSizeChange}
               />
             </div>
@@ -100,25 +96,23 @@ export default function ProductDetail() {
               <Description description={description} />
               <Cautions />
             </div>
+
+            <Quantity quantity={quantity} setQuantity={setQuantity} />
             <div className="flex items-center my-10 gap-4">
               <AddCartBtn
                 productToAddCart={product}
                 selectedColor={selectedColor}
                 selectedSize={selectedSize}
               />
-              <div className="flex items-center px-8 py-3 border border-black">
+              <div className="flex items-center px-8 py-3 border border-black rounded-md cursor-pointer">
                 {isFavorite ? (
                   <AiFillHeart
-                    className={`text-2xl  cursor-pointer ${
-                      isFavorite && "text-red-600"
-                    }`}
+                    className={`text-2xl   ${isFavorite && "text-red-600"}`}
                     onClick={handleFavoriteClick}
                   />
                 ) : (
                   <AiOutlineHeart
-                    className={`text-2xl  cursor-pointer ${
-                      isFavorite && "text-rose-500"
-                    }`}
+                    className={`text-2xl  ${isFavorite && "text-rose-500"}`}
                     onClick={handleFavoriteClick}
                   />
                 )}
