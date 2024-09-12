@@ -5,12 +5,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/shop/Home";
-import MyCart from "./pages/shop/MyCart";
 import ProductDetail from "./pages/shop/ProductDetail";
 import Products from "./pages/shop/Products";
 import ProductsRecommend from "./pages/shop/ProductsRecommend";
 import MyFavorites from "./pages/shop/MyFavorites";
-import ProtectedRoute_isUser from "./components/protectedRoute/ProtectedRoute_isUser";
 import { Provider } from "react-redux";
 import store from "./store";
 import UploadProduct from "./pages/management/UploadProduct";
@@ -25,8 +23,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserRegister from "./pages/management/UserRegister";
 import Register_email from "./components/shop/signUp/Register_email";
 import Register_password from "./components/shop/signUp/Register_password";
-import Register_personal from "./components/shop/signUp/Register_info";
 import Register_info from "./components/shop/signUp/Register_info";
+import ShoppingBag from "./pages/shop/ShoppingBag";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -48,7 +46,6 @@ const router = createBrowserRouter([
         path: "/products/:category",
         element: <Products />,
       },
-      // ! 몽고디비로 바꿈에 따라 변화할 수 있는 페이지
       {
         path: "/products/:category/:id",
         element: <ProductDetail />,
@@ -56,17 +53,17 @@ const router = createBrowserRouter([
       {
         path: "/carts",
         element: (
-          <ProtectedRoute_isUser>
-            <MyCart />
-          </ProtectedRoute_isUser>
+          // <ProtectedRoute_isUser>
+          <ShoppingBag />
+          // </ProtectedRoute_isUser>
         ),
       },
       {
         path: "/favorites",
         element: (
-          <ProtectedRoute_isUser>
-            <MyFavorites />
-          </ProtectedRoute_isUser>
+          // <ProtectedRoute_isUser>
+          <MyFavorites />
+          // </ProtectedRoute_isUser>
         ),
       },
     ],

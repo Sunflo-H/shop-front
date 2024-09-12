@@ -7,8 +7,8 @@ import Cautions from "../../components/shop/main/product/Cautions";
 import Description from "../../components/shop/main/product/Description";
 import SizeSelectBox from "../../components/shop/main/product/SizeSelectBox";
 import { IKImage } from "imagekitio-react";
-import AddCartBtn from "../../components/shop/main/product/AddCartBtn";
 import Quantity from "../../components/shop/main/product/Quantity";
+import AddBagBtn from "../../components/shop/main/product/AddBagBtn";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
@@ -98,7 +98,7 @@ export default function ProductDetail() {
 
             <Quantity quantity={quantity} setQuantity={setQuantity} />
             <div className="flex items-center my-10 gap-4">
-              <AddCartBtn
+              <AddBagBtn
                 productId={_id}
                 selectedColor={selectedColor}
                 selectedSize={selectedSize}

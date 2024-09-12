@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useQueries, useQuery } from "@tanstack/react-query";
 
 /**
  *  children에 아무나 접근하지 못하도록 보호하는 컴포넌트
@@ -8,8 +9,7 @@ import { useSelector } from "react-redux";
  * - user 인지 확인한다. (로그인)
  */
 export default function ProtectedRoute({ children, requireAdmin }) {
-  const user = useSelector((state) => state.auth.user);
-  const isLoading = useSelector((state) => state.auth.isLoading);
+  const { data: user, isLoading } = useQuery({ queryKey: ["user"] });
 
   if (isLoading) {
     return <div>Loading...</div>;

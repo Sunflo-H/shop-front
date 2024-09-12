@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import useCart from "../../../../hooks/useCart";
 import Swal from "sweetalert2";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { addCart, updateUser } from "../../../../api/userApi";
+import { addCart, updateCartList, updateUser } from "../../../../api/userApi";
 
-export default function AddCartBtn({
+export default function AddBagBtn({
   productId,
   selectedColor,
   selectedSize,
@@ -14,17 +14,23 @@ export default function AddCartBtn({
   const queryClient = useQueryClient();
 
   const { isLogined } = useSelector((state) => state.auth);
-  const { data: user } = useQuery({ queryKey: ["user"] });
+  const { data: user } = useQuery({ queryKey: ["loginedUser"] });
   // const { addCart } = useCart();
   // const { _id } = user ?? {};
   //! 장바구니에 담기 누르면
   //! mutation으로 ["user"]의 값을 변경해야지
   //! cartList 변경해
+  console.log(user);
 
   const mutation = useMutation({
-    mutationFn: addCart,
+    mutationFn: updateUser,
     onSuccess: (data) => {
-      queryClient.invalidateQueries("user");
+      queryClient.invalidateQueries("loginedUser");
+      Swal.fire({
+        icon: "success",
+        title: "Added",
+        confirmButtonColor: "#222",
+      });
     },
   });
 
@@ -37,13 +43,9 @@ export default function AddCartBtn({
         quantity,
       };
 
-      mutation.mutate({ userId: user._id, productToAddCart });
-
-      Swal.fire({
-        icon: "success",
-        title: "Added",
-        confirmButtonColor: "#222",
-      });
+      const updatedCartList = [...user.cartList, productToAddCart];
+      const updatedUser = { ...user, cartList: updatedCartList };
+      mutation.mutate(updatedUser);
     } else {
       Swal.fire({
         icon: "error",
@@ -55,10 +57,10 @@ export default function AddCartBtn({
   };
   return (
     <div
-      className="block w-full bg-black py-3 text-white text-xl font-bold text-center cursor-pointer rounded-md select-none"
+      className="block w-full bg-black py-3 text-white text-lg font-bold text-center cursor-pointer rounded-md select-none"
       onClick={handleAddCartClick}
     >
-      Add Cart
+      ADD TO BAG
     </div>
   );
 }
