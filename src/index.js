@@ -38,10 +38,6 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-      // {
-      //   path: "/products/recommend",
-      //   element: <ProductsRecommend />,
-      // },
       {
         path: "/products/:category",
         element: <Products />,
