@@ -1,24 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
 import useFavorites from "../../../../hooks/useFavorites";
 import { IKImage } from "imagekitio-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { updateUser } from "../../../../api/userApi";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
 export default function ProductCard({ product, currentCategory }) {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { name, image, category, price, _id } = product;
-  const { isFavorite, updateFavorites } = useFavorites(
-    product,
-    currentCategory
-  );
+
+  const [isFavorite, setIsFavorite] = useState(false);
+  const { data: user } = useQuery({ queryKey: ["loginedUser"] });
+
+  useEffect(() => {
+    if (user?.favoriteList.find((item) => item._id === _id))
+      setIsFavorite(true);
+  }, [user]);
+
+  const mutation = useMutation({
+    mutationFn: updateUser,
+    onSuccess: (data) => {
+      console.log(data);
+      queryClient.invalidateQueries("loginedUser");
+    },
+  });
+
   const handleProductClick = () => {
     navigate(`/products/${category}/${_id}`, { state: { product } });
   };
 
   const handleFavoritesClick = () => {
-    updateFavorites.mutate();
+    const isInFavoriteList = user.favoriteList.find((item) => item._id === _id);
+    let newFavoriteList;
+
+    if (isInFavoriteList) {
+      // 있으면 list에서 제거
+      newFavoriteList = user.favoriteList.filter((item) => item._id !== _id);
+      setIsFavorite(false);
+    } else {
+      // 없으면 list에 추가
+      newFavoriteList = [...user.favoriteList, { _id }];
+      setIsFavorite(true);
+    }
+
+    const userToUpdate = { ...user, favoriteList: newFavoriteList };
+    mutation.mutate(userToUpdate);
   };
 
   return (
