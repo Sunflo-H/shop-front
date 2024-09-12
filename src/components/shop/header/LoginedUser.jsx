@@ -9,12 +9,12 @@ export default function LoginedUser() {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
-  const { data: user } = useQuery({ queryKey: ["user"] });
+  const { data: user } = useQuery({ queryKey: ["loginedUser"] });
 
   const handleLogout = () => {
     localStorage.removeItem("jwt");
-    queryClient.removeQueries(["user"]); // ["user"] 쿼리 캐시 무효화
-    queryClient.invalidateQueries(["user"]); // 쿼리 리패칭
+    queryClient.removeQueries(["loginedUser"]); // ["user"] 쿼리 캐시 무효화
+    queryClient.invalidateQueries(["loginedUser"]); // 쿼리 리패칭
     dispatch(setIsLogined(false));
   };
 

@@ -40,6 +40,7 @@ export const fetchPagenation = async (role, searchQuery) => {
 };
 
 export const updateUser = async (userToUpdate) => {
+  console.log(userToUpdate);
   const response = await axios.post(
     `${UPDATE_URL}/${userToUpdate._id}`,
     userToUpdate
@@ -59,17 +60,17 @@ export const deleteUser = async (idList) => {
 // 유저 데이터에 cart 정보가 있기 때문에 유저를 업데이트한다.
 // productToAddCart = { id, color, size, quantity }
 // export const addCart = async ({ user, productToAddCart }) => {
-export const addCart = async ({ userId, productToAddCart }) => {
-  try {
-    const { data } = await axios.post(
-      `${ADDCART_URL}/${userId}`,
-      productToAddCart
-    );
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-};
+// export const updateCartList = async ({ userId, updatedCartList }) => {
+//   try {
+//     const { data } = await axios.post(
+//       `${ADDCART_URL}/${userId}`,
+//       updatedCartList
+//     );
+//     return data;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 export async function login(email, password) {
   try {
@@ -85,9 +86,10 @@ export async function login(email, password) {
   }
 }
 
-export async function getLoginedUserByJWT(token) {
+// jwt토큰으로 userId를 얻는 함수
+export async function getLoginedUserIdByJWT(token) {
   try {
-    const { data } = await axios.get(
+    const { data: userId } = await axios.get(
       "http://localhost:8080/api/protected-route",
       {
         headers: {
@@ -96,8 +98,19 @@ export async function getLoginedUserByJWT(token) {
         },
       }
     );
-    return data;
+    return userId;
   } catch (error) {
     console.log("jwt fetch error");
+  }
+}
+
+// jwt 토큰으로부터 userId를 받아 로그인한 유저 정보를 가져오는 비동기 함수
+export async function getUserById(userId) {
+  try {
+    const { data: user } = await axios.get(`${GET_URL}/${userId}`);
+
+    return user;
+  } catch (err) {
+    console.log("서버 요청 실패 :", err);
   }
 }

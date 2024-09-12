@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getLoginedUserByJWT } from "../../api/userApi";
+import { getLoginedUserIdByJWT, getUserById } from "../../api/userApi";
 import { useDispatch } from "react-redux";
 import { setIsLogined } from "../../slice/authSlice";
 
@@ -9,21 +9,22 @@ export default function AuthCheck() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("jwt");
 
-  const { data } = useQuery({
-    queryKey: ["user"],
+  const { data: user } = useQuery({
+    queryKey: ["loginedUser"],
     queryFn: async () => {
       if (!token) {
         throw new Error("No token");
       }
-      return getLoginedUserByJWT(token);
+      const userId = await getLoginedUserIdByJWT(token);
+      return getUserById(userId);
     },
     enabled: !!token,
     retry: false,
   });
 
   useEffect(() => {
-    if (data) dispatch(setIsLogined(true));
-  }, [data]);
+    if (user) dispatch(setIsLogined(true));
+  }, [user]);
 
   return <></>;
 }
