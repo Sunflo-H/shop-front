@@ -21,7 +21,7 @@ export default function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(color[0]);
   const [quantity, setQuantity] = useState(1);
-  const { isFavorite, updateFavorites } = useFavorites(product);
+  // const { isFavorite, updateFavorites } = useFavorites(product);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -35,9 +35,9 @@ export default function ProductDetail() {
     setSelectedColor(e.target.value);
   };
 
-  const handleFavoriteClick = (e) => {
-    updateFavorites.mutate();
-  };
+  // const handleFavoriteClick = (e) => {
+  //   updateFavorites.mutate();
+  // };
 
   return (
     <section className="px-4 md:px-0 pt-28 pb-10">
@@ -104,7 +104,7 @@ export default function ProductDetail() {
                 selectedSize={selectedSize}
                 quantity={quantity}
               />
-              <div className="flex items-center px-8 py-3 border border-black rounded-md cursor-pointer">
+              {/* <div className="flex items-center px-8 py-3 border border-black rounded-md cursor-pointer">
                 {isFavorite ? (
                   <AiFillHeart
                     className={`text-2xl   ${isFavorite && "text-red-600"}`}
@@ -116,7 +116,7 @@ export default function ProductDetail() {
                     onClick={handleFavoriteClick}
                   />
                 )}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -4,11 +4,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import {
-  getProduct,
-  getProduct_all,
-  uploadProductToFirebase,
-} from "../api/firebase_db";
+
 import { fetchProducts, getProducts } from "../api/productApi";
 
 const SEC = 1000;

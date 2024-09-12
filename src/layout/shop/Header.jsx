@@ -49,10 +49,10 @@ export default function Header() {
           />
         )}
 
-        <SideNav
+        {/* <SideNav
           isSideNavOpen={isSideNavOpen}
           setIsSideNavOpen={setIsSideNavOpen}
-        />
+        /> */}
         <SearchIcon_mobile />
       </div>
     </header>
