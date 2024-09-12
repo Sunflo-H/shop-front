@@ -7,6 +7,18 @@ import { IKImage } from "imagekitio-react";
 import { useMutation } from "@tanstack/react-query";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
+const sizeOptionList = [
+  { value: "XX", label: "XX-Small" },
+  { value: "XS", label: "X-Small" },
+  { value: "S", label: "Small" },
+  { value: "M", label: "Medium" },
+  { value: "L", label: "Large" },
+  { value: "XL", label: "X-Large" },
+  { value: "XXL", label: "XX-Large" },
+  { value: "2X", label: "2X" },
+  { value: "3X", label: "3X" },
+];
+
 export default function CartItem({
   product,
   selectedSize,
@@ -17,7 +29,7 @@ export default function CartItem({
   // const { uid } = user ?? {};
   // const { quantityMinus, quantityPlus, removeCart } = useCart();
   const { _id, name, image, price } = product;
-
+  console.log(selectedSize, selectedColor);
   const mutation = useMutation({
     mutationFn: (async) => {
       //! quantity 증감 구현 하고 Ec2 작업 시작
@@ -43,64 +55,59 @@ export default function CartItem({
   // };
 
   return (
-    <div className="flex my-2">
-      <div className="w-28 md:w-40">
-        <IKImage
-          urlEndpoint={IMAGEKIT_ENDPOINT}
-          path={getImage(image)}
-          width={160}
-          height={240}
-          transformation={[{ width: 160, height: 240 }]}
-          loading="lazy"
-          alt={name}
-          lqip={{ active: true, quality: 10 }} // 로딩이 완료되기 전에 흐린 이미지를 보여준다.
-        />
-      </div>
+    <div className="flex border-t border-gray-300 py-3 px-3">
+      <IKImage
+        urlEndpoint={IMAGEKIT_ENDPOINT}
+        path={getImage(image)}
+        width={120}
+        height={150}
+        transformation={[{ width: 120, height: 150 }]}
+        loading="lazy"
+        alt={name}
+        lqip={{ active: true, quality: 10 }} // 로딩이 완료되기 전에 흐린 이미지를 보여준다.
+      />
 
-      <div className="my-auto mx-4">
+      <div className="mx-4">
         <div>
-          <div>
-            <span className="font-bold md:text-xl">{name}</span>
-          </div>
-          <div>
-            <span className=" font-bold text-sm md:text-base">
-              {selectedSize}
-            </span>
-          </div>
-          <div>
-            <span className=" font-bold text-sm md:text-base">
-              {selectedColor}
-            </span>
-          </div>
-          <div>
-            <span className="font-bold font-sans text-sm md:text-base">
-              ₩{price}
-            </span>
-          </div>
+          <span className="font-bold ">{name}</span>
+        </div>
+        <div className="mt-2 text-sm">
+          Color : <span className="  ">{selectedColor}</span>
+        </div>
+        <div className="text-sm">
+          Size :{" "}
+          <span className=" ">
+            {
+              sizeOptionList.find((option) => option.value === selectedSize)
+                .label
+            }
+          </span>
+        </div>
+
+        <div className=" mt-14 text-xs text-gray-400 underline decoration-gray-400 cursor-pointer">
+          Remove
         </div>
       </div>
-      <div className="flex items-center my-auto ml-auto">
-        {/* <div className="py-1.5 ">
+      <div className="flex ml-auto ">
+        <div className="py-1.5 ">
           <AiOutlineMinusSquare
             className="md:text-lg cursor-pointer"
-            onClick={handleMinusBtnClick}
+            // onClick={handleMinusBtnClick}
           />
-        </div> */}
+        </div>
         <div className="w-12 text-center">
           <span className="md:text-xl font-sans">{quantity}</span>
         </div>
-        {/* <div className="py-1.5">
+        <div className="py-1.5">
           <AiOutlinePlusSquare
             className="md:text-lg cursor-pointer"
-            onClick={handlePlusBtnClick}
+            // onClick={handlePlusBtnClick}
           />
-        </div> */}
-        {/* <div className="py-1.5 pl-6">
-          <BsFillTrashFill
-            className="text-lg cursor-pointer"
-            onClick={handleRemoveBtnClick}
-          />
-        </div> */}
+        </div>
+      </div>
+      {/* <div className="font-bold font-sans text-sm ml-auto">KRW {price}</div> */}
+      <div className="font-bold font-sans text-sm text-end ml-auto w-32">
+        KRW 300,000
       </div>
     </div>
   );

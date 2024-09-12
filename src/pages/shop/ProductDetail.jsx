@@ -40,7 +40,7 @@ export default function ProductDetail() {
   };
 
   return (
-    <section className="px-4 md:px-0 pt-28">
+    <section className="px-4 md:px-0 pt-28 pb-10">
       <div
         className="flex flex-col gap-0 justify-center m-auto max-w-screen-2xl 
         lg:flex-row md:gap-16 "

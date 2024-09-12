@@ -5,7 +5,7 @@ const UPDATE_URL = process.env.REACT_APP_UPDATE_USER_URL;
 const DELETE_URL = process.env.REACT_APP_DELETE_USER_URL;
 const REGISTER_URL = process.env.REACT_APP_REGISTER_URL;
 const LOGIN_URL = process.env.REACT_APP_LOGIN_URL;
-const ADDCART_URL = process.env.REACT_APP_ADD_CART_URL;
+// const ADDCART_URL = process.env.REACT_APP_ADD_CART_URL;
 
 export const fetchUsers = async (role, page, limit, searchQuery) => {
   if (role === "ALL") role = "";
@@ -56,21 +56,6 @@ export const deleteUser = async (idList) => {
     console.log(err);
   }
 };
-
-// 유저 데이터에 cart 정보가 있기 때문에 유저를 업데이트한다.
-// productToAddCart = { id, color, size, quantity }
-// export const addCart = async ({ user, productToAddCart }) => {
-// export const updateCartList = async ({ userId, updatedCartList }) => {
-//   try {
-//     const { data } = await axios.post(
-//       `${ADDCART_URL}/${userId}`,
-//       updatedCartList
-//     );
-//     return data;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
 
 export async function login(email, password) {
   try {

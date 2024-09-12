@@ -19,7 +19,7 @@ import GoAddPageButton from "../../components/management/main/ui/GoAddPageButton
 import Limit from "../../components/management/main/ui/Limit";
 import DetailModal from "../../components/management/main/ProductManagement/DetailModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteProducts, fetchProducts } from "../../api/productApi";
+import { deleteProducts, getProducts } from "../../api/productApi";
 import Swal from "sweetalert2";
 import Reset from "../../components/management/main/ui/Reset";
 import RemoveSelectedBtn from "../../components/management/main/ui/RemoveSeletedBtn";
@@ -65,7 +65,7 @@ export default function ProductManagement() {
       searchQuery,
     ],
     queryFn: () =>
-      fetchProducts(activeCategory, activeStatus, page, limit, searchQuery),
+      getProducts(activeCategory, activeStatus, page, limit, searchQuery),
   });
 
   // dataFetch onSuccess

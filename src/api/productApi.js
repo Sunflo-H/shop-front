@@ -5,7 +5,7 @@ const UPDATE_URL = process.env.REACT_APP_UPDATE_PRODUCT_URL;
 const DELETE_URL = process.env.REACT_APP_DELETE_PRODUCT_URL;
 const CREATE_URL = process.env.REACT_APP_CREATE_PRODUCT_URL;
 
-export const fetchProducts = async (
+export const getProducts = async (
   category,
   status,
   page,
