@@ -9,7 +9,7 @@ const SEC = 1000;
 
 export default function Products() {
   const { category } = useParams();
-  console.log(category);
+  console.log(1);
   const { data: products } = useQuery({
     queryKey: ["products", category],
     queryFn: async () => getProducts(category),

@@ -12,6 +12,7 @@ export const getProducts = async (
   limit,
   searchQuery
 ) => {
+  console.log(2);
   if (category === "ALL") category = "";
   if (status === "ALL") status = "";
   const response = await axios.get(GET_URL, {
