@@ -10,14 +10,12 @@ const SEC = 1000;
 export default function Products() {
   const { category } = useParams();
 
-  // const {
-  //   productsQuery: { data: products },
-  // } = useProducts(category);
   const { data: products } = useQuery({
     queryKey: ["products", category],
     queryFn: async () => getProducts(category),
     staleTime: SEC * 60,
   });
+  console.log(products);
 
   useEffect(() => {
     window.scrollTo(0, 0);

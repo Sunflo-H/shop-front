@@ -11,7 +11,6 @@ export default function UserList({ users }) {
 
   const queryClient = useQueryClient();
   const { page } = useSelector((state) => state.userManagement);
-  // 삭제
   const mutation = useMutation({
     mutationFn: deleteUser,
     onSuccess: (deleteCount) => {

@@ -47,6 +47,7 @@ export default function ProductManagement() {
 
   const { activeCategory, activeStatus, page, limit, searchQuery } =
     useSelector((state) => state.productManagement);
+
   const [prevQueryParams, setPrevQueryParams] = useState({
     category: "ALL",
     status: "ALL",
@@ -141,6 +142,7 @@ export default function ProductManagement() {
     });
   };
 
+  console.log(data);
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
