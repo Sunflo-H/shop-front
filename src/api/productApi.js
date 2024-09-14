@@ -18,6 +18,7 @@ export const getProducts = async (
   const response = await axios.get(GET_URL, {
     params: { category, status, page, limit, searchQuery },
   });
+  console.log(3);
   return response.data;
 };
 
