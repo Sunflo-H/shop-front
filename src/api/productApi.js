@@ -2,7 +2,7 @@ import axios from "axios";
 
 const GET_URL = process.env.REACT_APP_GET_PRODUCT_URL;
 // const GET_URL = "http://13.124.80.0/api/product";
-const GET_URL_HTTPS = "https://13.124.80.0/api/product";
+// const GET_URL_HTTPS = "https://13.124.80.0/api/product";
 const UPDATE_URL = process.env.REACT_APP_UPDATE_PRODUCT_URL;
 const DELETE_URL = process.env.REACT_APP_DELETE_PRODUCT_URL;
 const CREATE_URL = process.env.REACT_APP_CREATE_PRODUCT_URL;
@@ -17,21 +17,15 @@ export const getProducts = async (
   if (category === "ALL") category = "";
   if (status === "ALL") status = "";
   console.log("상품 가져와!");
+
   try {
-    const response = await axios.get(GET_URL_HTTPS, {
+    console.log("요청 주소 :", GET_URL);
+    const response = await axios.get(GET_URL, {
       params: { category, status, page, limit, searchQuery },
     });
     return response.data;
   } catch (err) {
-    console.log("https 요청 실패 http로 요청합니다.");
-    try {
-      const response = await axios.get(GET_URL, {
-        params: { category, status, page, limit, searchQuery },
-      });
-      return response.data;
-    } catch (err) {
-      console.log("https도 실패");
-    }
+    console.log("https 실패");
   }
 };
 
