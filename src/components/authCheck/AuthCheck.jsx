@@ -8,7 +8,7 @@ import { setIsLogined } from "../../slice/authSlice";
 export default function AuthCheck() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("jwt");
-
+  console.log(token);
   const { data: user } = useQuery({
     queryKey: ["loginedUser"],
     queryFn: async () => {
@@ -16,6 +16,7 @@ export default function AuthCheck() {
         throw new Error("No token");
       }
       const userId = await getLoginedUserIdByJWT(token);
+      console.log(userId);
       return getUserById(userId);
     },
     enabled: !!token,

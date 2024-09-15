@@ -5,7 +5,7 @@ const UPDATE_URL = process.env.REACT_APP_UPDATE_USER_URL;
 const DELETE_URL = process.env.REACT_APP_DELETE_USER_URL;
 const REGISTER_URL = process.env.REACT_APP_REGISTER_URL;
 const LOGIN_URL = process.env.REACT_APP_LOGIN_URL;
-// const ADDCART_URL = process.env.REACT_APP_ADD_CART_URL;
+const AUTH_URL = process.env.REACT_APP_AUTH_URL;
 
 export const fetchUsers = async (role, page, limit, searchQuery) => {
   if (role === "ALL") role = "";
@@ -74,15 +74,12 @@ export async function login(email, password) {
 // jwt토큰으로 userId를 얻는 함수
 export async function getLoginedUserIdByJWT(token) {
   try {
-    const { data: userId } = await axios.get(
-      "http://localhost:8080/api/protected-route",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, // JWT 토큰을 Authorization 헤더에 포함
-          "Content-Type": "application/json", // 요청의 데이터 형식을 JSON으로 지정
-        },
-      }
-    );
+    const { data: userId } = await axios.get(AUTH_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`, // JWT 토큰을 Authorization 헤더에 포함
+        "Content-Type": "application/json", // 요청의 데이터 형식을 JSON으로 지정
+      },
+    });
     return userId;
   } catch (error) {
     console.log("jwt fetch error");
