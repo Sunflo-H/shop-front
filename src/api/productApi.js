@@ -16,10 +16,9 @@ export const getProducts = async (
 ) => {
   if (category === "ALL") category = "";
   if (status === "ALL") status = "";
-  console.log("상품 가져와!");
 
   try {
-    console.log("요청 주소 :", GET_URL);
+    console.log("상품들 주소 :", GET_URL);
     const response = await axios.get(GET_URL, {
       params: { category, status, page, limit, searchQuery },
     });
@@ -32,6 +31,7 @@ export const getProducts = async (
 export const fetchPagenation = async (category, status, searchQuery) => {
   if (category === "ALL") category = "";
   if (status === "ALL") status = "";
+  console.log("페이지네이션 URL :", GET_URL);
   const response = await axios.get(GET_URL, {
     params: { category, status, searchQuery },
   });
@@ -39,6 +39,8 @@ export const fetchPagenation = async (category, status, searchQuery) => {
 };
 
 export const updateProduct = async (productToUpdate) => {
+  console.log("업데이트 URL :", UPDATE_URL);
+
   const response = await axios.post(
     `${UPDATE_URL}/${productToUpdate._id}`,
     productToUpdate
@@ -47,6 +49,8 @@ export const updateProduct = async (productToUpdate) => {
 };
 
 export const deleteProducts = async (idList) => {
+  console.log("삭제 URL :", DELETE_URL);
+
   try {
     const response = await axios.delete(DELETE_URL, { data: idList });
     return response.data;
@@ -56,6 +60,7 @@ export const deleteProducts = async (idList) => {
 };
 
 export const uploadProduct = async (uploadProduct) => {
+  console.log("상품등록 URL :", CREATE_URL);
   try {
     const response = await axios.post(CREATE_URL, uploadProduct);
     return response.data;
