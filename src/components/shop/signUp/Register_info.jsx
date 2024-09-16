@@ -11,6 +11,7 @@ import axios from "axios";
 import { alert_registerSuccess } from "../../../alerts/success";
 import { alert_registerError } from "../../../alerts/error";
 
+const REGISTER_URL = process.env.REACT_APP_REGISTER_URL;
 export default function Register_info() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,10 +26,7 @@ export default function Register_info() {
 
   const handleNextClick = async () => {
     try {
-      const { data } = await axios.post(
-        "http://localhost:8080/api/user/register",
-        newUser
-      );
+      const { data } = await axios.post(REGISTER_URL, newUser);
       alert_registerSuccess().then(() => {
         navigate("/");
         dispatch(resetNewUser());
