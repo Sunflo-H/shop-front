@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import InputFormTitle from "../../management/main/ui/InputFormTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { setNewUser, setProgress } from "../../../slice/userRegisterSlice";
-import { Link, useNavigate } from "react-router-dom";
-import { alert_emailError, alert_registerError } from "../../../alerts/error";
+import { useNavigate } from "react-router-dom";
+import { alert_registerError } from "../../../alerts/error";
 import axios from "axios";
 
 export default function Register_email() {

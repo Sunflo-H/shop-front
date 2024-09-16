@@ -3,10 +3,7 @@ import React, { useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { alert_incompleteForm, alert_missMatch } from "../../alerts/warning";
-import {
-  alert_registerSuccess,
-  alert_resigterSuccess,
-} from "../../alerts/success";
+import { alert_registerSuccess } from "../../alerts/success";
 import { alert_registerError } from "../../alerts/error";
 import Progress from "../../components/shop/signUp/Progress";
 
@@ -15,7 +12,6 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
