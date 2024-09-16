@@ -27,12 +27,7 @@ export default function Register_email() {
       alert_registerError("Please enter a valid email address");
     else {
       try {
-        const { data } = await axios.post(
-          "http://localhost:8080/api/user/isUser",
-          {
-            email,
-          }
-        );
+        const { data } = getUserByEmail(email);
         data.length > 0
           ? alert_registerError("This email address is already in use.")
           : navigate("/register/password");

@@ -6,6 +6,7 @@ const DELETE_URL = process.env.REACT_APP_DELETE_USER_URL;
 const REGISTER_URL = process.env.REACT_APP_REGISTER_URL;
 const LOGIN_URL = process.env.REACT_APP_LOGIN_URL;
 const AUTH_URL = process.env.REACT_APP_AUTH_URL;
+const CHECK_URL = process.env.REACT_APP_CHECK_USER_URL;
 
 export const fetchUsers = async (role, page, limit, searchQuery) => {
   console.log("일치하는 모든 유저 URL :", GET_URL);
@@ -100,6 +101,17 @@ export async function getUserById(userId) {
   try {
     console.log("유저 id로 유저 가져오기 URL :", GET_URL);
     const { data: user } = await axios.get(`${GET_URL}/${userId}`);
+
+    return user;
+  } catch (err) {
+    console.log("서버 요청 실패 :", err);
+  }
+}
+
+export async function getUserByEmail(email) {
+  try {
+    console.log("이메일로 유저 가져오기 URL :", CHECK_URL);
+    const { data: user } = await axios.get(`${CHECK_URL}`, { email });
 
     return user;
   } catch (err) {
