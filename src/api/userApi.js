@@ -85,7 +85,7 @@ export async function login(email, password) {
       email,
       password,
     });
-
+    console.log(data);
     return data;
   } catch (err) {
     console.log("서버 요청 실패 :", err);
