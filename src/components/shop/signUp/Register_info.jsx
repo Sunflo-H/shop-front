@@ -12,7 +12,6 @@ import { alert_registerSuccess } from "../../../alerts/success";
 import { alert_registerError } from "../../../alerts/error";
 import { registerUser_user } from "../../../api/userApi";
 
-const REGISTER_URL = process.env.REACT_APP_REGISTER_URL;
 export default function Register_info() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ export default function Register_info() {
   const handleNextClick = async () => {
     try {
       console.log(newUser);
-      registerUser_user();
+      registerUser_user(newUser);
       alert_registerSuccess().then(() => {
         navigate("/");
         dispatch(resetNewUser());
