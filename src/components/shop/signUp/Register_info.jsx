@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { alert_registerSuccess } from "../../../alerts/success";
 import { alert_registerError } from "../../../alerts/error";
+import { registerUser_user } from "../../../api/userApi";
 
 const REGISTER_URL = process.env.REACT_APP_REGISTER_URL;
 export default function Register_info() {
@@ -26,7 +27,8 @@ export default function Register_info() {
 
   const handleNextClick = async () => {
     try {
-      const { data } = await axios.post(REGISTER_URL, newUser);
+      console.log(newUser);
+      registerUser_user();
       alert_registerSuccess().then(() => {
         navigate("/");
         dispatch(resetNewUser());

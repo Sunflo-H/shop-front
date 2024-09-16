@@ -33,6 +33,17 @@ export const registerUser = async (newData) => {
   }
 };
 
+export const registerUser_user = async (newUser) => {
+  try {
+    console.log("회원가입 URL :", REGISTER_URL);
+
+    const response = await axios.post(REGISTER_URL, newUser);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const fetchPagenation = async (role, searchQuery) => {
   console.log("페이지네이션 URL :", GET_URL);
   if (role === "ALL") role = "";
