@@ -111,7 +111,7 @@ export async function getUserById(userId) {
 export async function getUserByEmail(email) {
   try {
     console.log("이메일로 유저 가져오기 URL :", CHECK_URL);
-    const { data: user } = await axios.get(`${CHECK_URL}`, { email });
+    const { data: user } = await axios.post(`${CHECK_URL}`, { email });
 
     return user;
   } catch (err) {
