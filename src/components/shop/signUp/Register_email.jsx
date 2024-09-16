@@ -29,6 +29,7 @@ export default function Register_email() {
     else {
       try {
         const { data } = getUserByEmail(email);
+        console.log(data);
         data.length > 0
           ? alert_registerError("This email address is already in use.")
           : navigate("/register/password");
