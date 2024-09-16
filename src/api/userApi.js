@@ -80,6 +80,7 @@ export async function login(email, password) {
   try {
     console.log("로그인 URL :", LOGIN_URL);
     //* data = {token, user}
+    console.log(email, password);
     const { data } = await axios.post(LOGIN_URL, {
       email,
       password,
