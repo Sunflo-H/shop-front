@@ -91,8 +91,8 @@ export async function getLoginedUserIdByJWT(token) {
       },
     });
     return userId;
-  } catch (error) {
-    console.log("jwt fetch error");
+  } catch (err) {
+    console.log(err);
   }
 }
 
