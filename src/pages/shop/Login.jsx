@@ -18,6 +18,7 @@ const Login = () => {
     onSuccess: (data) => {
       const { token, user } = data;
       localStorage.setItem("jwt", token);
+      console.log(token);
       navigate("/");
     },
     onError: (err) => {
