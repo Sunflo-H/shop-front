@@ -5,6 +5,7 @@ import { setNewUser, setProgress } from "../../../slice/userRegisterSlice";
 import { useNavigate } from "react-router-dom";
 import { alert_registerError } from "../../../alerts/error";
 import axios from "axios";
+import { getUserByEmail } from "../../../api/userApi";
 
 export default function Register_email() {
   const dispatch = useDispatch();
