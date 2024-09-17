@@ -6,6 +6,7 @@ import { setUser } from "../../slice/authSlice";
 import { useDispatch } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../api/userApi";
+import { setJwtWithExpiry } from "../../utils/jwt_localstorage";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,8 +18,9 @@ const Login = () => {
     mutationFn: async ({ email, password }) => login(email, password),
     onSuccess: (data) => {
       const { token, user } = data;
-      localStorage.setItem("jwt", token);
-      console.log(token);
+      setJwtWithExpiry("jwt", token, 3600 * 1000);
+      // localStorage.setItem("jwt", token);
+
       navigate("/");
     },
     onError: (err) => {
