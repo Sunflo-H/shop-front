@@ -6,6 +6,7 @@ const GET_URL = process.env.REACT_APP_GET_PRODUCT_URL;
 const UPDATE_URL = process.env.REACT_APP_UPDATE_PRODUCT_URL;
 const DELETE_URL = process.env.REACT_APP_DELETE_PRODUCT_URL;
 const CREATE_URL = process.env.REACT_APP_CREATE_PRODUCT_URL;
+const CART_URL = process.env.REACT_APP_CART_PRODUCT_URL;
 
 export const getProducts = async (
   category,
@@ -64,6 +65,17 @@ export const uploadProduct = async (uploadProduct) => {
   try {
     const response = await axios.post(CREATE_URL, uploadProduct);
     return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getProductsByIdList = async (idList) => {
+  try {
+    console.log("카트에 담긴 상품들 URL :", CART_URL);
+    const { data } = await axios.post(CART_URL, idList);
+    console.log(data);
+    return data;
   } catch (err) {
     console.log(err);
   }

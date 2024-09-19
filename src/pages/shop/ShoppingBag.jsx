@@ -1,32 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { FaEquals } from "react-icons/fa";
 import CartItem from "../../components/shop/main/cart/CartItem";
 import PriceCard from "../../components/shop/main/cart/PriceCard";
-import useCart from "../../hooks/useCart";
 import EmptyProduct from "../error/EmptyProduct";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
-const DELIVERY_FEE = 3;
+import { getProductsByIdList } from "../../api/productApi";
+import { formatPrice } from "../../utils/converter";
+
+// const DELIVERY_FEE = 3;
+const SHIPPING_FEE = 5000;
 
 export default function ShoppingBag() {
   const { data: user } = useQuery({ queryKey: ["loginedUser"] });
-
   const { cartList } = user ?? [];
-  const idList = cartList?.map((cart) => cart._id);
-  console.log(cartList && cartList[0]);
+  const idList = user ? cartList.map((cart) => cart._id) : null;
 
-  const { data: productsInCart } = useQuery({
+  const { data: productsInCart, refetch } = useQuery({
     queryKey: ["cart"],
-    queryFn: async () => {
-      const response = await axios.post(
-        "http://localhost:8080/api/product/cart",
-        idList
-      );
-      return response.data;
-    },
+    queryFn: () => getProductsByIdList(idList),
+    enabled: false,
   });
 
   const allPrice = () => {
@@ -47,12 +42,18 @@ export default function ShoppingBag() {
     });
   };
 
+  useEffect(() => {
+    if (idList) {
+      console.log("idList가 있다.");
+      refetch();
+    }
+  }, [idList]);
+
   return (
     <div className="px-4 pt-20 pb-10 bg-gray-50 ">
       {!productsInCart || productsInCart?.length === 0 ? (
         <EmptyProduct />
       ) : (
-        // <div className="px-5 max-w-screen-2xl m-auto">
         <div className="flex flex-col md:flex-row max-w-screen-lg m-auto gap-6 mt-12">
           <div className="bg-white w-full md:w-3/5 shadow-md ">
             <div className="flex justify-between border-t border-gray-300 py-3 px-3 font-bold text-sm">
@@ -82,7 +83,25 @@ export default function ShoppingBag() {
                 );
               })}
           </div>
-          <div className="bg-white grow h-40">결제창</div>
+          <div className="bg-white w-2/5 h-full shadow-sm border-t border-gray-300 pt-6 pb-4">
+            <div className="flex justify-between  px-4">
+              <div className="text-sm font-semibold">Items Subtotal</div>
+              <div className="text-sm font-semibold">KRW 373,839</div>
+            </div>
+            <div className="flex justify-between mt-4  px-4 text-gray-500">
+              <div className="text-sm font-semibold ">Shipping Fee</div>
+              <div className="text-sm font-semibold">
+                KRW {formatPrice(SHIPPING_FEE)}
+              </div>
+            </div>
+            <div className="flex justify-between mt-4 px-4 py-4 border-t border-gray-300">
+              <div className="text-basic font-bold">Total Price</div>
+              <div className="text-basic font-bold">KRW 373,839</div>
+            </div>
+            <div className="bg-black text-white mt-2 py-2 mx-4 text-center font-bold cursor-pointer">
+              CHECKOUT NOW
+            </div>
+          </div>
         </div>
       )}
       {/* {productsInCart &&

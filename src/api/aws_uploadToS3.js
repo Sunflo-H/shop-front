@@ -27,7 +27,7 @@ const uploadFileToS3 = async (file) => {
     Body: file,
     ContentType: file.type,
   };
-  console.log(params);
+
   try {
     const uploadResult = await s3.upload(params).promise();
     return uploadResult.Location; // 업로드된 파일의 URL 반환
