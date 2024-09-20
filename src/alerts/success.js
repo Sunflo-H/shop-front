@@ -21,6 +21,13 @@ export const alert_registerSuccess = () => {
   });
 };
 
+export const alert_checkoutSuccess = () => {
+  Swal.fire({
+    icon: "success",
+    title: "CHECK OUT",
+    confirmButtonColor: "#222",
+  });
+};
 // export const alert_loginSuccess = () => {
 //   return Swal.fire({
 //     position: "middle",

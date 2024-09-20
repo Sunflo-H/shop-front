@@ -74,7 +74,6 @@ export const getProductsByIdList = async (idList) => {
   try {
     console.log("카트에 담긴 상품들 URL :", CART_URL);
     const { data } = await axios.post(CART_URL, idList);
-    console.log(data);
     return data;
   } catch (err) {
     console.log(err);

@@ -5,6 +5,7 @@ import useCart from "../../../../hooks/useCart";
 import { useSelector } from "react-redux";
 import { IKImage } from "imagekitio-react";
 import { useMutation } from "@tanstack/react-query";
+import { formatPrice } from "../../../../utils/converter";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 const sizeOptionList = [
@@ -19,7 +20,7 @@ const sizeOptionList = [
   { value: "3X", label: "3X" },
 ];
 
-export default function CartItem({
+export default function ShoppingBagItem({
   product,
   selectedSize,
   selectedColor,
@@ -56,18 +57,20 @@ export default function CartItem({
 
   return (
     <div className="flex border-t border-gray-300 py-3 px-3">
-      <IKImage
-        urlEndpoint={IMAGEKIT_ENDPOINT}
-        path={getImage(image)}
-        width={120}
-        height={150}
-        transformation={[{ width: 120, height: 150 }]}
-        loading="lazy"
-        alt={name}
-        lqip={{ active: true, quality: 10 }} // 로딩이 완료되기 전에 흐린 이미지를 보여준다.
-      />
+      <div className="w-[120px] h-[150px]">
+        <IKImage
+          urlEndpoint={IMAGEKIT_ENDPOINT}
+          path={getImage(image)}
+          width={120}
+          height={150}
+          transformation={[{ width: 120, height: 150 }]}
+          loading="lazy"
+          alt={name}
+          lqip={{ active: true, quality: 10 }} // 로딩이 완료되기 전에 흐린 이미지를 보여준다.
+        />
+      </div>
 
-      <div className="mx-4">
+      <div className="w-[160px] ml-4">
         <div>
           <span className="font-bold ">{name}</span>
         </div>
@@ -105,9 +108,8 @@ export default function CartItem({
           />
         </div>
       </div>
-      {/* <div className="font-bold font-sans text-sm ml-auto">KRW {price}</div> */}
       <div className="font-bold font-sans text-sm text-end ml-auto w-32">
-        KRW 300,000
+        KRW {formatPrice(price)}
       </div>
     </div>
   );
