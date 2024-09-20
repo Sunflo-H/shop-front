@@ -1,25 +1,11 @@
 import React from "react";
 import Select from "react-select";
+import { formatSize } from "../../../../utils/converter";
 
 export default function SizeSelectBox({ sizeList, selectedSize, onChange }) {
-  const sizeOptionList = [
-    { value: "XX", label: "XX-Small" },
-    { value: "XS", label: "X-Small" },
-    { value: "S", label: "Small" },
-    { value: "M", label: "Medium" },
-    { value: "L", label: "Large" },
-    { value: "XL", label: "X-Large" },
-    { value: "XXL", label: "XX-Large" },
-    { value: "2X", label: "2X" },
-    { value: "3X", label: "3X" },
-  ];
-  const options = sizeList.map((size) => {
-    return sizeOptionList.find((sizeOption) => sizeOption.value === size);
-  });
+  const options = sizeList.map((size) => formatSize(size));
 
-  const selectedOption = selectedSize
-    ? sizeOptionList.find((sizeOption) => sizeOption.value === selectedSize)
-    : null;
+  const selectedOption = selectedSize ? formatSize(selectedSize) : null;
 
   return (
     <Select

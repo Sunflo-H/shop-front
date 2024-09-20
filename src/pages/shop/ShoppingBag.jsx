@@ -78,7 +78,7 @@ export default function ShoppingBag() {
                     selectedSize={equalProduct.size}
                     selectedColor={equalProduct.color}
                     quantity={equalProduct.quantity}
-                    key={i}
+                    key={product._id}
                   />
                 );
               })}
