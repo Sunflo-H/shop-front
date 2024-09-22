@@ -7,10 +7,11 @@ export function formatPrice(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+//! 주석 returns에 앞에 뭐라도 있어야 value 가 보임 없으면 :"숏네임" 만 보임
 /**
  * 사이즈를 받아 그 사이즈의 {숏네임, 풀네임} 객체를 리턴하는 함수
  * @param {*} size
- * @returns {value:"숏네임", lable:"풀네임"}
+ * @returns {ㅁ value:"숏네임" , label:"풀네임" }
  */
 export function formatSize(size) {
   const sizeOptionList = [

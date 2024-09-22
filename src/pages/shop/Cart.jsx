@@ -3,9 +3,9 @@ import EmptyProduct from "../error/EmptyProduct";
 import { useQuery } from "@tanstack/react-query";
 import { getProductsByIdList } from "../../api/productApi";
 import Payment from "../../components/shop/main/shoppingbag/Payment";
-import ProductsInBag from "../../components/shop/main/shoppingbag/ProductsInBag";
+import ProductsInCart from "../../components/shop/main/shoppingbag/ProductsInCart";
 
-export default function ShoppingBag() {
+export default function Cart() {
   const { data: user } = useQuery({ queryKey: ["loginedUser"] });
 
   const { cartList } = user ?? []; // cartList = {_id, size, color, quantity}
@@ -26,7 +26,7 @@ export default function ShoppingBag() {
         <EmptyProduct />
       ) : (
         <div className="flex flex-col md:flex-row max-w-screen-lg m-auto gap-6 mt-12">
-          <ProductsInBag productsInCart={productsInCart} cartList={cartList} />
+          <ProductsInCart productsInCart={productsInCart} cartList={cartList} />
           <Payment productsInCart={productsInCart} cartList={cartList} />
         </div>
       )}

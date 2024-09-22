@@ -1,9 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { getProductsByIdList } from "../../../../api/productApi";
-import ShoppingBagItemList from "./ShoppingBagItemList";
+import ShoppingBagItem from "./ShoppingBagItem";
 
-export default function ProductsInBag({ productsInCart, cartList }) {
+export default function ProductsInCart({ productsInCart, cartList }) {
   return (
     <div className="bg-white w-full md:w-3/5 shadow-md ">
       <div className="flex justify-between border-t border-gray-300 py-3 px-3 font-bold text-sm">
@@ -17,7 +15,20 @@ export default function ProductsInBag({ productsInCart, cartList }) {
         </div>
       </div>
 
-      <ShoppingBagItemList products={productsInCart} cartList={cartList} />
+      <div>
+        {cartList.map((cartItem) => {
+          const matchedProduct = productsInCart.find(
+            (product) => product._id === cartItem._id
+          );
+          return (
+            <ShoppingBagItem
+              product={matchedProduct}
+              cartItem={cartItem}
+              key={cartItem._id}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

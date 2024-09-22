@@ -24,7 +24,7 @@ import UserRegister from "./pages/management/UserRegister";
 import Register_email from "./components/shop/signUp/Register_email";
 import Register_password from "./components/shop/signUp/Register_password";
 import Register_info from "./components/shop/signUp/Register_info";
-import ShoppingBag from "./pages/shop/ShoppingBag";
+import Cart from "./pages/shop/Cart";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
         path: "/carts",
         element: (
           // <ProtectedRoute_isUser>
-          <ShoppingBag />
+          <Cart />
           // </ProtectedRoute_isUser>
         ),
       },

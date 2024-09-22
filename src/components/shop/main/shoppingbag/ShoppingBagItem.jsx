@@ -1,59 +1,79 @@
 import React from "react";
 import { AiOutlinePlusSquare, AiOutlineMinusSquare } from "react-icons/ai";
-import { BsFillTrashFill } from "react-icons/bs";
-import useCart from "../../../../hooks/useCart";
-import { useSelector } from "react-redux";
 import { IKImage } from "imagekitio-react";
-import { useMutation } from "@tanstack/react-query";
-import { formatPrice } from "../../../../utils/converter";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { formatPrice, formatSize } from "../../../../utils/converter";
+import { updateUser } from "../../../../api/userApi";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
-const sizeOptionList = [
-  { value: "XX", label: "XX-Small" },
-  { value: "XS", label: "X-Small" },
-  { value: "S", label: "Small" },
-  { value: "M", label: "Medium" },
-  { value: "L", label: "Large" },
-  { value: "XL", label: "X-Large" },
-  { value: "XXL", label: "XX-Large" },
-  { value: "2X", label: "2X" },
-  { value: "3X", label: "3X" },
-];
 
-export default function ShoppingBagItem({
-  product,
-  selectedSize,
-  selectedColor,
-  quantity,
-}) {
-  // const user = useSelector((state) => state.auth.user);
-  // const { uid } = user ?? {};
-  // const { quantityMinus, quantityPlus, removeCart } = useCart();
+export default function ShoppingBagItem({ product, cartItem }) {
+  const queryClient = useQueryClient();
+  const { data: user } = useQuery({ queryKey: ["loginedUser"] });
   const { _id, name, image, price } = product;
-  console.log(selectedSize, selectedColor);
+  const { color, size, quantity } = cartItem;
   const mutation = useMutation({
-    mutationFn: (async) => {
-      //! quantity 증감 구현 하고 Ec2 작업 시작
+    mutationFn: updateUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries("loginedUser");
     },
   });
-  // const handlePlusBtnClick = () => {
-  //   quantityPlus.mutate({ product, uid });
-  // };
+  const handlePlusBtnClick = () => {
+    const matchedCartItemIndex = user.cartList.findIndex(
+      (item) => item._id === _id
+    );
 
-  // const handleMinusBtnClick = () => {
-  //   if (quantity === 1) return;
-  //   quantityMinus.mutate({
-  //     product,
-  //     uid,
-  //   });
-  // };
+    const updatedCartList = [...user.cartList];
+    updatedCartList[matchedCartItemIndex] = {
+      ...updatedCartList[matchedCartItemIndex],
+      quantity: updatedCartList[matchedCartItemIndex].quantity + 1,
+    };
 
-  // const handleRemoveBtnClick = () => {
-  //   removeCart.mutate({
-  //     product,
-  //     uid,
-  //   });
-  // };
+    const updatedUser = {
+      ...user,
+      cartList: [...updatedCartList],
+    };
+
+    mutation.mutate(updatedUser);
+  };
+
+  const handleMinusBtnClick = () => {
+    if (quantity === 1) return;
+    const matchedCartItemIndex = user.cartList.findIndex(
+      (item) => item._id === _id
+    );
+
+    const updatedCartList = [...user.cartList];
+    updatedCartList[matchedCartItemIndex] = {
+      ...updatedCartList[matchedCartItemIndex],
+      quantity: updatedCartList[matchedCartItemIndex].quantity - 1,
+    };
+
+    const updatedUser = {
+      ...user,
+      cartList: [...updatedCartList],
+    };
+
+    mutation.mutate(updatedUser);
+  };
+
+  const handleRemoveBtnClick = () => {
+    const matchedCartItemIndex = user.cartList.findIndex(
+      (item) => item._id === _id
+    );
+
+    const updatedCartList = [...user.cartList].filter(
+      (cartItem, index) => index !== matchedCartItemIndex
+    );
+    console.log(updatedCartList);
+
+    const updatedUser = {
+      ...user,
+      cartList: [...updatedCartList],
+    };
+
+    mutation.mutate(updatedUser);
+  };
 
   return (
     <div className="flex border-t border-gray-300 py-3 px-3">
@@ -75,19 +95,16 @@ export default function ShoppingBagItem({
           <span className="font-bold ">{name}</span>
         </div>
         <div className="mt-2 text-sm">
-          Color : <span className="  ">{selectedColor}</span>
+          Color : <span className="  ">{color}</span>
         </div>
         <div className="text-sm">
-          Size :{" "}
-          <span className=" ">
-            {
-              sizeOptionList.find((option) => option.value === selectedSize)
-                .label
-            }
-          </span>
+          Size : <span className="">{formatSize(size).label}</span>
         </div>
 
-        <div className=" mt-14 text-xs text-gray-400 underline decoration-gray-400 cursor-pointer">
+        <div
+          className=" mt-14 text-xs text-gray-400 underline decoration-gray-400 cursor-pointer"
+          onClick={handleRemoveBtnClick}
+        >
           Remove
         </div>
       </div>
@@ -95,7 +112,7 @@ export default function ShoppingBagItem({
         <div className="py-1.5 ">
           <AiOutlineMinusSquare
             className="md:text-lg cursor-pointer"
-            // onClick={handleMinusBtnClick}
+            onClick={handleMinusBtnClick}
           />
         </div>
         <div className="w-12 text-center">
@@ -104,7 +121,7 @@ export default function ShoppingBagItem({
         <div className="py-1.5">
           <AiOutlinePlusSquare
             className="md:text-lg cursor-pointer"
-            // onClick={handlePlusBtnClick}
+            onClick={handlePlusBtnClick}
           />
         </div>
       </div>
