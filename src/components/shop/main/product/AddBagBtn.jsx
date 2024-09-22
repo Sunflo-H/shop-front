@@ -15,12 +15,6 @@ export default function AddBagBtn({
 
   const { isLogined } = useSelector((state) => state.auth);
   const { data: user } = useQuery({ queryKey: ["loginedUser"] });
-  // const { addCart } = useCart();
-  // const { _id } = user ?? {};
-  //! 장바구니에 담기 누르면
-  //! mutation으로 ["user"]의 값을 변경해야지
-  //! cartList 변경해
-  console.log(user);
 
   const mutation = useMutation({
     mutationFn: updateUser,
@@ -35,6 +29,24 @@ export default function AddBagBtn({
   });
 
   const handleAddCartClick = (e) => {
+    if (!isLogined) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Sign in first!",
+        confirmButtonColor: "#222",
+      });
+      return;
+    }
+    if (!selectedSize) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please select a size",
+        confirmButtonColor: "#222",
+      });
+      return;
+    }
     if (isLogined) {
       const productToAddCart = {
         _id: productId,
