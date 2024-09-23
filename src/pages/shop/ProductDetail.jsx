@@ -9,10 +9,14 @@ import SizeSelectBox from "../../components/shop/main/product/SizeSelectBox";
 import { IKImage } from "imagekitio-react";
 import Quantity from "../../components/shop/main/product/Quantity";
 import AddBagBtn from "../../components/shop/main/product/AddBagBtn";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { updateUser } from "../../api/userApi";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
 export default function ProductDetail() {
+  const queryClient = useQueryClient();
+
   const {
     state: { product },
   } = useLocation();
@@ -21,11 +25,26 @@ export default function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(color[0]);
   const [quantity, setQuantity] = useState(1);
-  // const { isFavorite, updateFavorites } = useFavorites(product);
+  const { data: user } = useQuery({ queryKey: ["loginedUser"] });
+  const { favoriteList } = user ?? {};
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const mutation = useMutation({
+    mutationFn: updateUser,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries("loginedUser");
+    },
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [_id]);
+
+  useEffect(() => {
+    if (user) {
+      if (favoriteList.find((item) => item._id === _id)) setIsFavorite(true);
+    }
+  }, [user]);
 
   const handleSizeChange = (selectedOption) => {
     setSelectedSize(selectedOption.value);
@@ -35,9 +54,23 @@ export default function ProductDetail() {
     setSelectedColor(e.target.value);
   };
 
-  // const handleFavoriteClick = (e) => {
-  //   updateFavorites.mutate();
-  // };
+  const handleFavoriteClick = (e) => {
+    const isInFavoriteList = favoriteList.find((item) => item._id === _id);
+    let newFavoriteList;
+    console.log(isInFavoriteList);
+    if (isInFavoriteList) {
+      // 있으면 list에서 제거
+      newFavoriteList = favoriteList.filter((item) => item._id !== _id);
+      setIsFavorite(false);
+    } else {
+      // 없으면 list에 추가
+      newFavoriteList = [...favoriteList, { _id }];
+      setIsFavorite(true);
+    }
+
+    const userToUpdate = { ...user, favoriteList: newFavoriteList };
+    mutation.mutate(userToUpdate);
+  };
 
   return (
     <section className="px-4 md:px-0 pt-28 pb-10">
@@ -46,18 +79,33 @@ export default function ProductDetail() {
         lg:flex-row md:gap-16 "
       >
         <div className=" w-5/12 ">
-          <div className="flex text-[12px] ml-2 mb-4 gap-1">
-            <Link to="/" className="h-4 font-bold border-b border-black ">
-              Home
-            </Link>
-            /
-            <Link
-              to={`/products/${category}`}
-              state={category}
-              className="h-4 font-bold border-b border-black"
-            >
-              {category}
-            </Link>
+          <div className="flex justify-between text-[12px] ml-2 ">
+            <div className="flex gap-1 mb-4">
+              <Link to="/" className="h-4 font-bold border-b border-black ">
+                Home
+              </Link>
+              /
+              <Link
+                to={`/products/${category}`}
+                state={category}
+                className="h-4 font-bold border-b border-black"
+              >
+                {category}
+              </Link>
+            </div>
+            <div className="flex items-center cursor-pointer">
+              {isFavorite ? (
+                <AiFillHeart
+                  className={`text-2xl`}
+                  onClick={handleFavoriteClick}
+                />
+              ) : (
+                <AiOutlineHeart
+                  className={`text-2xl`}
+                  onClick={handleFavoriteClick}
+                />
+              )}
+            </div>
           </div>
           <IKImage
             urlEndpoint={IMAGEKIT_ENDPOINT}
@@ -72,7 +120,9 @@ export default function ProductDetail() {
           />
         </div>
         <div className=" w-[344px] pt-8 ">
-          <div className="text-[20px] text-gray-600">{name}</div>
+          <div className="flex justify-between">
+            <div className="text-[20px] text-gray-600">{name}</div>
+          </div>
           <div className="product-detail-font mt-4 pb-2 text-2xl ">
             <span className=" mr-2">KRW</span>
             {price}
@@ -104,19 +154,7 @@ export default function ProductDetail() {
                 selectedSize={selectedSize}
                 quantity={quantity}
               />
-              {/* <div className="flex items-center px-8 py-3 border border-black rounded-md cursor-pointer">
-                {isFavorite ? (
-                  <AiFillHeart
-                    className={`text-2xl   ${isFavorite && "text-red-600"}`}
-                    onClick={handleFavoriteClick}
-                  />
-                ) : (
-                  <AiOutlineHeart
-                    className={`text-2xl  ${isFavorite && "text-rose-500"}`}
-                    onClick={handleFavoriteClick}
-                  />
-                )}
-              </div> */}
+              {/* <div className="flex items-center px-8 py-3 border border-black rounded-md cursor-pointer"> */}
             </div>
           </div>
         </div>

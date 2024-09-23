@@ -28,3 +28,16 @@ export function formatSize(size) {
 
   return sizeOptionList.find((sizeOption) => sizeOption.value === size);
 }
+
+/**
+ * aws s3 image url에서 맨뒤 image파일명만 가져오는 함수
+ * @param {*} imageUrl aws s3 image url
+ * @returns imageFileName
+ */
+export function formatImage(imageUrl) {
+  const imageUrlSplit = imageUrl.split("/");
+  const length = imageUrlSplit.length;
+  const image = imageUrlSplit[length - 1];
+
+  return image;
+}

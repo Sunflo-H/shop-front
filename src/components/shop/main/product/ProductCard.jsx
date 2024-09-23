@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
+import { AiOutlineHeart } from "react-icons/ai";
 import useFavorites from "../../../../hooks/useFavorites";
 import { IKImage } from "imagekitio-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { updateUser } from "../../../../api/userApi";
+
+import { formatImage } from "../../../../utils/converter";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
@@ -15,16 +18,17 @@ export default function ProductCard({ product, currentCategory }) {
 
   const [isFavorite, setIsFavorite] = useState(false);
   const { data: user } = useQuery({ queryKey: ["loginedUser"] });
+  const { favoriteList } = user ?? {};
 
   useEffect(() => {
-    if (user?.favoriteList.find((item) => item._id === _id))
-      setIsFavorite(true);
+    if (user) {
+      if (favoriteList.find((item) => item._id === _id)) setIsFavorite(true);
+    }
   }, [user]);
 
   const mutation = useMutation({
     mutationFn: updateUser,
     onSuccess: (data) => {
-      console.log(data);
       queryClient.invalidateQueries("loginedUser");
     },
   });
@@ -34,16 +38,16 @@ export default function ProductCard({ product, currentCategory }) {
   };
 
   const handleFavoritesClick = () => {
-    const isInFavoriteList = user.favoriteList.find((item) => item._id === _id);
+    const isInFavoriteList = favoriteList.find((item) => item._id === _id);
     let newFavoriteList;
 
     if (isInFavoriteList) {
       // 있으면 list에서 제거
-      newFavoriteList = user.favoriteList.filter((item) => item._id !== _id);
+      newFavoriteList = favoriteList.filter((item) => item._id !== _id);
       setIsFavorite(false);
     } else {
       // 없으면 list에 추가
-      newFavoriteList = [...user.favoriteList, { _id }];
+      newFavoriteList = [...favoriteList, { _id }];
       setIsFavorite(true);
     }
 
@@ -56,7 +60,7 @@ export default function ProductCard({ product, currentCategory }) {
       <div className="w-full cursor-pointer grow" onClick={handleProductClick}>
         <IKImage
           urlEndpoint={IMAGEKIT_ENDPOINT}
-          path={getImage(image)}
+          path={formatImage(image)}
           width={400}
           height={600}
           transformation={[{ width: 400, height: 600 }]}
@@ -68,10 +72,17 @@ export default function ProductCard({ product, currentCategory }) {
       </div>
       <div className="flex justify-between mt-2">
         <div className="font-bold">{name}</div>{" "}
-        <AiFillHeart
-          className={`text-2xl cursor-pointer ${isFavorite && "text-rose-500"}`}
-          onClick={handleFavoritesClick}
-        />
+        {isFavorite ? (
+          <AiFillHeart
+            className={`text-2xl cursor-pointer `}
+            onClick={handleFavoritesClick}
+          />
+        ) : (
+          <AiOutlineHeart
+            className={`text-2xl cursor-pointer `}
+            onClick={handleFavoritesClick}
+          />
+        )}
       </div>
       <div className="text-lg font-semibold text-gray-600">
         {price}
@@ -79,17 +90,4 @@ export default function ProductCard({ product, currentCategory }) {
       </div>
     </div>
   );
-}
-
-/**
- * aws s3 image url에서 맨뒤 image파일명만 추출하는 함수
- * @param {*} imageUrl aws s3 image url
- * @returns image filename
- */
-function getImage(imageUrl) {
-  const imageUrlSplit = imageUrl.split("/");
-  const length = imageUrlSplit.length;
-  const image = imageUrlSplit[length - 1];
-
-  return image;
 }
