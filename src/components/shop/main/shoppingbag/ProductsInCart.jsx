@@ -1,5 +1,5 @@
 import React from "react";
-import ShoppingBagItem from "./ShoppingBagItem";
+import CartItem from "./CartItem";
 
 export default function ProductsInCart({ productsInCart, cartList }) {
   return (
@@ -21,7 +21,7 @@ export default function ProductsInCart({ productsInCart, cartList }) {
             (product) => product._id === cartItem._id
           );
           return (
-            <ShoppingBagItem
+            <CartItem
               product={matchedProduct}
               cartItem={cartItem}
               key={cartItem._id}

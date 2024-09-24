@@ -4,14 +4,16 @@ import { IKImage } from "imagekitio-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { formatPrice, formatSize } from "../../../../utils/converter";
 import { updateUser } from "../../../../api/userApi";
+import { useNavigate } from "react-router-dom";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
-export default function ShoppingBagItem({ product, cartItem }) {
+export default function CartItem({ product, cartItem }) {
   const queryClient = useQueryClient();
   const { data: user } = useQuery({ queryKey: ["loginedUser"] });
-  const { _id, name, image, price } = product;
+  const { _id, name, image, price, category } = product;
   const { color, size, quantity } = cartItem;
+  const navigate = useNavigate();
   const mutation = useMutation({
     mutationFn: updateUser,
     onSuccess: () => {
@@ -75,9 +77,16 @@ export default function ShoppingBagItem({ product, cartItem }) {
     mutation.mutate(updatedUser);
   };
 
+  const productClick = () => {
+    navigate(`/products/${category}/${_id}`, { state: { product } });
+  };
+
   return (
     <div className="flex border-t border-gray-300 py-3 px-3">
-      <div className="w-[120px] h-[150px]">
+      <div
+        className="w-[120px] h-[150px] cursor-pointer"
+        onClick={productClick}
+      >
         <IKImage
           urlEndpoint={IMAGEKIT_ENDPOINT}
           path={getImage(image)}
