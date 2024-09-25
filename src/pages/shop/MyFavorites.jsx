@@ -10,7 +10,7 @@ export default function MyFavorites() {
   const { data: user } = useQuery({ queryKey: ["loginedUser"] });
   const { favoriteList } = user ?? {};
 
-  const { data: favoriteProducts } = useQuery({
+  const { data: favoriteProducts, refetch } = useQuery({
     queryKey: ["favoriteProducts"],
     queryFn: () => getProductsByIdList(favoriteList),
     enabled: !!user,
@@ -20,6 +20,10 @@ export default function MyFavorites() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    refetch();
+  }, [user]);
 
   return (
     <section className="pt-32 pb-10 px-4">
@@ -35,7 +39,7 @@ export default function MyFavorites() {
         md:grid-cols-3 md:m-auto`}
         >
           {favoriteProducts?.map((product, index) => (
-            <ProductCard product={product} key={index} />
+            <ProductCard product={product} key={product._id} />
           ))}
         </div>
       )}

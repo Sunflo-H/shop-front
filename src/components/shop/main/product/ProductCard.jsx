@@ -28,7 +28,7 @@ export default function ProductCard({ product, currentCategory }) {
 
   const mutation = useMutation({
     mutationFn: updateUser,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries("loginedUser");
     },
   });
