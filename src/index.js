@@ -25,6 +25,7 @@ import Register_email from "./components/shop/signUp/Register_email";
 import Register_password from "./components/shop/signUp/Register_password";
 import Register_info from "./components/shop/signUp/Register_info";
 import Cart from "./pages/shop/Cart";
+import SearchProducts from "./pages/shop/SearchProducts";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/products/:category/:id",
         element: <ProductDetail />,
+      },
+      {
+        path: "/products/:searchQuery",
+        element: <SearchProducts />,
       },
       {
         path: "/carts",
