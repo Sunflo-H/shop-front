@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import ProductCard from "../../components/shop/main/product/ProductCard";
 import { getProducts } from "../../api/productApi";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 const SEC = 1000;
 
@@ -28,14 +27,8 @@ export default function Products() {
         md:grid-cols-3 md:m-auto`}
       >
         {products &&
-          products.map((product, i) => {
-            return (
-              <ProductCard
-                product={product}
-                currentCategory={category}
-                key={product._id}
-              />
-            );
+          products.map((product) => {
+            return <ProductCard product={product} key={product._id} />;
           })}
       </div>
     </section>

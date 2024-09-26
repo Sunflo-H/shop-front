@@ -11,7 +11,7 @@ import { formatImage } from "../../../../utils/converter";
 
 const IMAGEKIT_ENDPOINT = process.env.REACT_APP_IMAGEKIT_ENDPOINT;
 
-export default function ProductCard({ product, currentCategory }) {
+export default function ProductCard({ product }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { name, image, category, price, _id } = product;

@@ -6,7 +6,7 @@ const GET_URL = process.env.REACT_APP_GET_PRODUCT_URL;
 const UPDATE_URL = process.env.REACT_APP_UPDATE_PRODUCT_URL;
 const DELETE_URL = process.env.REACT_APP_DELETE_PRODUCT_URL;
 const CREATE_URL = process.env.REACT_APP_CREATE_PRODUCT_URL;
-const CART_URL = process.env.REACT_APP_CART_PRODUCT_URL;
+const GET_BY_IDLIST_URL = process.env.REACT_APP_GET_BY_IDLIST_URL;
 
 export const getProducts = async (
   category,
@@ -72,8 +72,8 @@ export const uploadProduct = async (uploadProduct) => {
 
 export const getProductsByIdList = async (idList) => {
   try {
-    console.log("카트에 담긴 상품들 URL :", CART_URL);
-    const { data } = await axios.post(CART_URL, idList);
+    console.log("ID LIST로 상품들 가져오기 URL :", GET_BY_IDLIST_URL);
+    const { data } = await axios.post(GET_BY_IDLIST_URL, idList);
     return data;
   } catch (err) {
     console.log(err);

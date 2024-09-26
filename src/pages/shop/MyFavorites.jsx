@@ -27,10 +27,6 @@ export default function MyFavorites() {
 
   return (
     <section className="pt-32 pb-10 px-4">
-      {/* <div className="text-center mb-6">
-        <span className="text-2xl font-bold">My Favorites</span>
-      </div> */}
-
       {!favoriteList || favoriteList?.length === 0 ? (
         <EmptyProduct />
       ) : (
@@ -38,7 +34,7 @@ export default function MyFavorites() {
           className={`grid grid-cols-2 mx-4 max-w-screen-xl gap-10
         md:grid-cols-3 md:m-auto`}
         >
-          {favoriteProducts?.map((product, index) => (
+          {favoriteProducts?.map((product) => (
             <ProductCard product={product} key={product._id} />
           ))}
         </div>
