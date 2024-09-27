@@ -8,13 +8,18 @@ const DELETE_URL = process.env.REACT_APP_DELETE_PRODUCT_URL;
 const CREATE_URL = process.env.REACT_APP_CREATE_PRODUCT_URL;
 const GET_BY_IDLIST_URL = process.env.REACT_APP_GET_BY_IDLIST_URL;
 
-export const getProducts = async (
+export const getProducts = async ({
   category,
   status,
   page,
   limit,
-  searchQuery
-) => {
+  searchQuery,
+}) => {
+  console.log(category);
+  console.log(status);
+  console.log(page);
+  console.log(limit);
+  console.log(searchQuery);
   if (category === "ALL") category = "";
   if (status === "ALL") status = "";
 

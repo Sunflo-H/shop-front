@@ -13,8 +13,7 @@ export default function SearchBar() {
   };
 
   const handleSearchClick = () => {
-    navigate(`/products/${searchInput}`);
-    // 위 페이지에서 상품 데이터 렌더링할 수 있는 세팅해야지;
+    navigate(`/products/search/${searchInput}`);
   };
 
   return (

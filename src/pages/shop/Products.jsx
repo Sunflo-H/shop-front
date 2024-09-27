@@ -12,7 +12,7 @@ export default function Products() {
 
   const { data: products } = useQuery({
     queryKey: ["products", category],
-    queryFn: async () => getProducts(category),
+    queryFn: async () => getProducts({ category }),
     staleTime: SEC * 60,
   });
 

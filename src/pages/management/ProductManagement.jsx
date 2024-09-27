@@ -66,7 +66,13 @@ export default function ProductManagement() {
       searchQuery,
     ],
     queryFn: () =>
-      getProducts(activeCategory, activeStatus, page, limit, searchQuery),
+      getProducts({
+        category: activeCategory,
+        status: activeStatus,
+        page,
+        limit,
+        searchQuery,
+      }),
   });
 
   // dataFetch onSuccess
