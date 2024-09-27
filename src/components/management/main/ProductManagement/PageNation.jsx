@@ -29,7 +29,7 @@ export default function PageNation() {
   const { activeCategory, activeStatus, page, limit, pageGroup, searchQuery } =
     useSelector((state) => state.productManagement);
 
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: [
       "productsForPagenation",
       activeCategory,

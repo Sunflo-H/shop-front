@@ -28,13 +28,19 @@ export const alert_checkoutSuccess = () => {
     confirmButtonColor: "#222",
   });
 };
-// export const alert_loginSuccess = () => {
-//   return Swal.fire({
-//     position: "middle",
-//     icon: "success",
-//     title: "Sign in successful! ",
-//     text: "Redirecting HomePage",
-//     showConfirmButton: true,
-//     ConfirmButtonColor: "black",
-//   });
-// };
+
+export const alert_DeleteSelectedProductsSuccess = () => {
+  Swal.fire({
+    title: "Deleted!",
+    text: "Selected Products has been deleted.",
+    icon: "success",
+  });
+};
+
+export const alert_deleteSuccess = () => {
+  Swal.fire({
+    title: "Deleted!",
+    text: "Product has been deleted.",
+    icon: "success",
+  });
+};

@@ -15,11 +15,6 @@ export const getProducts = async ({
   limit,
   searchQuery,
 }) => {
-  console.log(category);
-  console.log(status);
-  console.log(page);
-  console.log(limit);
-  console.log(searchQuery);
   if (category === "ALL") category = "";
   if (status === "ALL") status = "";
 

@@ -8,9 +8,7 @@ import {
   resetFilter,
   setActiveCategory,
   setActiveStatus,
-  setAllCheckBox,
   setCheckboxList,
-  setIsSelectMode,
   setLimit,
   setPage,
   setSearchQuery,
@@ -18,13 +16,14 @@ import {
 import GoAddPageButton from "../../components/management/main/ui/GoAddPageButton";
 import Limit from "../../components/management/main/ui/Limit";
 import DetailModal from "../../components/management/main/ProductManagement/DetailModal";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteProducts, getProducts } from "../../api/productApi";
+import { useQuery } from "@tanstack/react-query";
+import { getProducts } from "../../api/productApi";
 import Swal from "sweetalert2";
 import Reset from "../../components/management/main/ui/Reset";
 import RemoveSelectedBtn from "../../components/management/main/ui/RemoveSeletedBtn";
-import ProductList from "../../components/management/main/ProductManagement/ProductList";
-import { alert_deleteProduct } from "../../alerts/warning";
+
+import ProductListHeader from "../../components/management/main/ProductManagement/ProductListHeader";
+import ProductListItem from "../../components/management/main/ProductManagement/ProductListItem";
 
 const categoryOptions = [
   { value: "ALL", label: "ALL Products" },
@@ -43,7 +42,6 @@ const statusOptions = [
 
 export default function ProductManagement() {
   const dispatch = useDispatch();
-  const queryClient = useQueryClient();
 
   const { activeCategory, activeStatus, page, limit, searchQuery } =
     useSelector((state) => state.productManagement);
@@ -56,9 +54,13 @@ export default function ProductManagement() {
     searchQuery: "",
   });
 
-  const { data, isLoading, error } = useQuery({
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: [
-      "products",
+      "productManagement",
       activeCategory,
       activeStatus,
       page,
@@ -73,13 +75,14 @@ export default function ProductManagement() {
         limit,
         searchQuery,
       }),
+    keepPreviousData: true,
   });
 
-  // dataFetch onSuccess
+  // useQuery onSuccess
   useEffect(() => {
     if (isLoading) return;
 
-    if (data.length === 0) {
+    if (products.length === 0) {
       // 데이터가 0개일 때 필터를 이전 상태로 되돌린다.
       Swal.fire("No data available");
       const isCategoryChange = activeCategory !== prevQueryParams.category;
@@ -103,9 +106,9 @@ export default function ProductManagement() {
         limit,
         searchQuery,
       });
-      dispatch(setCheckboxList(new Array(data.length).fill(false)));
+      dispatch(setCheckboxList(new Array(products.length).fill(false)));
     }
-  }, [data, isLoading, activeCategory, activeStatus]);
+  }, [products, isLoading, activeCategory, activeStatus]);
 
   const handleCategoryChange = (e) => {
     const category = e.target.value;
@@ -119,36 +122,6 @@ export default function ProductManagement() {
     dispatch(setPage(1));
   };
 
-  const { isSelectMode, idList } = useSelector(
-    (state) => state.productManagement
-  );
-  const mutation = useMutation({
-    mutationFn: deleteProducts,
-    onSuccess: (deleteCount) => {
-      queryClient.invalidateQueries("products");
-      if (deleteCount === data.length) dispatch(setPage(page - 1));
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
-
-  const handleRemoveClick = () => {
-    alert_deleteProduct().then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
-        mutation.mutate(idList);
-        dispatch(setIsSelectMode(false));
-        dispatch(setAllCheckBox(false));
-      }
-    });
-  };
-
-  console.log(data);
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
@@ -171,11 +144,21 @@ export default function ProductManagement() {
         <Reset resetFilterAction={resetFilter} />
         <GoAddPageButton url={"/manage/product/new"} />
       </div>
-      <RemoveSelectedBtn
-        isSelectMode={isSelectMode}
-        onClick={handleRemoveClick}
-      />
-      <ProductList products={data} />
+      <RemoveSelectedBtn products={products} page={page} />
+      <div className="mt-4 bg-white rounded-md shadow-md border border-gray-300 overflow-hidden">
+        <ProductListHeader products={products} />
+        <ul>
+          {products.map((product, i) => (
+            <ProductListItem
+              products={products}
+              product={product}
+              index={i}
+              key={product._id}
+            />
+          ))}
+        </ul>
+      </div>
+
       <PageNation />
 
       {/* 모달 */}

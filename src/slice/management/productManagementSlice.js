@@ -45,6 +45,14 @@ const productManagementSlice = createSlice({
       state.pageGroup = action.payload;
     },
 
+    /**
+     * 상품 삭제후 현재 페이지의 상품이 0개일 떄 이전 페이지로 이동하는 리듀서함수
+     * @param {*} state
+     */
+    setPrevPage: (state) => {
+      state.page = state.page - 1;
+    },
+
     // Remove
     setIsSelectMode: (state, action) => {
       state.isSelectMode = action.payload;
@@ -81,6 +89,7 @@ export const {
   setLimit,
   setPage,
   setPageGroup,
+  setPrevPage,
   setIsSelectMode,
   setIdList,
   setSearchQuery,
