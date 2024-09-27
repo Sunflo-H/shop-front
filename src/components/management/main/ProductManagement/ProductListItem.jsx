@@ -19,25 +19,13 @@ import _ from "lodash";
 import { alert_deleteSuccess } from "../../../../alerts/success";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteProducts } from "../../../../api/productApi";
+import RemoveBtn from "../ui/RemoveBtn";
 
 export default function DataListItem({ products, product, index }) {
-  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
   const { idList } = useSelector((state) => state.productManagement);
   const { name, price, category, status, createdAt, _id } = product;
-
-  // 삭제
-  const mutation = useMutation({
-    mutationFn: deleteProducts,
-    onSuccess: (deletedProductCount) => {
-      queryClient.invalidateQueries("productManagement");
-      if (deletedProductCount === products.length) dispatch(setPrevPage());
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
 
   const { checkboxList } = useSelector((state) => state.productManagement);
 
@@ -47,15 +35,6 @@ export default function DataListItem({ products, product, index }) {
       ? dispatch(setIsSelectMode(true))
       : dispatch(setIsSelectMode(false));
   }, [checkboxList]);
-
-  const handleRemoveClick = () => {
-    alert_deleteProduct().then((result) => {
-      if (result.isConfirmed) {
-        alert_deleteSuccess();
-        mutation.mutate([_id]);
-      }
-    });
-  };
 
   const handleCheckboxChange = (e) => {
     dispatch(
@@ -137,10 +116,7 @@ export default function DataListItem({ products, product, index }) {
           className="product-list-item cursor-pointer text-deepblue hover:text-blue-500"
           onClick={() => handleListItemClick(product)}
         />
-        <FaTrash
-          className="cursor-pointer text-deepblue hover:text-red-500"
-          onClick={handleRemoveClick}
-        />
+        <RemoveBtn products={products} productId={_id} />
       </div>
     </li>
   );
