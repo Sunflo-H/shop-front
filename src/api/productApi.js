@@ -17,26 +17,22 @@ export const getProducts = async ({
 }) => {
   if (category === "ALL") category = "";
   if (status === "ALL") status = "";
+  console.log(category);
+  console.log(status);
+  console.log(page);
+  console.log(limit);
+  console.log(searchQuery);
 
   try {
     console.log("상품들 주소 :", GET_URL);
     const response = await axios.get(GET_URL, {
       params: { category, status, page, limit, searchQuery },
     });
+    console.log(response.data);
     return response.data;
   } catch (err) {
     console.log("https 실패");
   }
-};
-
-export const fetchPagenation = async (category, status, searchQuery) => {
-  if (category === "ALL") category = "";
-  if (status === "ALL") status = "";
-  console.log("페이지네이션 URL :", GET_URL);
-  const response = await axios.get(GET_URL, {
-    params: { category, status, searchQuery },
-  });
-  return response.data;
 };
 
 export const updateProduct = async (productToUpdate) => {
@@ -78,4 +74,14 @@ export const getProductsByIdList = async (idList) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+export const fetchPagenation = async (category, status, searchQuery) => {
+  if (category === "ALL") category = "";
+  if (status === "ALL") status = "";
+  console.log("페이지네이션 URL :", GET_URL);
+  const response = await axios.get(GET_URL, {
+    params: { category, status, searchQuery },
+  });
+  return response.data;
 };
