@@ -22,6 +22,20 @@ export default function Header() {
         text1={"2024 Fall Collection"}
         text2={"New Season, New Style"}
       />
+      <div>
+        <marquee loop="infinite">
+          <div className="flex text-center ">
+            <div className="w-60">2024 Fall Collection</div>
+            <div className="w-60">New Season, New Style</div>
+            <div className="w-60">2024 Fall Collection</div>
+            <div className="w-60">New Season, New Style</div>
+            <div className="w-60">2024 Fall Collection</div>
+            <div className="w-60">New Season, New Style</div>
+            <div className="w-60">2024 Fall Collection</div>
+            <div className="w-60">New Season, New Style</div>
+          </div>
+        </marquee>
+      </div>
       <div
         className="relative flex items-stretch justify-center max-w-screen-2xl m-auto 
        md:justify-between md:px-10"
