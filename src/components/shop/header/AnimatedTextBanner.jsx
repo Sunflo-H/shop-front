@@ -31,50 +31,50 @@ export default function AnimatedTextBanner({ text1, text2 }) {
         <div className="w-60">{text1}</div>
         <div className="w-60">{text2}</div>
       </div>
-      <div className="flex text-center animate-marquee ">
+      {/* <div className="flex text-center animate-marquee ">
+        <div className="w-60">{text1}</div>
+        <div className="w-60">{text2}</div>
+      </div> */}
+      {/* <div className="flex text-center animate-marquee ">
         <div className="w-60">{text1}</div>
         <div className="w-60">{text2}</div>
       </div>
       <div className="flex text-center animate-marquee ">
         <div className="w-60">{text1}</div>
         <div className="w-60">{text2}</div>
-      </div>
-      <div className="flex text-center animate-marquee ">
+      </div> */}
+      {/* <div className="flex text-center animate-marquee ">
         <div className="w-60">{text1}</div>
         <div className="w-60">{text2}</div>
       </div>
       <div className="flex text-center animate-marquee ">
         <div className="w-60">{text1}</div>
         <div className="w-60">{text2}</div>
-      </div>
-      <div className="flex text-center animate-marquee ">
+      </div> */}
+      {/* <div className="flex text-center animate-marquee ">
         <div className="w-60">{text1}</div>
         <div className="w-60">{text2}</div>
       </div>
       <div className="flex text-center animate-marquee ">
         <div className="w-60">{text1}</div>
         <div className="w-60">{text2}</div>
-      </div>
-      <div className="flex text-center animate-marquee ">
+      </div> */}
+      {/* <div className="flex text-center animate-marquee ">
         <div className="w-60">{text1}</div>
         <div className="w-60">{text2}</div>
-      </div>
-      <div className="flex text-center animate-marquee ">
+      </div> */}
+      {/* <div className="flex text-center animate-marquee ">
         <div className="w-60">{text1}</div>
         <div className="w-60">{text2}</div>
-      </div>
-      <div className="flex text-center animate-marquee ">
+      </div> */}
+      {/* <div className="flex text-center animate-marquee ">
         <div className="w-60">{text1}</div>
         <div className="w-60">{text2}</div>
-      </div>
-      <div className="flex text-center animate-marquee ">
+      </div> */}
+      {/* <div className="flex text-center animate-marquee ">
         <div className="w-60">{text1}</div>
         <div className="w-60">{text2}</div>
-      </div>
-      <div className="flex text-center animate-marquee ">
-        <div className="w-60">{text1}</div>
-        <div className="w-60">{text2}</div>
-      </div>
+      </div> */}
     </div>
   );
 }
