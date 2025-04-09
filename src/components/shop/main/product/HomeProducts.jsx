@@ -14,7 +14,7 @@ export default function HomeProducts() {
   const products = productsQuery.data?.slice(0, MAX_PRODUCTS_COUNT);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 ">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
       {products &&
         products.map((product, index) => {
           return (
