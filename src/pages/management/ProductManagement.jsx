@@ -63,8 +63,8 @@ export default function ProductManagement() {
       "productManagement",
       activeCategory,
       activeStatus,
-      page, // 여기서 로딩이 발생하는거네
-      limit,
+      page, // ! 여기서 로딩이 발생하는거네
+      limit, // ! 여기서 로딩이 발생하는거네
       searchQuery,
     ],
     queryFn: () =>
@@ -144,7 +144,9 @@ export default function ProductManagement() {
         <Reset resetFilterAction={resetFilter} />
         <GoAddPageButton url={"/manage/product/new"} />
       </div>
+
       <RemoveSelectedBtn products={products} page={page} />
+
       <div className="mt-4 bg-white rounded-md shadow-md border border-gray-300 overflow-hidden">
         <ProductListHeader products={products} />
         <ul>

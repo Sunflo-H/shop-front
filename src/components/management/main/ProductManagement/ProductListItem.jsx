@@ -14,18 +14,14 @@ import {
   openModal,
 } from "../../../../slice/management/detailModalSlice";
 
-import { alert_deleteProduct } from "../../../../alerts/warning";
 import _ from "lodash";
-import { alert_deleteSuccess } from "../../../../alerts/success";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteProducts } from "../../../../api/productApi";
 import RemoveBtn from "../ui/RemoveBtn";
 
 export default function DataListItem({ products, product, index }) {
   const dispatch = useDispatch();
   const { isOpen, detailData } = useSelector((state) => state.detailModal);
   const { idList } = useSelector((state) => state.productManagement);
-  const { name, price, category, status, createdAt, _id } = product;
+  const { name, price, category, status, createdAt, _id, quantity } = product;
 
   const { checkboxList } = useSelector((state) => state.productManagement);
 
@@ -110,7 +106,8 @@ export default function DataListItem({ products, product, index }) {
       <div className="w-40 pl-[2px] ">{price}</div>
       <div className="w-40 pl-[2px] ">{category}</div>
       <div className="w-40 pl-[2px] ">{status}</div>
-      <div className="w-40 pl-[2px] ">{createdAt}</div>
+      {/* <div className="w-40 pl-[2px] ">{createdAt}</div> */}
+      <div className="w-40 pl-[2px] ">{quantity}</div>
       <div className="flex items-center px-6 ml-4 gap-5 border-l-[2px] border-lightblue">
         <FaPen
           className="product-list-item cursor-pointer text-deepblue hover:text-blue-500"
