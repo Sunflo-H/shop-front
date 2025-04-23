@@ -81,7 +81,7 @@ export default function Footer() {
               <p className="px-2 mb-4 underline text-sm font-bold">
                 South Korea
               </p>
-              <p className="font-bold px-2">© 2023 Adonis</p>
+              <p className="font-bold px-2">© 2025 Adonis</p>
             </div>
           </div>
           <div className="p-8 ">
