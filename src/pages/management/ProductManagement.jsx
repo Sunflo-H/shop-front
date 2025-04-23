@@ -63,7 +63,7 @@ export default function ProductManagement() {
       "productManagement",
       activeCategory,
       activeStatus,
-      page,
+      page, // 여기서 로딩이 발생하는거네
       limit,
       searchQuery,
     ],
