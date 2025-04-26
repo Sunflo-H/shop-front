@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import NavItem from "./NavItem";
-import { useParams } from "react-router-dom";
 
 const navItemList = ["Home", "Man", "Woman", "Accessory", "Shoes", "Recommend"];
 
