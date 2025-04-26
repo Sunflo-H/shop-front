@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+function getLink(navItem) {
+  return navItem === "Home" ? "/" : `/products/${navItem}`;
+}
+
 export default function NavItem({ navItem }) {
   const link = getLink(navItem);
 
@@ -12,13 +16,4 @@ export default function NavItem({ navItem }) {
       {navItem}
     </Link>
   );
-}
-
-function getLink(navItem) {
-  let result = "";
-
-  if (navItem === "Home") result = "/";
-  else result = `/products/${navItem}`;
-
-  return result;
 }
