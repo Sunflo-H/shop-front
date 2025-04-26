@@ -51,7 +51,7 @@ export default function Footer() {
           </li>
           <li className="flex items-center">
             <GrMail className="mr-2 text-2xl" />
-            <span>hbj2cjswodla@gmail.com</span>
+            <span>sunflo0524@gmail.com</span>
           </li>
         </ul>
       </div>

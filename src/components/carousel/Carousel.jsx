@@ -4,7 +4,6 @@ import Images from "./Images";
 import NextImage from "./NextImage";
 import PrevImage from "./PrevImage";
 
-import { HiArrowLongRight, HiArrowLongLeft } from "react-icons/hi2";
 import { AiOutlineSwapLeft, AiOutlineSwapRight } from "react-icons/ai";
 
 const IMAGE_DURATION = 2000;

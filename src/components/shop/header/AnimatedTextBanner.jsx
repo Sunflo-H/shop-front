@@ -30,7 +30,7 @@ const BannerScreen2xl = ({ text1, text2 }) => {
 export default function AnimatedTextBanner({ text1, text2 }) {
   return (
     // banner container
-    <div className="flex bg-black h-7 border font-bold text-[12px] text-white">
+    <div className="flex hidden bg-black h-7 border font-bold text-[12px] text-white md:block">
       <BannerScreen2xl text1={text1} text2={text2} />
       <BannerScreen2xl text1={text1} text2={text2} />
     </div>
