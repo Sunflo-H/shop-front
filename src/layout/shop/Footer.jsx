@@ -32,9 +32,9 @@ export default function Footer() {
       "California Transparency Act/Modern Slavery Act",
       "Investor Relations",
       "Terms of Use",
-      "Privacy Policy",
-      "California Do Not Sell My Personal Information",
-      "Diversity, Equity and Inclusion at J.Crew Group",
+      // "Privacy Policy",
+      // "California Do Not Sell My Personal Information",
+      // "Diversity, Equity and Inclusion at J.Crew Group",
     ],
   ];
   return (
