@@ -16,6 +16,7 @@ export default function Header() {
   const { isLogined } = useSelector((state) => state.auth);
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
 
+  console.log(isSideNavOpen);
   return (
     <header className="fixed w-full z-50 border-b border-gray-300 bg-white shadow-sm">
       <AnimatedTextBanner
@@ -35,7 +36,6 @@ export default function Header() {
           {isLogined && <LoginedUser />}
           {isLogined && <Cart />}
         </div>
-
         {/* 모바일 버전 */}
         {/* 햄버거 */}
         {isSideNavOpen ? (
@@ -50,10 +50,10 @@ export default function Header() {
           />
         )}
 
-        {/* <SideNav
+        <SideNav
           isSideNavOpen={isSideNavOpen}
           setIsSideNavOpen={setIsSideNavOpen}
-        /> */}
+        />
         <SearchIcon_mobile />
       </div>
     </header>

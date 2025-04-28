@@ -65,6 +65,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  // 로그인
   {
     path: "/login",
     element: (
@@ -75,6 +76,7 @@ const router = createBrowserRouter([
       </QueryClientProvider>
     ),
   },
+  // 회원가입
   {
     path: "/register",
     element: (
@@ -97,6 +99,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  // 상품 관리 페이지
   {
     path: "/manage",
     element: <ManagementApp />,

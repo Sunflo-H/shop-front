@@ -28,7 +28,7 @@ export default function SideNav({ isSideNavOpen, setIsSideNavOpen }) {
       className={`absolute w-80 h-screen top-14 left-0 z-10 bg-white border border-gray-300 transition-all md:hidden 
       ${!isSideNavOpen && "-translate-x-full"}`}
     >
-      <SignAndUser_Side />
+      {/* <SignAndUser_Side /> 잠시 로그인 기능 때문에 유지보수중 */}
       <ul className={`flex flex-col mt-4 font-bold`}>
         {navItemList.map((navItem, i) => (
           <SideListItem
