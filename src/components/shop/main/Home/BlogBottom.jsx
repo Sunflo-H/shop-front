@@ -12,7 +12,7 @@ export default function BlogBottom() {
     "https://res.cloudinary.com/dysdtbktd/image/upload/c_scale,h_296,w_270/v1679413298/shoppy/blog9_vmczy4.jpg",
     "https://res.cloudinary.com/dysdtbktd/image/upload/c_scale,h_296,w_270/v1679413298/shoppy/blog10_cw41yu.jpg",
   ];
-  const { handleGoToMen } = useCategoryNavigation();
+  const { handleGoToMan } = useCategoryNavigation();
 
   return (
     <>
@@ -21,7 +21,7 @@ export default function BlogBottom() {
           return <BlogBottomImage image={image} key={i} />;
         })}
         <div className="m-auto lg:hidden mt-10">
-          <Button text="Meet our Community" handleClick={handleGoToMen} />
+          <Button text="Meet our Community" handleClick={handleGoToMan} />
         </div>
       </div>
 
@@ -44,7 +44,7 @@ export default function BlogBottom() {
           </div>
         </div>
         <div className="hidden lg:block mt-8">
-          <Button text="Meet our Community" onClick={handleGoToMen} />
+          <Button text="Meet our Community" onClick={handleGoToMan} />
         </div>
       </div>
     </>

@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 export default function useCategoryNavigation(currentCategory) {
   const navigate = useNavigate();
 
-  const handleGoToMen = () => {
-    navigate(`/products/Men`, { state: "Men" });
+  const handleGoToMan = () => {
+    navigate(`/products/Man`, { state: "Man" });
   };
   const handleGoToWomen = () => {
     navigate(`/products/Women`, { state: "Women" });
@@ -19,7 +19,7 @@ export default function useCategoryNavigation(currentCategory) {
     navigate(`/products/${currentCategory}`, { state: currentCategory });
   };
   return {
-    handleGoToMen,
+    handleGoToMan,
     handleGoToWomen,
     handleGoToAccessories,
     handleGoToShoes,
