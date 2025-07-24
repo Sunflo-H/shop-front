@@ -9,6 +9,7 @@ export default function Nav() {
       {navItemList.map((navItem) => (
         <NavItem key={navItem} navItem={navItem} />
       ))}
+      하이
     </nav>
   );
 }
